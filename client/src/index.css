@@ -8,3 +8,11 @@
     @apply text-white;
   }
 }
+
+.blog_header {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

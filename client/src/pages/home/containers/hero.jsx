@@ -1,3 +1,9 @@
+import { FaInstagram, FaWhatsapp } from "react-icons/fa";
+import { RiMediumLine } from "react-icons/ri";
+import { FaXTwitter } from "react-icons/fa6";
+import { PiTelegramLogo } from "react-icons/pi";
+import { MdOutlineEmail } from "react-icons/md";
+
 import { illustration } from "../../../assets/images";
 import Button from "../../../components/button";
 
@@ -10,6 +16,7 @@ const HeroSection = () => {
             src={illustration}
             alt=""
             className="w-full h-full object-contain"
+            loading="lazy"
           />
         </div>
         <div className="flex-1 grid place-items-center ">
@@ -25,7 +32,14 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
-      <div className=""></div>
+      <div className="flex items-center justify-center gap-[50px] h-[120px] mt-8">
+        <FaXTwitter size={26} />
+        <PiTelegramLogo size={26} />
+        <FaInstagram size={26} />
+        <RiMediumLine size={26} />
+        <FaWhatsapp size={26} />
+        <MdOutlineEmail size={26} />
+      </div>
     </div>
   );
 };

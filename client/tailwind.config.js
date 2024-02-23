@@ -7,6 +7,7 @@ export default {
       "light-dark": "#454248",
       white: "#ffffff",
       primary: "#FFBB4C",
+      green: "#71A68B",
     },
     fontFamily: {
       sans: ["Montserrat", "sans-serif"],
