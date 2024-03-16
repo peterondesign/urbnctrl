@@ -4,6 +4,14 @@ module.exports=(sequelize, DataTypes)=>{
    title:{
     type: DataTypes.STRING,
     allowNull : false
+   },
+   img:{
+    type: DataTypes.ARRAY(DataTypes.STRING),
+    allowNull : false
+   },
+   content:{
+    type: DataTypes.STRING,
+    allowNull : false
    }
  })
   
