@@ -6,8 +6,14 @@ module.exports=(sequelize, DataTypes)=>{
     allowNull : false
    },
    img:{
-    type: DataTypes.ARRAY(DataTypes.STRING),
-    allowNull : false
+    type: DataTypes.STRING,
+    allowNull : false,
+    get(){
+      return this.getDataValue("img").split(";")
+    },
+    set(val){
+      this.setDataValue("img",val.join(";"))
+    }
    },
    content:{
     type: DataTypes.STRING,
