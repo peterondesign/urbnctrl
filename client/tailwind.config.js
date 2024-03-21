@@ -11,6 +11,7 @@ export default {
     },
     fontFamily: {
       sans: ["Montserrat", "sans-serif"],
+      playfail: ["Playfair Display", "serif"],
     },
     extend: {},
   },

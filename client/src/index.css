@@ -16,3 +16,19 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.quill {
+  border: 1px solid #e7e5e5;
+  border-radius: 8px;
+}
+.quill .ql-snow {
+  border: 0;
+}
+.quill .ql-editor {
+  border: 0;
+  min-height: 300px;
+}
+
+.quill .ql-toolbar {
+  border-bottom: 1px solid #e7e5e5;
+}

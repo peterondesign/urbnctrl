@@ -6,8 +6,10 @@ import { MdOutlineEmail } from "react-icons/md";
 
 import { illustration } from "../../../assets/images";
 import Button from "../../../components/button";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
   return (
     <div className="px-[60px]">
       <div className="flex w-full items-center h-[640px]">
@@ -28,7 +30,7 @@ const HeroSection = () => {
               Giants
             </h1>
             <p className="text-sm">Beyond Music</p>
-            <Button text="sign in" />
+            <Button text="sign in" onClick={() => navigate("/auth/sign-in")} />
           </div>
         </div>
       </div>

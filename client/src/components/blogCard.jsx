@@ -1,9 +1,14 @@
 import { FaCalendarAlt } from "react-icons/fa";
 import { chains } from "../assets/images";
+import { useNavigate } from "react-router-dom";
 
 const BlogCard = () => {
+  const navigate = useNavigate();
   return (
-    <div className="w-[400px] h-[440px] rounded-[20px] bg-white flex flex-col overflow-hidden cursor-pointer">
+    <div
+      className="w-[400px] h-[440px] rounded-[20px] bg-white flex flex-col overflow-hidden cursor-pointer"
+      onClick={() => navigate("/community/blog")}
+    >
       <div className="h-[248px]">
         <img
           src={chains}
@@ -21,7 +26,7 @@ const BlogCard = () => {
         <div className="flex items-center gap-2">
           <FaCalendarAlt color="#aab0bc" size={15} />
           <p className="text-xs text-[#aab0bc] font-medium">
-            21 May, 2021 - 06:09AM
+            May 23, 2021 - 06:09AM
           </p>
         </div>
       </div>

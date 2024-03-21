@@ -1,7 +1,9 @@
 import Button from "../../../components/button";
 import { berri, yarden, deela } from "../../../assets/images/artists";
+import { useNavigate } from "react-router-dom";
 
 const TalentSection = () => {
+  const navigate = useNavigate();
   const artists = [
     { name: "Berri Tiga", img: berri },
     { name: "Deela", img: deela },
@@ -16,7 +18,11 @@ const TalentSection = () => {
         <p className="text-sm">
           Take a look at the hottest new kids on the block.
         </p>
-        <Button text="Read about utilities" className="w-[276px]" />
+        <Button
+          text="Read about utilities"
+          className="w-[276px]"
+          onClick={() => navigate("/utilities")}
+        />
       </div>
       <div className="flex-1 flex justify-between">
         {artists?.map((artist, idx) => (

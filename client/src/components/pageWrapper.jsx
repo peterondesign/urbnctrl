@@ -1,8 +1,10 @@
+import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { logo } from "../assets/images";
 import Button from "./button";
 import { Link } from "react-router-dom";
 import MaxContainer from "./maxContainer";
+import { useLocation, useNavigate } from "react-router";
 
 /**
  * @param {object} props
@@ -12,11 +14,18 @@ import MaxContainer from "./maxContainer";
 const PageWrapper = ({ children }) => {
   const links = [
     { title: "community", to: "/community" },
-    { title: "socials", to: "/" },
+    { title: "socials", to: "/socials" },
     { title: "annoucements", to: "/" },
     { title: "utilities", to: "/utilities" },
     { title: "about us", to: "/about-us" },
   ];
+
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
   return (
     <>
       <nav className=" relative z-50">
@@ -33,7 +42,10 @@ const PageWrapper = ({ children }) => {
                   </li>
                 ))}
               </ul>
-              <Button text="sign in" />
+              <Button
+                text="sign in"
+                onClick={() => navigate("/auth/sign-in")}
+              />
             </div>
           </div>
         </MaxContainer>

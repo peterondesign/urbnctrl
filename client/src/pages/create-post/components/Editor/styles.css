@@ -1,0 +1,6 @@
+.ql-formats button:hover .ql-fill {
+  fill: #ffbb4c !important;
+}
+.ql-formats button:hover .ql-stroke {
+  stroke: #ffbb4c !important;
+}

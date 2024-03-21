@@ -6,8 +6,14 @@ import womanUrban from "./woman-urban.png";
 import manUrban from "./man-urban.png";
 import girlWithGultar from "./girl-with-gultar.png";
 import girlWithPhone from "./girl-with-phone.png";
+import speaker from "./speaker.png";
+import authBg from "./auth-background.png";
+import gmail from "./gmail.png";
 
 export {
+  gmail,
+  speaker,
+  authBg,
   manUrban,
   logo,
   illustration,

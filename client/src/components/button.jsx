@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 /**
  * Button component.
- * @param {{text: string} & React.BaseHTMLAttributes} props - The props for the Button component.
+ * @param {{text: string} & React.ButtonHTMLAttributes} props - The props for the Button component.
  * @returns {JSX.Element} - A button element.
  */
 const Button = ({ text = "text", ...restProps }) => {
