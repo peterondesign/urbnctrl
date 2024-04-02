@@ -7,7 +7,9 @@ import PropTypes from "prop-types";
  */
 const MaxContainer = ({ children }) => {
   return (
-    <div className="max-w-[1440px] mx-auto px-[80px] w-full">{children}</div>
+    <div className="max-w-[1440px] mx-auto px-[24px] lg:px-[80px] w-full">
+      {children}
+    </div>
   );
 };
 

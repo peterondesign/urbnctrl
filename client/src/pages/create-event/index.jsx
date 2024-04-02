@@ -1,3 +1,4 @@
+import Footer from "../../components/footer";
 import MaxContainer from "../../components/maxContainer";
 import PageWrapper from "../../components/pageWrapper";
 import Content from "./containers/content";
@@ -9,9 +10,9 @@ const CreateEvent = () => {
       <MaxContainer>
         <Header />
       </MaxContainer>
-      <MaxContainer>
-        <Content />
-      </MaxContainer>
+
+      <Content />
+      <Footer />
     </PageWrapper>
   );
 };

@@ -9,8 +9,10 @@ import girlWithPhone from "./girl-with-phone.png";
 import speaker from "./speaker.png";
 import authBg from "./auth-background.png";
 import gmail from "./gmail.png";
+import announcementComingSoon from "./announcement-coming-soon.jpg";
 
 export {
+  announcementComingSoon,
   gmail,
   speaker,
   authBg,

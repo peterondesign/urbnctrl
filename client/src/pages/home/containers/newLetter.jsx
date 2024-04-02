@@ -2,12 +2,12 @@ import Button from "../../../components/button";
 
 const NewLetterSection = () => {
   return (
-    <div className="py-[40px] px-[16px]">
-      <div className="rounded-[20px] bg-white p-12 text-dark">
-        <h2 className="text-5xl leading-[48px] font-bold">
+    <div className="py-[40px] lg:px-[16px]">
+      <div className="rounded-[20px] bg-white p-9 sm:p-12 text-dark">
+        <h2 className="text-2xl leading-[28px] sm:text-5xl sm:leading-[48px] font-bold">
           Big Updates Coming
         </h2>
-        <form className="mt-6">
+        <form className="mt-3 sm:mt-6">
           <p className="text-sm mb-4">Stay up to date with us</p>
           <label>
             <p className="text-sm font-bold mb-4">Enter your email address* </p>

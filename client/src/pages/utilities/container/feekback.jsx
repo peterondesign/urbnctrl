@@ -4,20 +4,22 @@ import { girlWithGultar, girlWithPhone } from "../../../assets/images";
 const FeekbackSection = () => {
   return (
     <div>
-      <h2 className="max-w-[520px] text-[60px] leading-[66px] font-bold">
+      <h2 className="max-w-[206px] lg:max-w-[520px] text-[32px] lg:text-[60px] leading-[35px] lg:leading-[66px] font-bold">
         Feedback is Prioritized
       </h2>
       <div className="flex flex-col w-full items-center">
-        <div className="flex py-[44px] w-full gap-[32px]">
+        <div className="flex flex-col sm:flex-row items-center lg:items-start py-[20px] lg:py-[44px] w-full gap-[32px]">
           <img
             src={girlWithGultar}
             alt=""
             loading="lazy"
-            className="w-[520px] h-[470px] object-cover rounded-[36px]"
+            className="w-full sm:w-[340px] h-[300px] lg:w-[520px] lg:h-[470px] object-cover rounded-[36px]"
           />
-          <div className="flex flex-col flex-1  gap-4">
-            <h3 className="text-[48px] leading-[56px] font-bold">Artists:</h3>
-            <div className="text-base leading-[200%] flex w-full flex-col gap-3">
+          <div className="flex flex-col flex-1 gap-4">
+            <h3 className="text-[28px] lg:text-[48px] lg:leading-[56px] font-bold">
+              Artists:
+            </h3>
+            <div className="text-[14px] lg:text-base leading-[200%] flex w-full flex-col gap-2 lg:gap-3">
               <p>
                 As part of our commitment to supporting musicians and
                 independent artistes, we have implemented a free publishing
@@ -40,18 +42,18 @@ const FeekbackSection = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-row-reverse py-[44px] w-full gap-[32px]">
+        <div className="flex flex-col items-center lg:items-start sm:flex-row-reverse pt-[40px] lg:py-[44px] w-full gap-[32px]">
           <img
             src={girlWithPhone}
             alt=""
             loading="lazy"
-            className="w-[520px] h-[470px] object-cover rounded-[36px]"
+            className="w-full sm:w-[340px] h-[300px] lg:w-[520px] lg:h-[470px] object-cover rounded-[36px]"
           />
-          <div className="flex flex-col flex-1  gap-4">
-            <h3 className="text-[48px] leading-[56px] font-bold max-w-[600px]">
+          <div className="flex flex-col flex-1 gap-4">
+            <h3 className="text-[28px] lg:text-[48px] lg:leading-[56px]  font-bold max-w-[600px]">
               Listening Group Membership:
             </h3>
-            <div className="text-base leading-[200%] flex w-full flex-col gap-3">
+            <div className="text-[14px] lg:text-base leading-[200%] flex w-full flex-col gap-2 lg:gap-3">
               <p>
                 By joining us, you become a part of our mission which is to
                 contribute to the expansion of Nigerian music.
