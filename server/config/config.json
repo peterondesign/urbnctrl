@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "root",
-    "password": "kerryesua9@gmail.com",
-    "database": "urbancentraldb",
-    "host": "localhost",
+    "username": "u7lydhhanzmx6icy",
+    "password": " W661JKTZsNTUddZ1jZZi",
+    "database": "be2hdvm3jzqeyas3647y",
+    "host": "http://be2hdvm3jzqeyas3647y-mysql.services.clever-cloud.com",
     "dialect": "mysql"
   },
   "test": {
