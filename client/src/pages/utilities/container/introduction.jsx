@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 const IntroductionSection = () => {
   return (
-    <div className="py-8 ">
-      <p className="text-[16px] leading-[200%] [&>a]:text-green">
+    <div className="pb-4 lg:py-8 ">
+      <p className="text-[14px] lg:text-[16px] leading-[200%] [&>a]:text-green">
         Urban Central is a fun and interactive platform that offers a
         comprehensive service to guide & ensure the life cycle of an average
         independent musician is fulfilled. We bridge the gap between creatives

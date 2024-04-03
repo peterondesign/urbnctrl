@@ -10,9 +10,8 @@ const Socials = () => {
       <MaxContainer>
         <Header />
       </MaxContainer>
-      <MaxContainer>
-        <Content />
-      </MaxContainer>
+
+      <Content />
       <Footer />
     </PageWrapper>
   );

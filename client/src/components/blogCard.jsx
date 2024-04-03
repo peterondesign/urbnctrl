@@ -6,7 +6,7 @@ const BlogCard = () => {
   const navigate = useNavigate();
   return (
     <div
-      className="w-[400px] h-[440px] rounded-[20px] bg-white flex flex-col overflow-hidden cursor-pointer"
+      className="w-full h-[400px] sm:h-[440px] rounded-[20px] bg-white flex flex-col overflow-hidden cursor-pointer"
       onClick={() => navigate("/community/blog")}
     >
       <div className="h-[248px]">

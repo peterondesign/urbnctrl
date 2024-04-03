@@ -10,9 +10,9 @@ const TalentSection = () => {
     { name: "Yarden", img: yarden },
   ];
   return (
-    <div className="flex py-[44px] w-full gap-20 items-center">
-      <div className="w-[504px] flex flex-col gap-6">
-        <h2 className="text-5xl font-bold">
+    <div className="flex flex-col lg:flex-row lg:py-[44px] w-full gap-[48px] lg:gap-20 items-center">
+      <div className=" items-center sm:items-start text-center sm:text-left w-full lg:w-[504px] flex flex-col gap-6">
+        <h2 className="text-[32px] sm:text-5xl font-bold">
           Emerging talents in our Afrobeats space
         </h2>
         <p className="text-sm">
@@ -24,7 +24,7 @@ const TalentSection = () => {
           onClick={() => navigate("/utilities")}
         />
       </div>
-      <div className="flex-1 flex justify-between">
+      <div className=" flex-col sm:flex-row flex-1 w-full items-center sm:items-start gap-9  flex justify-between">
         {artists?.map((artist, idx) => (
           <div className="" key={idx}>
             <img

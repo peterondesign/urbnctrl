@@ -7,6 +7,22 @@
     @apply bg-dark;
     @apply text-white;
   }
+  .logo-white svg path {
+    @apply fill-white;
+  }
+  .logo-dark svg path {
+    @apply fill-dark;
+  }
+}
+
+.stroke-dark svg rect {
+  /* stroke: #020a0d; */
+  fill: #020a0d;
+}
+
+.player {
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .blog_header {
@@ -31,4 +47,7 @@
 
 .quill .ql-toolbar {
   border-bottom: 1px solid #e7e5e5;
+}
+.react-datepicker-wrapper {
+  display: block;
 }

@@ -10,11 +10,13 @@ import ForgottenPassword from "./pages/auth/forgottenPassword";
 import CreatePost from "./pages/create-post";
 import Socials from "./pages/socials";
 import CreateEvent from "./pages/create-event";
+import Announcement from "./pages/announcement";
 
 const routes = createBrowserRouter([
   { path: "/", element: <Home /> },
   { path: "utilities", element: <Utilities /> },
   { path: "about-us", element: <AboutUs /> },
+  { path: "announcements", element: <Announcement /> },
   {
     path: "community",
     children: [
