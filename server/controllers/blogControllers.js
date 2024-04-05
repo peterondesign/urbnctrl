@@ -28,7 +28,7 @@ const getBlogId = async (req, res) => {
 const setBlog = async (req, res) => {
   const { title, content, category, author, img } = req.body;
 
-  if (!title || !content || !category || !author || img) {
+  if (!title || !content || !category || !author || !img) {
     res.status(401).json('fill in all the columns');
   }
   try {

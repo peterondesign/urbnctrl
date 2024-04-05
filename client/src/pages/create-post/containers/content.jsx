@@ -47,7 +47,6 @@ const Content = () => {
       }
     }
   };
-
   return (
     <div className="w-full bg-white py-[60px] px-[40px] rounded-[20px] text-dark">
       <label className="mb-7 block">
