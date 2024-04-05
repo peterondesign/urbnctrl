@@ -1,41 +1,24 @@
-import { useRef, useMemo, useState } from "react";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import "./styles.css";
+import { useRef, useMemo, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import ReactQuill, { Quill } from 'react-quill';
+import ImageUploader from 'quill-image-uploader';
+import 'react-quill/dist/quill.snow.css';
+import './styles.css';
+import useUpload from '../../../../hooks/api/upload';
 
-export const Editor = () => {
-  const [value, setValue] = useState({ value: null });
-  const [images, setImages] = useState([]);
+Quill.register('modules/imageUploader', ImageUploader);
+
+/**
+ * @param {{onChange: Function}} props
+ * @returns {JSX.Element}
+ */
+export const Editor = ({ onChange }) => {
+  const [html, setHtml] = useState('');
   const quillRef = useRef(null);
+  const { handleUpload, getUploadedData } = useUpload();
+
   const handleChange = (value) => {
-    setValue(value);
-  };
-
-  const imageHandler = () => {
-    const quillObj = quillRef?.current?.getEditor();
-    const range = quillObj?.getSelection();
-
-    const input = document.createElement("input");
-    input.setAttribute("type", "file");
-    input.setAttribute("accept", "image/*");
-    input.click();
-
-    input.onchange = async () => {
-      const file = input.files[0];
-      if (/^image\//.test(file.type)) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = (e) => {
-          const imageUrl = e.target.result; // For debugging
-          setImages((prev) => {
-            const copy = [...prev];
-            copy.push({ data: imageUrl, file });
-            return copy;
-          });
-          quillObj.editor.insertEmbed(range.index, "image", imageUrl);
-        };
-      }
-    };
+    setHtml(value);
   };
 
   const modules = useMemo(
@@ -43,35 +26,65 @@ export const Editor = () => {
       toolbar: {
         container: [
           [{ header: [1, 2, 3, 4, 5, 6, false] }],
-          ["bold", "italic", "underline", "strike"],
+          ['bold', 'italic', 'underline', 'strike'],
           [
-            { list: "ordered" },
-            { list: "bullet" },
-            { indent: "-1" },
-            { indent: "+1" },
+            { list: 'ordered' },
+            { list: 'bullet' },
+            { indent: '-1' },
+            { indent: '+1' },
           ],
-          ["image"],
+          ['image'],
         ],
-        handlers: {
-          image: imageHandler,
+
+        // handlers: {
+        //   image: imageHandler,
+        // },
+      },
+      imageUploader: {
+        upload: (file) => {
+          console.log(file, '/////');
+          return new Promise((resolve, reject) => {
+            const formData = new FormData();
+            formData.append('image', file);
+            handleUpload(file).then((result) => {
+              console.log(result);
+            });
+            setTimeout(() => {
+              resolve(
+                'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/JavaScript-logo.png/480px-JavaScript-logo.png',
+              );
+            }, 3500);
+          });
         },
       },
     }),
     [],
   );
+
+  useEffect(() => {
+    if (onChange) {
+      onChange(html);
+    }
+  }, [html]);
+
   return (
     <div className="text-editor">
       <ReactQuill
         className="bg-[#F8F7F7]"
         theme="snow"
         ref={quillRef}
-        value={value}
+        value={html}
+        defaultValue={html}
         onChange={handleChange}
-        placeholder={"Create Blog..."}
+        placeholder={'Create Blog...'}
         modules={modules}
       />
     </div>
   );
+};
+
+Editor.propTypes = {
+  onChange: PropTypes.func,
 };
 
 export default Editor;
