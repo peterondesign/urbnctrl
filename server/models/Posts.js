@@ -5,16 +5,14 @@ module.exports=(sequelize, DataTypes)=>{
     type: DataTypes.STRING,
     allowNull : false
    },
-   img:{
-    type: DataTypes.STRING,
-    allowNull : false,
-    get(){
-      return this.getDataValue("img").split(";")
+    category:{
+      type: DataTypes.STRING,
+      allowNull : false
     },
-    set(val){
-      this.setDataValue("img",val.join(";"))
-    }
-   },
+    author:{
+      type: DataTypes.STRING,
+      allowNull : false
+    },
    content:{
     type: DataTypes.STRING,
     allowNull : false

@@ -25,19 +25,13 @@ const getBlogId=async(req,res)=>{
  
   //CREATE BLOGPOST
  const setBlog= async(req,res)=>{
-    const {title,content} = req.body
+    const {title,content,category,author} = req.body
 
-     if (!title || !content) {
+     if (!title || !content || !category || !author) {
        res.status(401).json("fill in all the columns")
     }
      try {
-      const images = req.files
-      const img =[]
-      for(const singleImg of images){
-         const result = await cloudinary.uploader.upload(singleImg.path)
-         img.push(result.url)
-      }
-      await Posts.create({title,img,content})
+      await Posts.create({title,content,category,author})
       res.status(201).json("blog created")
      } catch (error) {
       res.status(400).json(error 
@@ -75,6 +69,22 @@ const getBlogId=async(req,res)=>{
      }
  }
 
+ const uploadImage =async(req,res)=>{
+   try {
+       const images = req.files
+      const img =[]
+      for(const singleImg of images){
+         const result = await cloudinary.uploader.upload(singleImg.path)
+         img.push(result.url)
+
+         await Images.create({img})
+         res.status(201).json(img)
+      }
+   } catch (error) {
+      res.status(400).json(error.message)
+   }
+ }
+
   //IMAGE UPLOAD CONTROLLER
    const storage = multer.diskStorage({
       filename : (req,file,cb)=>{
@@ -89,5 +99,6 @@ module.exports={
     editBlog,
     deleteBlog,
     getBlogId,
+    uploadImage,
     upload
 }
