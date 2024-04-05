@@ -9,13 +9,13 @@ import useUpload from '../../../../hooks/api/upload';
 Quill.register('modules/imageUploader', ImageUploader);
 
 /**
- * @param {{onChange: Function}} props
+ * @param {{onChange: Function, defaultValue: string}} props
  * @returns {JSX.Element}
  */
-export const Editor = ({ onChange }) => {
+export const Editor = ({ defaultValue, onChange }) => {
   const [html, setHtml] = useState('');
   const quillRef = useRef(null);
-  const { handleUpload, getUploadedData } = useUpload();
+  const { handleUpload, cancelUpload } = useUpload();
 
   const handleChange = (value) => {
     setHtml(value);
@@ -44,15 +44,17 @@ export const Editor = ({ onChange }) => {
         upload: (file) => {
           return new Promise((resolve, reject) => {
             const formData = new FormData();
-            formData.append('image', file);
-            handleUpload(formData).then((result) => {
-              console.log(result);
-            });
-            setTimeout(() => {
-              resolve(
-                'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/JavaScript-logo.png/480px-JavaScript-logo.png',
-              );
-            }, 3500);
+            formData.append('img', file);
+            handleUpload(formData)
+              .then((result) => {
+                const url = result?.data[0];
+                console.log(result);
+                resolve(url);
+              })
+              .catch(() => {
+                reject('Upload failed');
+                cancelUpload();
+              });
           });
         },
       },
@@ -73,7 +75,7 @@ export const Editor = ({ onChange }) => {
         theme="snow"
         ref={quillRef}
         value={html}
-        defaultValue={html}
+        defaultValue={defaultValue}
         onChange={handleChange}
         placeholder={'Create Blog...'}
         modules={modules}
@@ -84,6 +86,7 @@ export const Editor = ({ onChange }) => {
 
 Editor.propTypes = {
   onChange: PropTypes.func,
+  defaultValue: PropTypes.string,
 };
 
 export default Editor;

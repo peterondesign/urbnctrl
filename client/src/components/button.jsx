@@ -1,23 +1,35 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import Loader from './loader';
 
 /**
  * Button component.
- * @param {{text: string} & React.ButtonHTMLAttributes} props - The props for the Button component.
+ * @param {{loading: boolean, text: string} & React.ButtonHTMLAttributes} props - The props for the Button component.
  * @returns {JSX.Element} - A button element.
  */
-const Button = ({ text = "text", ...restProps }) => {
+const Button = ({ loading, text = 'text', ...restProps }) => {
   return (
     <button
       {...restProps}
-      className={`h-[52px] w-[150px] bg-primary font-medium text-light-dark capitalize rounded ${restProps.className}`}
+      className={classNames(
+        `h-[52px] w-[150px] bg-primary font-medium grid place-items-center relative text-light-dark capitalize rounded ${restProps.className}`,
+        { 'opacity-70 cursor-not-allowed': restProps.disabled || loading },
+      )}
     >
-      {text}
+      {!loading ? (
+        text
+      ) : (
+        <span>
+          <Loader size="28" color="#fff" />
+        </span>
+      )}
     </button>
   );
 };
 
 Button.propTypes = {
   text: PropTypes.string,
+  loading: PropTypes.bool,
 };
 
 export default Button;
