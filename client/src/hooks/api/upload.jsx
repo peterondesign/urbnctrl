@@ -5,7 +5,7 @@ const useUpload = () => {
   const handleUpload = async (data) => {
     return await upload({
       method: 'POST',
-      url: '/postImages',
+      url: '/blog/postImages',
       data,
     });
   };

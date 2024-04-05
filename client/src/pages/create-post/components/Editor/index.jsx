@@ -42,11 +42,10 @@ export const Editor = ({ onChange }) => {
       },
       imageUploader: {
         upload: (file) => {
-          console.log(file, '/////');
           return new Promise((resolve, reject) => {
             const formData = new FormData();
             formData.append('image', file);
-            handleUpload(file).then((result) => {
+            handleUpload(formData).then((result) => {
               console.log(result);
             });
             setTimeout(() => {
