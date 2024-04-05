@@ -1,5 +1,6 @@
 const multer = require("multer")
 const {Posts} = require("../models")
+const {Images} = require("../models")
 const cloudinary = require("../utilis/cloudinary")
 
 // FETCH ALL BLOGS
@@ -29,7 +30,7 @@ const getBlogId=async(req,res)=>{
 
      if (!title || !content || !category || !author) {
        res.status(401).json("fill in all the columns")
-    }
+    } 
      try {
       await Posts.create({title,content,category,author})
       res.status(201).json("blog created")
@@ -71,15 +72,18 @@ const getBlogId=async(req,res)=>{
 
  const uploadImage =async(req,res)=>{
    try {
-       const images = req.files
-      const img =[]
+        const images = req.files
+        if (!images) {
+         res.json("empty")
+        }
+        const img =[]
       for(const singleImg of images){
          const result = await cloudinary.uploader.upload(singleImg.path)
          img.push(result.url)
-
-         await Images.create({img})
-         res.status(201).json(img)
       }
+        await Images.create({img})
+         res.status(201).json(img)
+      
    } catch (error) {
       res.status(400).json(error.message)
    }

@@ -7,6 +7,6 @@ router.post("/postBlog", setBlog)
 router.post("/postImages",upload.array("img"), uploadImage)
 router.put("/editBlog/:id",editBlog)
 router.delete("/deleteBlog/:id", deleteBlog)
-
+ 
 
 module.exports=router

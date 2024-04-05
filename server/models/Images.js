@@ -16,6 +16,6 @@ module.exports=(sequelize, DataTypes)=>{
     })
      
    
-    return Images
+    return Images 
    }
    

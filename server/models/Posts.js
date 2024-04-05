@@ -3,19 +3,19 @@ module.exports=(sequelize, DataTypes)=>{
  const Posts=sequelize.define("Posts",{
    title:{
     type: DataTypes.STRING,
-    allowNull : false
+    allowNull : true
    },
     category:{
-      type: DataTypes.STRING,
-      allowNull : false
+      type: DataTypes.STRING, 
+      allowNull : true
     },
     author:{
       type: DataTypes.STRING,
-      allowNull : false
+      allowNull : true
     },
    content:{
     type: DataTypes.STRING,
-    allowNull : false
+    allowNull : true
    }
  })
   
