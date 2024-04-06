@@ -25,20 +25,11 @@ export const Editor = ({ defaultValue, onChange }) => {
     () => ({
       toolbar: {
         container: [
-          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+          [{ header: [1, false] }],
           ['bold', 'italic', 'underline', 'strike'],
-          [
-            { list: 'ordered' },
-            { list: 'bullet' },
-            { indent: '-1' },
-            { indent: '+1' },
-          ],
+          [{ list: 'ordered' }, { list: 'bullet' }],
           ['image'],
         ],
-
-        // handlers: {
-        //   image: imageHandler,
-        // },
       },
       imageUploader: {
         upload: (file) => {
