@@ -22,7 +22,7 @@ const routes = createBrowserRouter([
     path: 'community',
     children: [
       { index: true, element: <Community /> },
-      { path: ':post-id', element: <CommunityPost /> },
+      { path: ':postId', element: <CommunityPost /> },
       {
         path: 'create-post',
         children: [
