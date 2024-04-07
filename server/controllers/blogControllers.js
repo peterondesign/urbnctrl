@@ -6,7 +6,7 @@ const cloudinary = require('../utilis/cloudinary');
 // FETCH ALL BLOGS
 const getBlogs = async (req, res) => {
   try {
-    const allPosts = await Posts.findAll();
+    const allPosts = await Posts.findAll({order:[["createdAt", "  DESC"]]});
     res.status(200).json(allPosts);
   } catch (error) {
     res.status(400).json(error.message);
