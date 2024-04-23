@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const axiosInstance = axios.create({
   baseURL: 'https://urbnctrl.onrender.com/api',
@@ -7,7 +8,8 @@ const axiosInstance = axios.create({
 // Request interceptor to add the token to headers for each request
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('accessToken');
+    // const token = localStorage.getItem('accessToken');
+    const token = Cookies.get('urb-access-token');
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
     }

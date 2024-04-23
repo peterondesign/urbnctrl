@@ -1,8 +1,8 @@
-import PropTypes from "prop-types";
-import { authBg } from "../../../assets/images";
-import Footer from "../../../components/footer";
-import PageWrapper from "../../../components/pageWrapper";
-import MaxContainer from "../../../components/maxContainer";
+import PropTypes from 'prop-types';
+import { authBg } from '../../../assets/images';
+import Footer from '../../../components/footer';
+import PageWrapper from '../../../components/pageWrapper';
+import MaxContainer from '../../../components/maxContainer';
 
 /**
  * @param {object} props
@@ -17,7 +17,7 @@ const AuthWrapper = ({ children }) => {
           <img src={authBg} alt="" className="w-full h-[1250px] object-cover" />
         </div>
         <MaxContainer>
-          <div className="flex items-center justify-end w-full relative z-10 flex-1 py-[54px]">
+          <div className="flex items-center justify-center lg:justify-end w-full relative z-10 flex-1 py-[54px]">
             <div className="text-dark w-[352px] py-[40px] px-[42px] bg-white rounded-[10px]">
               {children}
             </div>

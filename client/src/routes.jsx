@@ -12,6 +12,7 @@ import Socials from './pages/socials';
 import CreateEvent from './pages/create-event';
 import Announcement from './pages/announcement';
 import PreviewPost from './pages/preview-post';
+import ProtectedRoutes from './components/protectedRoutes';
 
 const routes = createBrowserRouter([
   { path: '/', element: <Home /> },
@@ -24,10 +25,15 @@ const routes = createBrowserRouter([
       { index: true, element: <Community /> },
       { path: ':postId', element: <CommunityPost /> },
       {
-        path: 'create-post',
+        element: <ProtectedRoutes />,
         children: [
-          { index: true, element: <CreatePost /> },
-          { path: 'preview', element: <PreviewPost /> },
+          {
+            path: 'create-post',
+            children: [
+              { index: true, element: <CreatePost /> },
+              { path: 'preview', element: <PreviewPost /> },
+            ],
+          },
         ],
       },
     ],

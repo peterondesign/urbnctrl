@@ -1,10 +1,9 @@
-import Footer from "../../components/footer";
-import MaxContainer from "../../components/maxContainer";
-import PageWrapper from "../../components/pageWrapper";
-import Video from "../../components/video";
-import FeekbackSection from "./container/feekback";
-import HeaderSection from "./container/header";
-import IntroductionSection from "./container/introduction";
+import Footer from '../../components/footer';
+import MaxContainer from '../../components/maxContainer';
+import PageWrapper from '../../components/pageWrapper';
+import FeekbackSection from './container/feekback';
+import HeaderSection from './container/header';
+import IntroductionSection from './container/introduction';
 
 const Utilities = () => {
   return (
@@ -14,7 +13,6 @@ const Utilities = () => {
         <MaxContainer>
           <IntroductionSection />
         </MaxContainer>
-        <Video />
         <MaxContainer>
           <FeekbackSection />
         </MaxContainer>
