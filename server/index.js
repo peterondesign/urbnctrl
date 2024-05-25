@@ -5,6 +5,7 @@ require('dotenv').config();
 const { errorHandler } = require('./middlewares/errorhandler');
 const db = require('./models');
 const blogs = require('./blogs/blog');
+const events = require("./events/eventRoute")
 const googleAuth = require('./authRoute/googleAuth');
 const credentialsAuth = require('./authRoute/credentialsAuth');
 
@@ -22,6 +23,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/api/blog', blogs);
+app.use('/api/event', events);
 app.use('/api', credentialsAuth);
 app.use('/auth', googleAuth);
 app.use(errorHandler);

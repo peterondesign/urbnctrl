@@ -1,5 +1,5 @@
 const router = require("express").Router()
-const {signup,login}= require("../controllers/userControllers")
+const {signup,login,getMe}= require("../controllers/userControllers")
 const {adminAuth} = require("../middlewares/authmiddleware")
 
 
