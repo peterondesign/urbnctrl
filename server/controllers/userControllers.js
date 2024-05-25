@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { Users } = require("../models");
+const { get } = require("../authRoute/credentialsAuth");
 
 const signup = async (req, res) => {
   const { email, password } = req.body;
@@ -17,7 +18,6 @@ const signup = async (req, res) => {
     res.status(400).json("email already in use");
   }
   //hashing password
-
   try {
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
@@ -25,6 +25,19 @@ const signup = async (req, res) => {
     res.status(201).json(saved);
   } catch (error) {
     res.status(500).json(error.message);
+  }
+};
+
+const getMe = async (req, res) => {
+  try {
+    const { email } = req.user;
+    const active = await Users.findOne({ where: { email } });
+
+    const mail = active.email;
+    const isAdmin = active.isAdmin;
+    res.status(200).json({ mail, isAdmin });
+  } catch (error) {
+    res.status(500).json("something went wrong");
   }
 };
 
@@ -74,4 +87,5 @@ const generateTRoken = (uservalue) => {
 module.exports = {
   login,
   signup,
+  getMe,
 };

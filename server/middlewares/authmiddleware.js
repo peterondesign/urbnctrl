@@ -19,3 +19,15 @@ const checkToken=(req,res,next)=>{
         res.status(400).json("you are not authorized")
     }
 }   
+const adminAuth=(req, res, next)=>{
+    checkToken(req, res,()=>{
+      if (req.user.isAdmin) {
+          next()
+      }
+      else{
+          res.status(403).json("you are not authorized for this")
+      }
+    })
+  }
+
+module.exports ={checkToken,adminAuth}
