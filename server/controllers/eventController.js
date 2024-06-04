@@ -27,6 +27,10 @@ const getEvent= async(req,res)=>{
     console.log("events fetched")
 }
 
+const getUnapprovedEvent= async(req,res)=>{
+    console.log("events fetched")
+}
+
 const deleteEvent= async(req,res)=>{
     console.log("event deleted")
 }
@@ -36,5 +40,6 @@ const deleteEvent= async(req,res)=>{
 module.exports={
     createEvent,
     getEvent,
-    deleteEvent
+    deleteEvent,
+    getUnapprovedEvent
 }

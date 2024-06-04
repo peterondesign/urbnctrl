@@ -4,6 +4,7 @@ const { body}=require("express-validator")
 const eventBody = [body("name").isString()
 .withMessage("name must be a string").notEmpty().withMessage("must not be empty"),
  body("email").notEmpty().withMessage("please fill in your email address"),
+ body("url").notEmpty().withMessage("please fill in location url"),
  body("eventType").notEmpty().withMessage("please select an event type"),
  body("description").notEmpty().withMessage("please describe the event briefly"),
  body("address").notEmpty().withMessage("please provide the event address"),
