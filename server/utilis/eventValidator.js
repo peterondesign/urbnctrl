@@ -12,7 +12,6 @@ const eventBody = [body("name").isString()
  body("startTime").notEmpty().withMessage("please provide a starting time"),
  body("endDay").notEmpty().withMessage("please provide an ending day"),
  body("endTime").notEmpty().withMessage("please provide an ending time"),
- body("img").notEmpty().withMessage("please add the event thumbnail"),
  body("vip").isNumeric().withMessage("please provide the number of vip tickets available"),
  body("regular").isNumeric().withMessage(" please provide the number of regular tickets available"),
  body("table").isNumeric().withMessage("please provide the number of table tickets available"),
