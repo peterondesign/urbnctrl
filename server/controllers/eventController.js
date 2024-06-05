@@ -23,8 +23,18 @@ const createEvent= async(req,res,next)=>{
  }
 }
 
-const getEvent= async(req,res)=>{
-    console.log("events fetched")
+const getEvent= async(req,res,next)=>{
+    try {
+        const events = await Events.findAll({where:{approved:"approved"}})
+        if (events.length===0) {
+            res.status(404).json("No events available yet")
+        }
+
+          res.status(200).json(events)
+    } catch (error) {
+        const serverError = new Error(error.message)
+        next(serverError)
+    }
 }
 
 const getUnapprovedEvent= async(req,res)=>{
