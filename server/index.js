@@ -1,20 +1,20 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const cors = require('cors');
-require('dotenv').config();
-const { errorHandler } = require('./middlewares/errorhandler');
-const db = require('./models');
-const blogs = require('./blogs/blog');
-const events = require("./events/eventRoute")
-const googleAuth = require('./authRoute/googleAuth');
-const credentialsAuth = require('./authRoute/credentialsAuth');
+const cors = require("cors");
+require("dotenv").config();
+const { errorHandler } = require("./middlewares/errorhandler");
+const db = require("./models");
+const blogs = require("./blogs/blog");
+const events = require("./events/eventRoute");
+const googleAuth = require("./authRoute/googleAuth");
+const credentialsAuth = require("./authRoute/credentialsAuth");
 
 const corsOptions = {
   origin: [
-    'http://localhost:5173',
-    'http://localhost:5174',
-    'https://urbnctrl-frontend.onrender.com',
-    'https://urbnctrl.onrender.com',
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "https://urbnctrl-frontend.onrender.com",
+    "https://urbnctrl.onrender.com",
   ],
   optionalSuccessStatus: 200,
 };
@@ -22,10 +22,10 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/api/blog', blogs);
-app.use('/api/event', events);
-app.use('/api', credentialsAuth);
-app.use('/auth', googleAuth);
+app.use("/api/blog", blogs);
+app.use("/api/event", events);
+app.use("/api", credentialsAuth);
+app.use("/auth", googleAuth);
 app.use(errorHandler);
 
 db.sequelize.sync({ alter: true }).then(() => {
