@@ -4,7 +4,7 @@ const { validationResult, matchedData } = require("express-validator");
 const { Events } = require("../models");
 
 const createEvent = async (req, res, next) => {
-  const image = req.file;
+  const image = req.files;
   try {
     const result = validationResult(req);
 
@@ -31,7 +31,7 @@ const createEvent = async (req, res, next) => {
 
 const getEvent = async (req, res, next) => {
   try {
-    const events = await Events.findAll({ where: { approved: "approved" } });
+    const events = await Events.findAll({ where: { approved: "pending" } });
     if (events.length === 0) {
       res.status(404).json("No events available yet");
     }
