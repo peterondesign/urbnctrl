@@ -1,4 +1,5 @@
 const router = require("../events/eventRoute");
+const cloudinary = require("../utilis/cloudinary");
 const { validationResult, matchedData } = require("express-validator");
 const { Events } = require("../models");
 

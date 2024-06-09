@@ -188,6 +188,7 @@ const Content = () => {
                   if (v) {
                     const formData = new FormData();
                     formData.append("img", v?.file);
+                    console.log(v?.file);
                     handleChange("img", formData);
                   } else {
                     handleChange("img", null);
