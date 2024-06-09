@@ -8,11 +8,11 @@ import { ArrowDown } from "../../../assets/svgs/arrows";
 /**
  * @param {object} props
  * @param {Date} props.selected
- * @param {Date} props.mintDate
+ * @param {Date} props.minDate
  * @param {Function} props.onChange
  * @returns
  */
-const DateInput = ({ selected, onChange, className, mintDate }) => {
+const DateInput = ({ selected, onChange, className, minDate }) => {
   const CustomInput = forwardRef(({ value, onClick }, ref) => (
     <div
       onClick={onClick}
@@ -36,7 +36,7 @@ const DateInput = ({ selected, onChange, className, mintDate }) => {
     <DatePicker
       selected={selected}
       onChange={onChange}
-      minDate={mintDate}
+      minDate={minDate}
       customInput={<CustomInput />}
       showTimeSelect
       dateFormat="MMMM d, yyyy  h:mm aa"
@@ -46,7 +46,7 @@ const DateInput = ({ selected, onChange, className, mintDate }) => {
 
 DateInput.propTypes = {
   selected: PropTypes.instanceOf(Date),
-  mintDate: PropTypes.string,
+  minDate: PropTypes.instanceOf(Date),
   onChange: PropTypes.func,
   className: PropTypes.string,
 };

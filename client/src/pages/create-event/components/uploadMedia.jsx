@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
-const UploadMedia = () => {
+const UploadMedia = ({ onChange }) => {
   const [image, setImage] = useState(null);
+  useEffect(() => {
+    onChange && onChange(image);
+  }, [image]);
   return (
     <div className=" w-[250px] h-[328px] relative">
       {!image ? (
@@ -90,3 +94,7 @@ const Gallery = () => (
 );
 
 export default UploadMedia;
+
+UploadMedia.propTypes = {
+  onChange: PropTypes.func,
+};

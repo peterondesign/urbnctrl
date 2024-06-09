@@ -1,12 +1,14 @@
-const multer = require('multer');
-const { Posts } = require('../models');
-const { Images } = require('../models');
-const cloudinary = require('../utilis/cloudinary');
+const multer = require("multer");
+const { Posts } = require("../models");
+const { Images } = require("../models");
+const cloudinary = require("../utilis/cloudinary");
 
 // FETCH ALL BLOGS
 const getBlogs = async (req, res) => {
   try {
-    const allPosts = await Posts.findAll({order:[["createdAt", "  DESC"]]});
+    const allPosts = await Posts.findAll({
+      order: [["createdAt", "DESC"]],
+    });
     res.status(200).json(allPosts);
   } catch (error) {
     res.status(400).json(error.message);
@@ -29,11 +31,11 @@ const setBlog = async (req, res) => {
   const { title, content, category, author, img } = req.body;
 
   if (!title || !content || !category || !author || !img) {
-    res.status(401).json('fill in all the columns');
+    res.status(401).json("fill in all the columns");
   }
   try {
     await Posts.create({ title, content, category, author, img });
-    res.status(201).json('blog created');
+    res.status(201).json("blog created");
   } catch (error) {
     res.status(400).json(error.message);
     console.log(error.message);
@@ -50,7 +52,7 @@ const editBlog = async (req, res) => {
     singleBlog.title = title;
     singleBlog.content = content;
     await singleBlog.save();
-    res.status(201).json('blog edited');
+    res.status(201).json("blog edited");
   } catch (error) {
     res.status(400).json(error.message);
   }
@@ -63,7 +65,7 @@ const deleteBlog = async (req, res) => {
   try {
     const singleBlog = await Posts.findByPk(id);
     await singleBlog.destroy();
-    res.status(200).json('Blog deleted');
+    res.status(200).json("Blog deleted");
   } catch (error) {
     res.status(401).json(error.message);
   }
@@ -73,7 +75,7 @@ const uploadImage = async (req, res) => {
   try {
     const images = req.files;
     if (!images) {
-      res.json('empty');
+      res.json("empty");
     }
     const img = [];
     for (const singleImg of images) {

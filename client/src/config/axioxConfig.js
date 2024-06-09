@@ -1,17 +1,18 @@
-import axios from 'axios';
-import Cookies from 'js-cookie';
+import axios from "axios";
+import Cookies from "js-cookie";
 
 const axiosInstance = axios.create({
-  baseURL: 'https://urbnctrl.onrender.com/api',
+  // baseURL: 'https://urbnctrl.onrender.com/api',
+  baseURL: "http://localhost:8000/api",
 });
 
 // Request interceptor to add the token to headers for each request
 axiosInstance.interceptors.request.use(
   (config) => {
     // const token = localStorage.getItem('accessToken');
-    const token = Cookies.get('urb-access-token');
+    const token = Cookies.get("urb-access-token");
     if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
+      config.headers["Authorization"] = `Bearer ${token}`;
     }
     return config;
   },
