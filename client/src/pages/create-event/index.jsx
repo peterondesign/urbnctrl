@@ -10,7 +10,6 @@ const CreateEvent = () => {
       <MaxContainer>
         <Header />
       </MaxContainer>
-
       <Content />
       <Footer />
     </PageWrapper>

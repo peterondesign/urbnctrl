@@ -10,9 +10,11 @@ import speaker from "./speaker.png";
 import authBg from "./auth-background.png";
 import gmail from "./gmail.png";
 import announcementComingSoon from "./announcement-coming-soon.jpg";
+import successPhone from "./success-phone.png";
 
 export {
   announcementComingSoon,
+  successPhone,
   gmail,
   speaker,
   authBg,

@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 /**
  * Button component.
- * @param {{type: "text" | "email", label: string} & React.InputHTMLAttributes} props - The props for the Button component.
+ * @param {{ label: string} & React.InputHTMLAttributes} props - The props for the Button component.
  * @returns {JSX.Element} - A button element.
  */
 const Input = ({ type = "text", label, ...restProps }) => {
@@ -13,7 +13,7 @@ const Input = ({ type = "text", label, ...restProps }) => {
         <input
           type={type}
           {...restProps}
-          className="w-full h-[54px] border border-solid border-[#ABABAB] outline-none px-[20px]"
+          className={`w-full h-[54px] border border-solid border-[#ABABAB] outline-none px-[20px] ${restProps.className}`}
         />
       </label>
     </>

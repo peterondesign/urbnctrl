@@ -12,31 +12,35 @@ const Content = () => {
 
   const cards = [1, 2, 3, 4, 5, 6];
   return (
-    <div className="max-w-[1440px] mx-auto px-[0px] sm:px-[24px] lg:px-[80px] w-full">
-      <div className="py-[38px] px-[24px] lg:px-[54px] pb-[54px] bg-white rounded-[20px] text-dark">
-        <div className="w-full flex items-center justify-between mb-9 lg:mb-11">
-          <ul className="flex gap-6 lg:gap-10">
-            {tabs?.map((tab) => (
-              <li
-                onClick={() => setTabActive(tab)}
-                key={tab}
-                className={classNames(tabCn, { [activeCn]: tabActive === tab })}
-              >
-                {tab}
-              </li>
+    <>
+      <div className="max-w-[1440px] mx-auto px-[0px] sm:px-[24px] lg:px-[80px] w-full">
+        <div className="py-[38px] px-[24px] lg:px-[54px] pb-[54px] bg-white rounded-[20px] text-dark">
+          <div className="w-full flex items-center justify-between mb-9 lg:mb-11">
+            <ul className="flex gap-6 lg:gap-10">
+              {tabs?.map((tab) => (
+                <li
+                  onClick={() => setTabActive(tab)}
+                  key={tab}
+                  className={classNames(tabCn, {
+                    [activeCn]: tabActive === tab,
+                  })}
+                >
+                  {tab}
+                </li>
+              ))}
+            </ul>
+            <button className="hidden sm:block text-lg font-medium border border-dark border-solid w-[160px] h-[54px] rounded-[10px]">
+              Create Event
+            </button>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {cards?.map((card) => (
+              <SocialCard key={card} data={{ id: card }} />
             ))}
-          </ul>
-          <button className="hidden sm:block text-lg font-medium border border-dark border-solid w-[160px] h-[54px] rounded-[10px]">
-            Create Event
-          </button>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {cards?.map((card) => (
-            <SocialCard key={card} />
-          ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
