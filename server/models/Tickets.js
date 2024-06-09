@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
           return this.getDataValue("email").split(";")
         },
         set(val){
-          this.setDataValue("code",val.join(";"))
+          this.setDataValue("email",val.join(";"))
         }
       },
       vip: {
@@ -20,10 +20,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       table: {
         type: DataTypes.INTEGER,
-        allowNull: true,
-      },
-      img: {
-        type: DataTypes.STRING,
         allowNull: true,
       },
       total:{

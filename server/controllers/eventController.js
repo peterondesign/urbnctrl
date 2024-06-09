@@ -45,7 +45,7 @@ const getEvent= async(req,res,next)=>{
     }
 }
 
-const getUnapprovedEvent= async(req,res)=>{
+const getUnapprovedEvent= async(req,res,next)=>{
     try {
         const events = await Events.findAll({where:{approved:"pending"}})
         if (events.length===0) {
@@ -60,9 +60,15 @@ const getUnapprovedEvent= async(req,res)=>{
 }
 
 
-const getUnapprovedEventById= async(req,res)=>{
-    console.log("event by id")
-}
+const getUnapprovedEventById= async(req,res,next)=>{
+    const id = req.params.id;
+    try {
+      const singleEvent = await Events.findByPk(id);
+      res.status(200).json(singleEvent);
+    } catch (error) {
+        const serverError = new Error(error.message)
+        next(serverError) 
+       }}
 
 
 const deleteEvent= async(req,res)=>{
