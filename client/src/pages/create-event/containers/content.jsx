@@ -63,7 +63,6 @@ const Content = () => {
     );
   }, [value]);
 
-  console.log(notValid);
   console.log(value);
   const handleCreate = async (e) => {
     e?.preventDefault();
@@ -187,8 +186,11 @@ const Content = () => {
                 onChange={(v) => {
                   if (v) {
                     const formData = new FormData();
+
                     formData.append("img", v?.file);
-                    console.log(v?.file);
+                    // console.log(formData);
+                    console.log({ ...value, formData }, ".....");
+
                     handleChange("img", formData);
                   } else {
                     handleChange("img", null);

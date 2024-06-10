@@ -1,8 +1,8 @@
-import { Outlet, Navigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { Outlet, Navigate } from "react-router-dom";
+import PropTypes from "prop-types";
 // import { useEffect } from 'react';
 // import useAuth from '../../hooks/api/auth';
-import Loader from './loader';
+import Loader from "./loader";
 
 /**
  * @param {object} props
@@ -28,7 +28,7 @@ const ProtectedRoutes = ({ type }) => {
       )}
       {getMeData?.data?.isAdmin && <Outlet />}
       {getMeData?.data?.isAdmin === false && (
-        <Navigate to={type === 'blog' ? '/community' : '/'} replace />
+        <Navigate to={type === "blog" ? "/community" : "/"} replace />
       )}
     </>
   );
