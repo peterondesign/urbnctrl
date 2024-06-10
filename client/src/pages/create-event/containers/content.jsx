@@ -7,6 +7,9 @@ import DateInput from "../components/dateInput";
 import UploadMedia from "../components/uploadMedia";
 import EventDropdown from "../components/dropdown";
 import useEvent from "../../../hooks/api/event";
+import useUpload from "../../../hooks/api/upload";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Content = () => {
   const [value, setValue] = useState({
@@ -31,54 +34,58 @@ const Content = () => {
     setValue((prev) => ({ ...prev, [key]: value }));
   };
   const { handleCreateEvent, createEventData } = useEvent();
+  const { handleUpload, getUploadedData } = useUpload();
+  const navigate = useNavigate();
 
   const notValid = useMemo(() => {
-    const {
-      name,
-      email,
-      description,
-      url,
-      address,
-      eventType,
-      startDay,
-      startTime,
-      endDay,
-      endTime,
-      frequency,
-      img,
-    } = value;
-    return (
-      !name ||
-      !email ||
-      !description ||
-      !url ||
-      !address ||
-      !eventType ||
-      !startDay ||
-      !startTime ||
-      !endDay ||
-      !endTime ||
-      !frequency ||
-      !img
-    );
+    const requiredFields = [
+      "name",
+      "email",
+      "description",
+      "url",
+      "address",
+      "eventType",
+      "startDay",
+      "startTime",
+      "endDay",
+      "endTime",
+      "frequency",
+      "img",
+    ];
+
+    for (const field of requiredFields) {
+      if (!value[field]) {
+        return true;
+      }
+    }
+    return false;
   }, [value]);
 
-  console.log(value);
   const handleCreate = async (e) => {
     e?.preventDefault();
+
+    const handleSuccess = (msg) => {
+      toast.success(msg);
+      navigate("/socials", { replace: true });
+    };
     if (!notValid) {
-      if (value?.eventType !== "paid") {
+      const formdata = new FormData();
+      formdata.append("img", value.img?.file);
+      const uploadRes = await handleUpload(formdata);
+      const image = uploadRes?.data[0];
+      const copyValue = { ...value, img: image };
+      if (copyValue?.eventType !== "paid") {
         const res = await handleCreateEvent({
-          ...value,
-          regular: undefined,
-          vip: undefined,
-          table: undefined,
+          ...copyValue,
+          regular: null,
+          vip: null,
+          table: null,
         });
-        console.log(res);
+        handleSuccess(res?.data);
         return;
       }
-      const res = await handleCreateEvent(value);
-      console.log(res);
+      const res = await handleCreateEvent(copyValue);
+      handleSuccess(res?.data);
     }
   };
 
@@ -184,17 +191,7 @@ const Content = () => {
               <p className="text-[20px] leading-[20px] mb-5">Image Upload</p>
               <UploadMedia
                 onChange={(v) => {
-                  if (v) {
-                    const formData = new FormData();
-
-                    formData.append("img", v?.file);
-                    // console.log(formData);
-                    console.log({ ...value, formData }, ".....");
-
-                    handleChange("img", formData);
-                  } else {
-                    handleChange("img", null);
-                  }
+                  handleChange("img", v);
                 }}
               />
             </div>
@@ -260,7 +257,11 @@ const Content = () => {
           {notValid ? (
             <Button text="Upload Details" disabled />
           ) : (
-            <Button text="Upload Details" onClick={handleCreate} />
+            <Button
+              text="Upload Details"
+              onClick={handleCreate}
+              loading={createEventData?.loading || getUploadedData?.loading}
+            />
           )}
         </div>
       </form>

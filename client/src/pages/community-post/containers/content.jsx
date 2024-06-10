@@ -1,25 +1,24 @@
-import { useRef, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import parse from 'html-react-parser';
-import moment from 'moment';
-import Loader from '../../../components/loader';
+import { useRef, useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import parse from "html-react-parser";
+import moment from "moment";
+import Loader from "../../../components/loader";
 
 /**
  *
  * @param {{data: Object, loading: boolean}} props
  * @returns {JSX.Element}
  */
-
 const Content = ({ data, loading }) => {
   const [height, setHeight] = useState(0);
   const bodyEl = useRef();
 
   useEffect(() => {
-    if (bodyEl.current) {
+    if (bodyEl?.current) {
       const elementHeight = bodyEl.current.clientHeight;
       setHeight(elementHeight);
     }
-  }, [bodyEl.current]);
+  }, [data]);
 
   return (
     <>
@@ -42,7 +41,7 @@ const Content = ({ data, loading }) => {
                   </h2>
                   <div className="text-[14px] lg:text-base italic mt-4 lg:mt-10 flex flex-col sm:flex-row gap-2 sm:gap-10">
                     <p>Article by {data?.author}</p>
-                    <p>{moment(Date.now()).format('MMMM DD, YYYY')}</p>
+                    <p>{moment(Date.now()).format("MMMM DD, YYYY")}</p>
                     <p>{data?.category}</p>
                   </div>
                 </div>

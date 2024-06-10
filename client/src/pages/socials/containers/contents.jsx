@@ -1,9 +1,11 @@
 import classNames from "classnames";
 import { useState } from "react";
 import SocialCard from "../components/socialCard";
+import { useNavigate } from "react-router-dom";
 
 const Content = () => {
   const [tabActive, setTabActive] = useState("Upcoming Events");
+  const navigate = useNavigate();
   const tabs = ["Upcoming Events", "Recent Events"];
   const tabCn =
     "cursor-pointer leading-[32px] lg:leading-[40px] relative text-[16px] lg:text-[20px]";
@@ -29,7 +31,10 @@ const Content = () => {
                 </li>
               ))}
             </ul>
-            <button className="hidden sm:block text-lg font-medium border border-dark border-solid w-[160px] h-[54px] rounded-[10px]">
+            <button
+              onClick={() => navigate("create-event")}
+              className="hidden sm:block text-lg font-medium border border-dark border-solid w-[160px] h-[54px] rounded-[10px]"
+            >
               Create Event
             </button>
           </div>
