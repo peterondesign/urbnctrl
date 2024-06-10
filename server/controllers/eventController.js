@@ -4,7 +4,7 @@ const { validationResult, matchedData } = require("express-validator");
 const { Events } = require("../models");
 
 const createEvent = async (req, res, next) => {
-  const image = req.files;
+  const image = req.file;
   try {
     const result = validationResult(req);
 
