@@ -206,7 +206,7 @@ const Content = () => {
                 </div>
                 <div className="flex-1">
                   <div className="[&>p]:leading-[63px] flex flex-col gap-[24px] ">
-                    <div className="items-center grid grid-rows-2 lg:grid-cols-2 [&>p]:text-[20px] [&>p]:font-medium ">
+                    <div className="items-center grid grid-rows-2 lg:grid-cols-2 lg:grid-rows-1 [&>p]:text-[20px] [&>p]:font-medium ">
                       <p>Regular</p>
                       <div className="flex flex-col gap-[24px] [&>input]:h-[63px] [&>input]:border [&>input]:border-[#4E4E4E] [&>input]:outline-none [&>input]:px-[16px] [&>input]:text-[20px]">
                         <input
@@ -226,7 +226,7 @@ const Content = () => {
                         />
                       </div>
                     </div>
-                    <div className="items-center grid grid-rows-2 lg:grid-cols-2 [&>p]:text-[20px] [&>p]:font-medium ">
+                    <div className="items-center grid grid-rows-2 lg:grid-cols-2 lg:grid-rows-1 [&>p]:text-[20px] [&>p]:font-medium ">
                       <p>VIP</p>
                       <div className="flex flex-col gap-[24px] [&>input]:h-[63px] [&>input]:border [&>input]:border-[#4E4E4E] [&>input]:outline-none [&>input]:px-[16px] [&>input]:text-[20px]">
                         <input
@@ -246,13 +246,13 @@ const Content = () => {
                         />
                       </div>
                     </div>
-                    <div className="items-center grid grid-rows-2 lg:grid-cols-2 [&>p]:text-[20px] [&>p]:font-medium  ">
+                    <div className="items-center grid grid-rows-2 lg:grid-cols-2 lg:grid-rows-1 [&>p]:text-[20px] [&>p]:font-medium  ">
                       <p>Table</p>
                       <div className="flex flex-col gap-[24px] [&>input]:h-[63px] [&>input]:border [&>input]:border-[#4E4E4E] [&>input]:outline-none [&>input]:px-[16px] [&>input]:text-[20px]">
                         <input
                           type="number"
                           required
-                          value={value?.vip}
+                          value={value?.table}
                           onChange={(e) => {
                             const { value } = e.target;
                             if (value === "" || /^[0-9]+$/.test(value)) {
@@ -266,20 +266,6 @@ const Content = () => {
                         />
                       </div>
                     </div>
-                  </div>
-                  <div className="flex-1">
-                    <input
-                      type="number"
-                      required
-                      value={value?.table}
-                      onChange={(e) => {
-                        const { value } = e.target;
-                        if (value === "" || /^[0-9]+$/.test(value)) {
-                          const numericValue = value?.replace(/[^0-9]/g, "");
-                          handleChange("table", numericValue);
-                        }
-                      }}
-                    />
                   </div>
                 </div>
               </div>
