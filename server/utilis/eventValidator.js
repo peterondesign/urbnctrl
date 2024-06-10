@@ -11,6 +11,7 @@ const eventBody = [body("name").isString()
  body("startDay").notEmpty().withMessage("please provide the event start day"),
  body("startTime").notEmpty().withMessage("please provide a starting time"),
  body("endDay").notEmpty().withMessage("please provide an ending day"),
+ body("img").notEmpty().withMessage("please provide an image"),
  body("endTime").notEmpty().withMessage("please provide an ending time"),
  body("vip").isNumeric().withMessage("please provide the number of vip tickets available"),
  body("regular").isNumeric().withMessage(" please provide the number of regular tickets available"),

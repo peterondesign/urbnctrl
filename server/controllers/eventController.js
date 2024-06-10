@@ -4,7 +4,6 @@ const { validationResult, matchedData } = require("express-validator");
 const { Events } = require("../models");
 
 const createEvent = async (req, res, next) => {
-  const image = req.file;
   try {
     const result = validationResult(req);
 
@@ -17,9 +16,6 @@ const createEvent = async (req, res, next) => {
     }
 
     const data = matchedData(req);
-    const results = await cloudinary.uploader.upload(image.path);
-    const img = results.url;
-    data.img = img;
 
     await Events.create(data);
     res.status(201).json("Event submitted for approval");
