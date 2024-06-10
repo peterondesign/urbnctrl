@@ -260,7 +260,7 @@ const Content = () => {
                                 /[^0-9]/g,
                                 "",
                               );
-                              handleChange("vip", numericValue);
+                              handleChange("table", numericValue);
                             }
                           }}
                         />
