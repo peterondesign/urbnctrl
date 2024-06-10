@@ -11,6 +11,8 @@ const createTickect=async(req,res,next)=>{
     }
     try {
         await Tickets.create({email,vip,regular,table,EventId})
+        res.status(201).json("ticket(s) purchased successfully");
+
     } catch (error) {
       
     }
