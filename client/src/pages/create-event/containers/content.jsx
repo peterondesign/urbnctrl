@@ -77,9 +77,9 @@ const Content = () => {
       if (copyValue?.eventType !== "paid") {
         const res = await handleCreateEvent({
           ...copyValue,
-          regular: null,
-          vip: null,
-          table: null,
+          regular: 0,
+          vip: 0,
+          table: 0,
         });
         handleSuccess(res?.data);
         return;
@@ -197,44 +197,77 @@ const Content = () => {
             </div>
 
             {value?.eventType === "paid" && (
-              <div className="flex w-[600px] mt-10">
-                <div className="flex-1">
-                  <p className="text-xl font-semibold mb-9">Category</p>
-                  <div className="[&>p]:leading-[63px] flex flex-col gap-[24px] [&>p]:text-[20px] [&>p]:font-medium ">
-                    <p>Regular</p>
-                    <p>VIP</p>
-                    <p>Table</p>
-                  </div>
-                </div>
-                <div className="flex-1">
+              <div className="flex flex-col w-full lg:w-[600px] mt-10">
+                <div className="flex-1 grid grid-cols-2 ">
+                  <p className="text-xl font-semibold mb-9">Category</p>{" "}
                   <p className="text-xl font-semibold mb-9 text-center">
                     Price
                   </p>
-                  <div className="flex flex-col gap-[24px] [&>input]:h-[63px] [&>input]:border [&>input]:border-[#4E4E4E] [&>input]:outline-none [&>input]:px-[16px] [&>input]:text-[20px]">
-                    <input
-                      type="number"
-                      required
-                      value={value?.regular}
-                      onChange={(e) => {
-                        const { value } = e.target;
-                        if (value === "" || /^[0-9]+$/.test(value)) {
-                          const numericValue = value?.replace(/[^0-9]/g, "");
-                          handleChange("regular", numericValue);
-                        }
-                      }}
-                    />
-                    <input
-                      type="number"
-                      required
-                      value={value?.vip}
-                      onChange={(e) => {
-                        const { value } = e.target;
-                        if (value === "" || /^[0-9]+$/.test(value)) {
-                          const numericValue = value?.replace(/[^0-9]/g, "");
-                          handleChange("vip", numericValue);
-                        }
-                      }}
-                    />
+                </div>
+                <div className="flex-1">
+                  <div className="[&>p]:leading-[63px] flex flex-col gap-[24px] ">
+                    <div className="items-center grid grid-rows-2 lg:grid-cols-2 [&>p]:text-[20px] [&>p]:font-medium ">
+                      <p>Regular</p>
+                      <div className="flex flex-col gap-[24px] [&>input]:h-[63px] [&>input]:border [&>input]:border-[#4E4E4E] [&>input]:outline-none [&>input]:px-[16px] [&>input]:text-[20px]">
+                        <input
+                          type="number"
+                          required
+                          value={value?.regular}
+                          onChange={(e) => {
+                            const { value } = e.target;
+                            if (value === "" || /^[0-9]+$/.test(value)) {
+                              const numericValue = value?.replace(
+                                /[^0-9]/g,
+                                "",
+                              );
+                              handleChange("regular", numericValue);
+                            }
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div className="items-center grid grid-rows-2 lg:grid-cols-2 [&>p]:text-[20px] [&>p]:font-medium ">
+                      <p>VIP</p>
+                      <div className="flex flex-col gap-[24px] [&>input]:h-[63px] [&>input]:border [&>input]:border-[#4E4E4E] [&>input]:outline-none [&>input]:px-[16px] [&>input]:text-[20px]">
+                        <input
+                          type="number"
+                          required
+                          value={value?.vip}
+                          onChange={(e) => {
+                            const { value } = e.target;
+                            if (value === "" || /^[0-9]+$/.test(value)) {
+                              const numericValue = value?.replace(
+                                /[^0-9]/g,
+                                "",
+                              );
+                              handleChange("vip", numericValue);
+                            }
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div className="items-center grid grid-rows-2 lg:grid-cols-2 [&>p]:text-[20px] [&>p]:font-medium  ">
+                      <p>Table</p>
+                      <div className="flex flex-col gap-[24px] [&>input]:h-[63px] [&>input]:border [&>input]:border-[#4E4E4E] [&>input]:outline-none [&>input]:px-[16px] [&>input]:text-[20px]">
+                        <input
+                          type="number"
+                          required
+                          value={value?.vip}
+                          onChange={(e) => {
+                            const { value } = e.target;
+                            if (value === "" || /^[0-9]+$/.test(value)) {
+                              const numericValue = value?.replace(
+                                /[^0-9]/g,
+                                "",
+                              );
+                              handleChange("vip", numericValue);
+                            }
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex-1">
                     <input
                       type="number"
                       required
