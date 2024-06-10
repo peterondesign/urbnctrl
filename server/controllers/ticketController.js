@@ -1,3 +1,4 @@
+const { Tickets } = require("../models");
 
 const createTickect=async(req,res,next)=>{
   const {email,vip,regular,table,total,EventId} =req.body
@@ -7,6 +8,11 @@ const createTickect=async(req,res,next)=>{
         const error = new Error("please fill all required fields")
         error.status = 400
         next(error)
+    }
+    try {
+        await Tickets.create({email,vip,regular,table,EventId})
+    } catch (error) {
+      
     }
   } catch (error) {
     

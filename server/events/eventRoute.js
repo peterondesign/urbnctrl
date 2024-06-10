@@ -8,7 +8,7 @@ const {createEvent,deleteEvent,getEvent, getUnapprovedEvent,getUnapprovedEventBy
 router.get("/getEvent",getEvent)
 router.get("/getUnapprovedEvent",getUnapprovedEvent)
 router.get("/getUnapprovedEvent/:id",getUnapprovedEventById)
-router.post("/createEvent",upload.array("img"),eventBody,createEvent)
+router.post("/createEvent",eventBody,createEvent)
 router.post("/eventImage",upload.array("img"),uploadImage)
 router.delete("/deleteEvent", deleteEvent)
 
