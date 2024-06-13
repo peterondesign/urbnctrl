@@ -3,7 +3,7 @@ const {getTickect,createTickect} = require("../controllers/ticketController")
 
 
 router.get("/getTicket", getTickect)
-router.post("/getTicket", createTickect)
+router.post("/createTicket", createTickect)
 
 
 module.exports=router

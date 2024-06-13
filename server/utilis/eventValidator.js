@@ -6,6 +6,7 @@ const eventBody = [body("name").isString()
  body("email").notEmpty().withMessage("please fill in your email address"),
  body("url").notEmpty().withMessage("please fill in location url"),
  body("eventType").notEmpty().withMessage("please select an event type"),
+ body("frequency").notEmpty().withMessage("please select a frequency"),
  body("description").notEmpty().withMessage("please describe the event briefly"),
  body("address").notEmpty().withMessage("please provide the event address"),
  body("startDay").notEmpty().withMessage("please provide the event start day"),

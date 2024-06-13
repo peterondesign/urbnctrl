@@ -3,12 +3,6 @@ module.exports = (sequelize, DataTypes) => {
       email: {
         type: DataTypes.STRING,
         allowNull : false,
-        get(){
-          return this.getDataValue("email").split(";")
-        },
-        set(val){
-          this.setDataValue("email",val.join(";"))
-        }
       },
       vip: {
         type: DataTypes.INTEGER,
@@ -25,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
       total:{
         type: DataTypes.INTEGER,
         allowNull: true,
+      },
+      code: {
+        type: DataTypes.STRING,
+        allowNull: false 
       }
     });
   

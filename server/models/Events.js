@@ -47,18 +47,23 @@ module.exports = (sequelize, DataTypes) => {
       regular: {
         type: DataTypes.INTEGER,
         allowNull: true,
-        defaultValue: 0 
+        defaultValue: 0,
+        minValue: 0
+
       },
       vip: {
         type: DataTypes.INTEGER,
         allowNull: true,
-        defaultValue: 0
+        defaultValue: 0,
+        minValue: 0
 
       },
       table: {
         type: DataTypes.INTEGER,
         allowNull: true,
-        defaultValue: 0
+        defaultValue: 0,
+        minValue: 0
+
       },
       img: {
         type: DataTypes.STRING,
