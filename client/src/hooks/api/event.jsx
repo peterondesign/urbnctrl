@@ -8,6 +8,7 @@ const useEvent = () => {
       method: "POST",
       url: `${url}/createEvent`,
       data,
+      
     });
   };
 
