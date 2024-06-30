@@ -2,6 +2,7 @@ const router = require("../events/eventRoute");
 const cloudinary = require("../utilis/cloudinary");
 const { validationResult, matchedData } = require("express-validator");
 const { Events } = require("../models");
+const {generatePassword} =require("../utilis/randomSring")
 
 const createEvent = async (req, res, next) => {
   try {
@@ -40,7 +41,7 @@ const getEvent = async (req, res, next) => {
 };
 const getUnapprovedEvent = async (req, res) => {
   try {
-    const events = await Events.findAll({ where: { approved: "pending" } });
+    const events = await Events.findAll();
     if (events.length === 0) {
       res.status(404).json("No events available yet");
     }
@@ -52,18 +53,41 @@ const getUnapprovedEvent = async (req, res) => {
   }
 };
 
-const getUnapprovedEventById = async (req, res) => {
-  console.log("event by id");
+const getUnapprovedEventById = async (req, res, next) => {
+  const eventId = req.params.id
+  try {
+    const eventDetails = await Events.findByPk(eventId)
+    const {password, ...others} = eventDetails
+    res.status(200).json(others.dataValues)
+  } catch (error) {
+    const err = new Error(error.message)
+    next(err)
+  }
 };
 
-const deleteEvent = async (req, res) => {
-  console.log("event deleted");
+const approvalChange = async (req, res, next) => {
+  const eventId = req.params.id
+  const approval = req.body.approval
+  try {
+    const event = await Events.findByPk(eventId)
+    const genPassword = generatePassword()
+    event.approved= approval
+    event.password=genPassword
+    const email = event.email
+    await event.save()
+    console.log(password)
+    res.status(201).json("done")
+    //SEND MAIL
+  } catch (error) {
+    const err = new Error(error.message)
+    next(err)
+  }
 };
 
 module.exports = {
   createEvent,
   getEvent,
-  deleteEvent,
+  approvalChange,
   getUnapprovedEvent,
   getUnapprovedEventById,
 };

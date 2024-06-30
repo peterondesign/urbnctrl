@@ -2,6 +2,7 @@ const { Tickets } = require("../models");
 const { Events } = require("../models");
 const db = require("../models/index")
 const {generateCode} = require("../utilis/randomSring")
+const{ mailForOrganizers } = require("../utilis/email");
 
 const createTickect=async(req,res,next)=>{
   const {email,vip,regular,table,total,EventId} =req.body
@@ -27,6 +28,7 @@ const createTickect=async(req,res,next)=>{
     await event.save({transact})
     await Tickets.create({email,vip,regular,table,EventId,total, code:generateCode()},{transact})
     await transact.commit()
+    await mailForOrganizers("kerryesua9@gmail.com")
     res.status(201).json("ticket(s) purchased successfully!") 
 
   } catch (error) {

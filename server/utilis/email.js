@@ -16,8 +16,9 @@ const mailForOrganizers=async(email)=>{
       await transporter.sendMail({
          from: process.env.GMAIL_ADDRESS,
          to: email,
-         subject: "",
-         html: ""
+         subject: "testing",
+         html: "<p>Hello</p>",
+         text: "testing 1 2"
       })
   
 }
@@ -26,3 +27,5 @@ const mailForOrganizers=async(email)=>{
 
 
 const mailForTickets=()=>{}
+
+module.exports={mailForOrganizers}
