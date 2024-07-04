@@ -41,7 +41,6 @@ const paystackWebhook = async (req, res, next) => {
     .createHmac("sha512", secret)
     .update(JSON.stringify(req.body))
     .digest("hex");
-
   if (hash === req.headers["x-paystack-signature"]) {
     const details = req.body;
     const { email, vip, table, regular, EventId, total } =
