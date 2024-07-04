@@ -19,12 +19,14 @@ const EventFormModal = ({ open, onClose }) => {
       setSection("info");
     }
   }, []);
+
+  console.log(open);
   return (
     <ModalContainer open={Boolean(open)}>
       <div
         className={classNames(
           "w-full bg-white max-w-[1090px] rounded-[60px] py-[32px] px-[48px] text-[#000000]",
-          { "max-w-[1024px": section === "card" || section === "success" },
+          { "max-w-[1024px": section === "card" || section === "success" }
         )}
       >
         <div className="flex w-full justify-end mb-9">
@@ -42,7 +44,7 @@ const EventFormModal = ({ open, onClose }) => {
         ) : section === "success" ? (
           <EventSuccess />
         ) : (
-          <EventInfo onClick={() => setSection("mail")} />
+          <EventInfo data={open} onClick={() => setSection("mail")} />
         )}
       </div>
     </ModalContainer>
@@ -50,7 +52,7 @@ const EventFormModal = ({ open, onClose }) => {
 };
 
 EventFormModal.propTypes = {
-  data: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  data: PropTypes.object,
   open: PropTypes.bool,
   onClose: PropTypes.func,
 };
