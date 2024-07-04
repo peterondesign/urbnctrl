@@ -3,14 +3,12 @@ const crypto = require("crypto");
 const db = require("../models");
 
 const initiatePayment = async (req, res, next) => {
-  const { emails, total, vip, regular, table, EventId } = req.body;
+  const { email, total, vip, regular, table, EventId } = req.body;
 
-  const emailList = emails.map((emailAdress) => emailAdress.email);
-
-  const metadata = { email: emailList, total, vip, regular, table, EventId };
+  const metadata = { email, total, vip, regular, table, EventId };
 
   const options = {
-    email: emailList[0],
+    email,
     total: total * 100,
     metadata,
   };

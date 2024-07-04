@@ -41,7 +41,7 @@ const getEvent = async (req, res, next) => {
 };
 const getUnapprovedEvent = async (req, res) => {
   try {
-    const events = await Events.findAll();
+    const events = await Events.findAll(); 
     if (events.length === 0) {
       res.status(404).json("No events available yet");
     }
