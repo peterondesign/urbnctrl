@@ -3,15 +3,18 @@ const crypto = require("crypto");
 const db = require("../models");
 
 const initiatePayment = async (req, res, next) => {
-  const { email, total, vip, regular, table, EventId } = req.body;
+  const { emails, total, vip, regular, table, EventId } = req.body;
 
-  const metadata = { email, total, vip, regular, table, EventId };
+  const emailList = emails.map((emailAdress) => emailAdress.email);
+
+  const metadata = { email: emailList, total, vip, regular, table, EventId };
 
   const options = {
-    email,
+    email: emailList[0],
     total: total * 100,
     metadata,
   };
+
   try {
     const paystack = await axios.post(
       "https://api.paystack.co/transaction/initialize",
