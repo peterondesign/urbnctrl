@@ -6,6 +6,7 @@ const { errorHandler } = require("./middlewares/errorhandler");
 const db = require("./models");
 const blogs = require("./blogs/blog");
 const tickets = require("./tickets/ticket");
+const payment = require("./payments/paystack")
 const events = require("./events/eventRoute");
 const googleAuth = require("./authRoute/googleAuth");
 const credentialsAuth = require("./authRoute/credentialsAuth");
@@ -26,6 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/blog", blogs);
 app.use("/api/event", events);
 app.use("/api/ticket", tickets);
+app.use("/api/payment", payment);
 app.use("/api", credentialsAuth);
 app.use("/auth", googleAuth);
 app.use(errorHandler);
