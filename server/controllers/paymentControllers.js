@@ -9,7 +9,7 @@ const initiatePayment = async (req, res, next) => {
 
   const options = {
     email,
-    total: total * 100,
+    amount: total * 100,
     metadata,
   };
 
@@ -28,7 +28,7 @@ const initiatePayment = async (req, res, next) => {
     const response = paystack.data?.data.authorization_url;
     res.status(200).json(response);
   } catch (error) {
-    const err = error.message;
+    const err = new Error(error.data.message);
     next(err);
   }
 };
