@@ -9,8 +9,8 @@ const initiatePayment = async (req, res, next) => {
 
   const options = {
     email,
-    total: total * 100,
-    metadata,
+    amount: total * 100,
+    metadata
   };
 
   try {
@@ -21,14 +21,14 @@ const initiatePayment = async (req, res, next) => {
         headers: {
           authorization: `Bearer ${process.env.PAYSTACK_API_KEY}`,
           content: "application/json",
-        },
+        }
       }
     );
 
     const response = paystack.data?.data.authorization_url;
     res.status(200).json(response);
   } catch (error) {
-    const err = new Error(err.message);
+    const err = new Error(error.data.message);
     next(err);
   }
 };
