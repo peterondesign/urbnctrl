@@ -35,7 +35,9 @@ const EventAddMail = ({ onClick, sectionData, data }) => {
     e.preventDefault();
     if (activeTab === "one") {
       handleMakePayment({
-        ...ticketCount,
+        vip: ticketCount?.vip > 0 ? [form?.email] : [],
+        regular: ticketCount?.regular > 0 ? [form?.email] : [],
+        table: ticketCount?.table > 0 ? [form?.email] : [],
         EventId: data?.id,
         email: form?.email,
         totol: ticketCount?.vip + ticketCount?.regular + ticketCount?.table,

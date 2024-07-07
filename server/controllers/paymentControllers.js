@@ -29,7 +29,6 @@ const initiatePayment = async (req, res, next) => {
     res.status(200).json(response);
   } catch (error) {
     const err = error.message;
-    console.log(error);
     next(err);
   }
 };
