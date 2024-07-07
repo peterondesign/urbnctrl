@@ -28,7 +28,8 @@ const initiatePayment = async (req, res, next) => {
     const response = paystack.data?.data.authorization_url;
     res.status(200).json(response);
   } catch (error) {
-    const err = new Error(err.message);
+    const err = error.message;
+    console.log(error);
     next(err);
   }
 };

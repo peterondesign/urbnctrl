@@ -13,14 +13,23 @@ import EventAddMail from "./sections/addMail";
  * @returns {JSX.Element}
  */
 const EventFormModal = ({ open, onClose }) => {
-  const [section, setSection] = useState("info");
+  const [section, setSection] = useState(null);
+  const [sectionData, setSectionData] = useState({
+    info: null,
+    details: null,
+  });
   useEffect(() => {
     if (open) {
-      setSection("info");
+      setSection(null);
+      setSectionData({
+        info: null,
+        mail: null,
+      });
     }
   }, []);
 
   console.log(open);
+  console.log(sectionData);
   return (
     <ModalContainer open={Boolean(open)}>
       <div
@@ -38,13 +47,27 @@ const EventFormModal = ({ open, onClose }) => {
           </span>
         </div>
         {section === "mail" ? (
-          <EventAddMail onClick={() => setSection("card")} />
+          <EventAddMail
+            onClick={(v) => {
+              setSection("card");
+
+              setSectionData((p) => ({ ...p, mail: v }));
+            }}
+            sectionData={sectionData}
+            data={open}
+          />
         ) : section === "card" ? (
           <EventCardDetails onClick={() => setSection("success")} />
         ) : section === "success" ? (
           <EventSuccess />
         ) : (
-          <EventInfo data={open} onClick={() => setSection("mail")} />
+          <EventInfo
+            data={open}
+            onClick={(v) => {
+              setSection("mail");
+              setSectionData((p) => ({ ...p, info: v }));
+            }}
+          />
         )}
       </div>
     </ModalContainer>

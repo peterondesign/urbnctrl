@@ -12,12 +12,11 @@ import { useState } from "react";
  */
 const EventInfo = ({ onClick, data }) => {
   const [ticketCount, setTIcketCount] = useState({
-    vipCount: 0,
-    tableCount: 0,
-    regularCount: 0,
+    vip: 0,
+    table: 0,
+    regular: 0,
   });
 
-  console.log(ticketCount);
   return (
     <div className="w-full">
       <h2 className="text-center font-medium text-[#232121] text-[32px] mb-9">
@@ -88,7 +87,7 @@ const EventInfo = ({ onClick, data }) => {
                     onChange={(v) =>
                       setTIcketCount((prev) => ({
                         ...prev,
-                        regularCount: data?.regular * v,
+                        regular: data?.regular * v,
                       }))
                     }
                   />
@@ -103,7 +102,7 @@ const EventInfo = ({ onClick, data }) => {
                     onChange={(v) =>
                       setTIcketCount((prev) => ({
                         ...prev,
-                        vipCount: data?.vip * v,
+                        vip: data?.vip * v,
                       }))
                     }
                   />
@@ -113,7 +112,15 @@ const EventInfo = ({ onClick, data }) => {
                 <div className="grid grid-cols-3">
                   <p>Table</p>
                   <p>₦{numberFormatter(data?.table)}</p>
-                  <Counter max={999} />
+                  <Counter
+                    max={999}
+                    onChange={(v) =>
+                      setTIcketCount((prev) => ({
+                        ...prev,
+                        table: data?.table * v,
+                      }))
+                    }
+                  />
                 </div>
               )}
             </div>
@@ -129,12 +136,12 @@ const EventInfo = ({ onClick, data }) => {
             <li className="flex items-center text-[20px] justify-between w-full font-medium">
               <p>
                 Regular{" "}
-                {ticketCount.regularCount !== 0
-                  ? `x${ticketCount.regularCount / data?.regular}`
+                {ticketCount.regular !== 0
+                  ? `x${ticketCount.regular / data?.regular}`
                   : null}
               </p>
               <p className="font-bold">
-                ₦{numberFormatter(ticketCount?.regularCount)}
+                ₦{numberFormatter(ticketCount?.regular)}
               </p>
             </li>
           )}
@@ -142,26 +149,22 @@ const EventInfo = ({ onClick, data }) => {
             <li className="flex items-center text-[20px] justify-between w-full font-medium">
               <p>
                 Table{" "}
-                {ticketCount.tableCount !== 0
-                  ? `x${ticketCount.tableCount / data?.table}`
+                {ticketCount.table !== 0
+                  ? `x${ticketCount.table / data?.table}`
                   : null}
               </p>
-              <p className="font-bold">
-                ₦{numberFormatter(ticketCount.tableCount)}
-              </p>
+              <p className="font-bold">₦{numberFormatter(ticketCount.table)}</p>
             </li>
           )}
           {data?.vip > 0 && (
             <li className="flex items-center text-[20px] justify-between w-full font-medium">
               <p>
                 VIP{" "}
-                {ticketCount.vipCount !== 0
-                  ? `x${ticketCount.vipCount / data?.vip}`
+                {ticketCount.vip !== 0
+                  ? `x${ticketCount.vip / data?.vip}`
                   : null}
               </p>
-              <p className="font-bold">
-                ₦{numberFormatter(ticketCount.vipCount)}
-              </p>
+              <p className="font-bold">₦{numberFormatter(ticketCount.vip)}</p>
             </li>
           )}
           <li className="flex items-center text-[20px] justify-between w-full font-medium pt-[20px]">
@@ -169,22 +172,25 @@ const EventInfo = ({ onClick, data }) => {
             <p className="font-bold">
               ₦
               {numberFormatter(
-                ticketCount.regularCount +
-                  ticketCount.tableCount +
-                  ticketCount.vipCount
+                ticketCount.regular + ticketCount.table + ticketCount.vip
               )}
             </p>
           </li>
         </ul>
       </div>
       <div className="flex justify-end w-full">
-        {!ticketCount?.regularCount > 0 &&
-        !ticketCount?.tableCount > 0 &&
-        !ticketCount?.vipCount > 0 &&
+        {!ticketCount?.regular > 0 &&
+        !ticketCount?.table > 0 &&
+        !ticketCount?.vip > 0 &&
         data?.eventType !== "free" ? (
           <Button text="Make Payment" disabled />
         ) : (
-          <Button text="Make Payment" onClick={onClick} />
+          <Button
+            text="Make Payment"
+            onClick={() => {
+              onClick(ticketCount);
+            }}
+          />
         )}
       </div>
     </div>

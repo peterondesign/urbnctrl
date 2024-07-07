@@ -24,6 +24,7 @@ const routes = createBrowserRouter([
     children: [
       { index: true, element: <Community /> },
       { path: ":postId", element: <CommunityPost /> },
+
       {
         element: <ProtectedRoutes />,
         children: [
