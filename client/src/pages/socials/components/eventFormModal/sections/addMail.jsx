@@ -8,13 +8,9 @@ import Input from "../../../../../components/input";
 import Counter from "../../../../../components/counter";
 import usePayment from "../../../../../hooks/api/payment";
 
-/**
- * @param {{onClick: Function}} props
- * @returns {JSX.Element}
- */
-const EventAddMail = ({ onClick, sectionData, data }) => {
+const EventAddMail = ({ sectionData, data }) => {
   const [activeTab, setActiveTab] = useState("one");
-  const [ticketCount] = useState(sectionData?.info);
+  const [ticketCount, setTicketCount] = useState(sectionData?.info);
   const [form, setForm] = useState(null);
 
   const { handleMakePayment, makePaymentData } = usePayment();
@@ -31,22 +27,43 @@ const EventAddMail = ({ onClick, sectionData, data }) => {
     ],
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (activeTab === "one") {
-      handleMakePayment({
+      const res = await handleMakePayment({
         vip: ticketCount?.vip > 0 ? [form?.email] : [],
         regular: ticketCount?.regular > 0 ? [form?.email] : [],
         table: ticketCount?.table > 0 ? [form?.email] : [],
         EventId: data?.id,
         email: form?.email,
-        totol: ticketCount?.vip + ticketCount?.regular + ticketCount?.table,
+        total: ticketCount?.vip + ticketCount?.regular + ticketCount?.table,
+      });
+
+      window.location.href = res.data;
+    }
+  };
+  const handleNumArray = (type) => {
+    const times = ticketCount[type] / data[type];
+    let array = [];
+    for (let index = 0; index < times; index++) {
+      array.push({
+        email: "",
+        phoneNo: "",
+        id: index,
       });
     }
+    return array;
   };
 
   useEffect(() => {
-    if (activeTab === "one") {
+    if (activeTab === "many") {
+      setForm({
+        email: "",
+        regular: handleNumArray("regular"),
+        table: handleNumArray("table"),
+        vip: handleNumArray("vip"),
+      });
+    } else {
       setForm({
         email: "",
         phoneNo: "",
@@ -54,7 +71,7 @@ const EventAddMail = ({ onClick, sectionData, data }) => {
     }
   }, [activeTab]);
 
-  console.log(makePaymentData);
+  console.log(form);
   const disableBtn = () => {
     if (activeTab === "one") return !form?.email || !form?.phoneNo;
   };
@@ -100,26 +117,14 @@ const EventAddMail = ({ onClick, sectionData, data }) => {
           </div>
         ) : (
           <>
-            {content?.map((i, idx) => (
-              <div key={i.type}>
+            {data?.regular > 0 && (
+              <div>
                 <div className="w-full flex justify-between items-center">
-                  <p className="text-[24px] font-medium">{i.type}</p>
-                  <Counter
-                    initValue={i.count.length}
-                    onChange={(v) => {
-                      const copy = [...content];
-                      const arr = [];
-                      for (let i = 0; i < v; i++) {
-                        arr.push(i);
-                      }
-                      copy[idx].count = arr;
-                      setContent(() => copy);
-                    }}
-                  />
+                  <p className="text-[24px] font-medium">Regular</p>
                 </div>
                 <ul>
-                  {i.count.map((i) => (
-                    <li className="py-[40px]" key={i}>
+                  {handleNumArray("regular").map((content) => (
+                    <li className="py-[40px]" key={content.id}>
                       <div className=" w-full flex flex-col gap-[24px]">
                         <Input label="Email" required />
                         <Input label="Phone Number" type="tel" required />
@@ -128,7 +133,41 @@ const EventAddMail = ({ onClick, sectionData, data }) => {
                   ))}
                 </ul>
               </div>
-            ))}
+            )}
+            {data?.table > 0 && (
+              <div>
+                <div className="w-full flex justify-between items-center">
+                  <p className="text-[24px] font-medium">Table</p>
+                </div>
+                <ul>
+                  {handleNumArray("table").map((content) => (
+                    <li className="py-[40px]" key={content.id}>
+                      <div className=" w-full flex flex-col gap-[24px]">
+                        <Input label="Email" required />
+                        <Input label="Phone Number" type="tel" required />
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {data?.vip > 0 && (
+              <div>
+                <div className="w-full flex justify-between items-center">
+                  <p className="text-[24px] font-medium">VIP</p>
+                </div>
+                <ul>
+                  {handleNumArray("vip").map((content) => (
+                    <li className="py-[40px]" key={content.id}>
+                      <div className=" w-full flex flex-col gap-[24px]">
+                        <Input label="Email" required />
+                        <Input label="Phone Number" type="tel" required />
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </>
         )}
       </div>
@@ -171,7 +210,7 @@ const EventAddMail = ({ onClick, sectionData, data }) => {
         {disableBtn() ? (
           <Button text="Continue" disabled />
         ) : (
-          <Button text="Continue" />
+          <Button text="Continue" loading={makePaymentData?.loading} />
         )}
       </div>
     </form>
