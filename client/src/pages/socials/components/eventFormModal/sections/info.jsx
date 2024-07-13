@@ -19,12 +19,12 @@ const EventInfo = ({ onClick, data }) => {
 
   return (
     <div className="w-full">
-      <h2 className="text-center font-medium text-[#232121] text-[32px] mb-9">
+      <h2 className="hidden sm:block  text-center font-medium text-[#232121] text-[32px] mb-9">
         Event Detail
       </h2>
 
-      <div className="w-full flex gap-10 h-fit border-b border-solid border-[#D9D9D9] pb-8 mb-8">
-        <div className="w-[340px] flex-shrink-0">
+      <div className="w-full flex flex-col md:flex-row gap-10 h-fit border-b border-solid border-[#D9D9D9] pb-8 mb-8">
+        <div className="w-full h-[330px] md:h-auto md:w-[340px]  flex-shrink-0">
           <img
             src={data?.img}
             alt="event image"
@@ -32,52 +32,56 @@ const EventInfo = ({ onClick, data }) => {
           />
         </div>
         <div>
-          <h3 className="text-2xl font-bold mb-8">{data?.name}</h3>
+          <h3 className="text-2xl font-bold mb-7 md:mb-8">{data?.name}</h3>
           <div className="w-full flex flex-col gap-5">
-            <div className="flex  w-full gap-[8px]">
-              <p className="w-[120px] flex-shrink-0 font-bold text-2xl">
+            <div className="flex w-full gap-[8px]">
+              <p className="w-[90px] md:w-[120px] flex-shrink-0 font-bold text-[18px] md:text-2xl">
                 Date:
               </p>
-              <p className="font-medium text-[20px]">
+              <p className="font-medium text-[18px] md:text-[20px]">
                 {moment(data?.stateDay).format("dddd, Do MMMM YYYY")}
               </p>
             </div>
             <div className="flex  w-full gap-[8px]">
-              <p className="w-[120px] flex-shrink-0 font-bold text-2xl">
+              <p className="w-[90px] md:w-[120px] flex-shrink-0 font-bold text-[18px] md:text-2xl">
                 Time:
               </p>
-              <p className="font-medium text-[20px]">
+              <p className="font-medium text-[18px] md:text-[20px]">
                 {moment(data?.stateDay).format("hh:mm A")}
               </p>
             </div>
             <div className="flex  w-full gap-[8px]">
-              <p className="w-[120px] flex-shrink-0 font-bold text-2xl">
+              <p className="w-[90px] md:w-[120px] flex-shrink-0 font-bold text-[18px] md:text-2xl">
                 Location:
               </p>
-              <p className="font-medium text-[20px] capitalize">
+              <p className="font-medium text-[18px] md:text-[20px] capitalize">
                 {data?.address}
               </p>
             </div>
             <div className="flex  w-full gap-[8px]">
-              <p className="w-[120px] flex-shrink-0 font-bold text-2xl">
+              <p className="w-[90px] md:w-[120px] flex-shrink-0 font-bold text-[18px] md:text-2xl">
                 Details:
               </p>
-              <p className="font-medium text-[20px]">{data?.description}</p>
+              <p className="font-medium text-[18px] md:text-[20px]">
+                {data?.description}
+              </p>
             </div>
           </div>
         </div>
       </div>
       {(data?.regular > 0 || data?.vip > 0 || data?.table > 0) && (
         <div className="w-full h-fit border-b border-solid border-[#D9D9D9] pb-8 mb-8">
-          <h3 className="text-[32px] mb-[32px] font-bold">Pricing</h3>
-          <div className="font-medium text-[24px]">
+          <h3 className="text-[24px] md:text-[32px] mb-[28px] md:mb-[32px] font-bold">
+            Pricing
+          </h3>
+          <div className="font-medium text-[16px] md:text-[24px]">
             <div className="grid grid-cols-3 text-[#737373] mb-[24px]">
               <p>Ticket type</p>
               <p>Amount</p>
               <p>Quantity</p>
             </div>
 
-            <div className="flex flex-col gap-[24px] w-full">
+            <div className="flex flex-col gap-[18px] md:gap-[24px] w-full">
               {data?.regular > 0 && (
                 <div className="grid grid-cols-3">
                   <p>Regular</p>
@@ -129,11 +133,13 @@ const EventInfo = ({ onClick, data }) => {
       )}
 
       <div className="w-full h-fit mb-[60px]">
-        <h3 className="text-[32px] mb-[32px] font-bold">Ticket Order</h3>
+        <h3 className="text-[24px] md:text-[32px] mb-[28px] md:mb-[32px] font-bold">
+          Ticket Order
+        </h3>
 
-        <ul className="flex w-full flex-col gap-[20px]">
+        <ul className="flex w-full flex-col gap-[16px] md:gap-[20px]">
           {data?.regular > 0 && (
-            <li className="flex items-center text-[20px] justify-between w-full font-medium">
+            <li className="flex items-center text-[16px] md:text-[20px] justify-between w-full font-medium">
               <p>
                 Regular{" "}
                 {ticketCount.regular !== 0
@@ -146,7 +152,7 @@ const EventInfo = ({ onClick, data }) => {
             </li>
           )}
           {data?.table > 0 && (
-            <li className="flex items-center text-[20px] justify-between w-full font-medium">
+            <li className="flex items-center text-[16px] md:text-[20px] justify-between w-full font-medium">
               <p>
                 Table{" "}
                 {ticketCount.table !== 0
@@ -157,7 +163,7 @@ const EventInfo = ({ onClick, data }) => {
             </li>
           )}
           {data?.vip > 0 && (
-            <li className="flex items-center text-[20px] justify-between w-full font-medium">
+            <li className="flex items-center text-[16px] md:text-[20px] justify-between w-full font-medium">
               <p>
                 VIP{" "}
                 {ticketCount.vip !== 0
@@ -167,7 +173,7 @@ const EventInfo = ({ onClick, data }) => {
               <p className="font-bold">₦{numberFormatter(ticketCount.vip)}</p>
             </li>
           )}
-          <li className="flex items-center text-[20px] justify-between w-full font-medium pt-[20px]">
+          <li className="flex items-center text-[16px] md:text-[20px] justify-between w-full font-medium pt-[20px]">
             <p>Total price </p>
             <p className="font-bold">
               ₦
@@ -178,7 +184,7 @@ const EventInfo = ({ onClick, data }) => {
           </li>
         </ul>
       </div>
-      <div className="flex justify-end w-full">
+      <div className="flex justify-center md:justify-end w-full">
         {!ticketCount?.regular > 0 &&
         !ticketCount?.table > 0 &&
         !ticketCount?.vip > 0 &&

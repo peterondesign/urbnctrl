@@ -102,8 +102,10 @@ const EventAddMail = ({ sectionData, data }) => {
           <li
             key={i.type}
             className={classNames(
-              "w-[360px] h-[70px] grid place-items-center font-medium text-[18px] text-[#B8B8B8] border-b border-[#B8B8B8] border-solid cursor-pointer",
-              { "border-[#FCC210] text-[#000]": activeTab === i.type }
+              "w-[50%]  md:w-[360px] h-[50px] sm:h-[70px] grid place-items-center font-medium text-[12px] sm:text-[18px]  border-b border-[#B8B8B8] border-solid cursor-pointer",
+              { "border-[#FCC210] text-[#000000]": activeTab === i.type },
+
+              { "text-[#B8B8B8]": activeTab !== i.type }
             )}
             onClick={() => setActiveTab(i.type)}
           >

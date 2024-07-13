@@ -28,13 +28,11 @@ const EventFormModal = ({ open, onClose }) => {
     }
   }, []);
 
-  console.log(open);
-  console.log(sectionData);
   return (
     <ModalContainer open={Boolean(open)}>
       <div
         className={classNames(
-          "w-full bg-white max-w-[1090px] rounded-[60px] py-[32px] px-[48px] text-[#000000]",
+          "w-full bg-white max-w-[1090px] rounded-[60px] py-[32px] px-[24px] md:px-[48px] text-[#000000]",
           { "max-w-[1024px": section === "card" || section === "success" }
         )}
       >
