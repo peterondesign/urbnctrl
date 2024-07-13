@@ -5,20 +5,15 @@ import { useEffect, useState } from "react";
 import numberFormatter from "../../../../../utils/numberFormatter";
 import Button from "../../../../../components/button";
 import Input from "../../../../../components/input";
-import Counter from "../../../../../components/counter";
+// import Counter from "../../../../../components/counter";
 import usePayment from "../../../../../hooks/api/payment";
 
 const EventAddMail = ({ sectionData, data }) => {
   const [activeTab, setActiveTab] = useState("one");
-  const [ticketCount, setTicketCount] = useState(sectionData?.info);
+  const [ticketCount] = useState(sectionData?.info);
   const [form, setForm] = useState(null);
 
   const { handleMakePayment, makePaymentData } = usePayment();
-
-  const [content, setContent] = useState([
-    { type: "Regular", count: [1, 2] },
-    { type: "Table", count: [1] },
-  ]);
 
   const data1 = {
     tabs: [
@@ -29,6 +24,7 @@ const EventAddMail = ({ sectionData, data }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const total = ticketCount?.vip + ticketCount?.regular + ticketCount?.table;
     if (activeTab === "one") {
       const res = await handleMakePayment({
         vip: ticketCount?.vip > 0 ? [form?.email] : [],
@@ -36,23 +32,38 @@ const EventAddMail = ({ sectionData, data }) => {
         table: ticketCount?.table > 0 ? [form?.email] : [],
         EventId: data?.id,
         email: form?.email,
-        total: ticketCount?.vip + ticketCount?.regular + ticketCount?.table,
+        total,
       });
-
+      window.location.href = res.data;
+    } else {
+      const regular = form?.regular?.map((i) => i?.email);
+      const table = form?.table?.map((i) => i?.email);
+      const vip = form?.vip?.map((i) => i?.email);
+      const res = await handleMakePayment({
+        ...form,
+        total,
+        regular,
+        table,
+        vip,
+        EventId: data?.id,
+      });
       window.location.href = res.data;
     }
   };
   const handleNumArray = (type) => {
-    const times = ticketCount[type] / data[type];
-    let array = [];
-    for (let index = 0; index < times; index++) {
-      array.push({
-        email: "",
-        phoneNo: "",
-        id: index,
-      });
+    if (data[type]) {
+      const times = ticketCount[type] / data[type];
+      let array = [];
+      for (let index = 0; index < times; index++) {
+        array.push({
+          email: "",
+          phoneNo: "",
+          id: index,
+        });
+      }
+      return array;
     }
-    return array;
+    return [];
   };
 
   useEffect(() => {
@@ -71,9 +82,17 @@ const EventAddMail = ({ sectionData, data }) => {
     }
   }, [activeTab]);
 
-  console.log(form);
-  const disableBtn = () => {
-    if (activeTab === "one") return !form?.email || !form?.phoneNo;
+  const handleInputUpdateState = (type, index, key, inputValue) => {
+    setForm((prev) => {
+      const value = {
+        ...prev?.[type][index],
+        [key]: inputValue,
+      };
+      const copyType = prev?.regular;
+      copyType[index] = value;
+
+      return { ...prev, [type]: copyType };
+    });
   };
 
   return (
@@ -94,7 +113,7 @@ const EventAddMail = ({ sectionData, data }) => {
       </ul>
 
       <div className="my-[80px] w-full max-w-[768px]">
-        {activeTab === "one" ? (
+        {activeTab !== "many" ? (
           <div className=" w-full flex flex-col gap-[24px]">
             <Input
               label="Email"
@@ -117,51 +136,141 @@ const EventAddMail = ({ sectionData, data }) => {
           </div>
         ) : (
           <>
-            {data?.regular > 0 && (
+            <div>
+              <div className="w-full ">
+                <p className="text-[24px] font-medium">Buyer</p>
+                <div className="pb-[40px] pt-[20px]">
+                  <Input
+                    label="Email"
+                    required
+                    value={form?.email || ""}
+                    onChange={(e) => {
+                      setForm((prev) => ({ ...prev, email: e.target.value }));
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+            {form?.regular?.length > 0 && (
               <div>
                 <div className="w-full flex justify-between items-center">
                   <p className="text-[24px] font-medium">Regular</p>
                 </div>
                 <ul>
-                  {handleNumArray("regular").map((content) => (
+                  {handleNumArray("regular").map((content, idx) => (
                     <li className="py-[40px]" key={content.id}>
                       <div className=" w-full flex flex-col gap-[24px]">
-                        <Input label="Email" required />
-                        <Input label="Phone Number" type="tel" required />
+                        <Input
+                          label="Email"
+                          required
+                          value={form?.regular[idx]?.email || ""}
+                          onChange={(e) =>
+                            handleInputUpdateState(
+                              "regular",
+                              idx,
+                              "email",
+                              e.target.value
+                            )
+                          }
+                        />
+                        <Input
+                          label="Phone Number"
+                          value={form?.regular[idx]?.phoneNo || ""}
+                          type="number"
+                          required
+                          onChange={(e) =>
+                            handleInputUpdateState(
+                              "regular",
+                              idx,
+                              "phoneNo",
+                              e.target.value
+                            )
+                          }
+                        />
                       </div>
                     </li>
                   ))}
                 </ul>
               </div>
             )}
-            {data?.table > 0 && (
+            {form?.table?.length > 0 && (
               <div>
                 <div className="w-full flex justify-between items-center">
                   <p className="text-[24px] font-medium">Table</p>
                 </div>
                 <ul>
-                  {handleNumArray("table").map((content) => (
+                  {handleNumArray("table").map((content, idx) => (
                     <li className="py-[40px]" key={content.id}>
                       <div className=" w-full flex flex-col gap-[24px]">
-                        <Input label="Email" required />
-                        <Input label="Phone Number" type="tel" required />
+                        <Input
+                          label="Email"
+                          value={form?.table[idx]?.email || ""}
+                          required
+                          onChange={(e) =>
+                            handleInputUpdateState(
+                              "table",
+                              idx,
+                              "email",
+                              e.target.value
+                            )
+                          }
+                        />
+                        <Input
+                          label="Phone Number"
+                          value={form?.table[idx]?.phoneNo || ""}
+                          type="number"
+                          required
+                          onChange={(e) =>
+                            handleInputUpdateState(
+                              "table",
+                              idx,
+                              "phoneNo",
+                              e.target.value
+                            )
+                          }
+                        />
                       </div>
                     </li>
                   ))}
                 </ul>
               </div>
             )}
-            {data?.vip > 0 && (
+            {form?.vip?.length > 0 && (
               <div>
                 <div className="w-full flex justify-between items-center">
                   <p className="text-[24px] font-medium">VIP</p>
                 </div>
                 <ul>
-                  {handleNumArray("vip").map((content) => (
+                  {handleNumArray("vip").map((content, idx) => (
                     <li className="py-[40px]" key={content.id}>
                       <div className=" w-full flex flex-col gap-[24px]">
-                        <Input label="Email" required />
-                        <Input label="Phone Number" type="tel" required />
+                        <Input
+                          label="Email"
+                          required
+                          value={form?.vip[idx]?.email || ""}
+                          onChange={(e) =>
+                            handleInputUpdateState(
+                              "vip",
+                              idx,
+                              "email",
+                              e.target.value
+                            )
+                          }
+                        />
+                        <Input
+                          label="Phone Number"
+                          value={form?.vip[idx]?.phoneNo || ""}
+                          type="number"
+                          required
+                          onChange={(e) =>
+                            handleInputUpdateState(
+                              "vip",
+                              idx,
+                              "phoneNo",
+                              e.target.value
+                            )
+                          }
+                        />
                       </div>
                     </li>
                   ))}
@@ -172,7 +281,7 @@ const EventAddMail = ({ sectionData, data }) => {
         )}
       </div>
       <ul className="flex w-full flex-col gap-[20px]">
-        {data?.regular > 0 && (
+        {ticketCount.regular / data?.regular > 0 && (
           <li className="flex items-center text-[20px] justify-between w-full font-medium">
             <p>
               Regular{" "}
@@ -185,7 +294,7 @@ const EventAddMail = ({ sectionData, data }) => {
             </p>
           </li>
         )}
-        {data?.table > 0 && (
+        {ticketCount.table / data?.table > 0 && (
           <li className="flex items-center text-[20px] justify-between w-full font-medium">
             <p>
               Table{" "}
@@ -196,7 +305,7 @@ const EventAddMail = ({ sectionData, data }) => {
             <p className="font-bold">₦{numberFormatter(ticketCount.table)}</p>
           </li>
         )}
-        {data?.vip > 0 && (
+        {ticketCount.vip / data?.vip > 0 && (
           <li className="flex items-center text-[20px] justify-between w-full font-medium">
             <p>
               VIP{" "}
@@ -207,11 +316,7 @@ const EventAddMail = ({ sectionData, data }) => {
         )}
       </ul>
       <div className="flex justify-end w-full mt-[80px]">
-        {disableBtn() ? (
-          <Button text="Continue" disabled />
-        ) : (
-          <Button text="Continue" loading={makePaymentData?.loading} />
-        )}
+        <Button text="Continue" loading={makePaymentData?.loading} />
       </div>
     </form>
   );

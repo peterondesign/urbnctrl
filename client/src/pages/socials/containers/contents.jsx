@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import SocialCard from "../components/socialCard";
 import useEvent from "../../../hooks/api/event";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../../components/loader";
 
 const Content = () => {
   const [tabActive, setTabActive] = useState("Upcoming Events");
@@ -13,8 +14,6 @@ const Content = () => {
     "cursor-pointer leading-[32px] lg:leading-[40px] relative text-[16px] lg:text-[20px]";
   const activeCn =
     "before:absolute before:h-[1px] before:w-[120px] lg:before:w-[180px] before:bg-primary before:bottom-0";
-
-  // const cards = [1, 2, 3, 4, 5, 6];
 
   useEffect(() => {
     handleGetEvents();
@@ -45,11 +44,18 @@ const Content = () => {
               Create Event
             </button>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {getEventsData?.data?.map((card) => (
-              <SocialCard key={card?.id} data={card} />
-            ))}
-          </div>
+          {getEventsData?.loading && (
+            <div className="h-[410px] lg:h-[472px] grid place-items-center ">
+              <Loader size="50" />
+            </div>
+          )}
+          {!getEventsData?.loading && getEventsData?.data && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {getEventsData?.data?.map((card) => (
+                <SocialCard key={card?.id} data={card} />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </>
