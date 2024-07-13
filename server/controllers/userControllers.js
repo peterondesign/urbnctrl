@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { Users } = require("../models");
-const { get } = require("../authRoute/credentialsAuth");
 
 const signup = async (req, res) => {
   const { email, password } = req.body;
@@ -67,10 +66,7 @@ const login = async (req, res) => {
       isAdmin: existingUser.isAdmin,
       email: existingUser.email,
     };
-    correct
-      ? res
-          .status(200)
-          .json({ email, id, isAdmin, token: generateTRoken(userInfo) })
+    correct ? res.status(200).json({ email, id, isAdmin, token: generateTRoken(userInfo) })
       : res.status(400).json("incorrect password");
   } catch (error) {
     res.status(500).json(error.message);

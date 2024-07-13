@@ -40,8 +40,9 @@ const createTickect=async(req,res,next)=>{
  
 
 
-const getTickect=async()=>{
-    
+const getTickect=async(req,res,next)=>{
+    const allTickets = await Tickets.findAll()
+    res.status(200).json(allTickets)
 }
 
 

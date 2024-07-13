@@ -1,6 +1,8 @@
 const axios = require("axios");
 const crypto = require("crypto");
 const db = require("../models");
+const { Tickets } = require("../models");
+
 
 const initiatePayment = async (req, res, next) => {
   const { email, total, vip, regular, table, EventId } = req.body;
@@ -48,15 +50,7 @@ const paystackWebhook = async (req, res, next) => {
     if (received.event === "charge.success") {
       //place order
       try {
-        await axios.post("https://urbnctrl-frontend.onrender.com/api/ticket/createTicket", {
-          email,
-          vip,
-          table,
-          regular,
-          EventId,
-          total,
-        });
-
+        await Tickets.create({email,vip,table,regular,EventId,total,})
         res.status(200).end().json("success");
       } catch (error) {
         const err = new Error(error.message);
