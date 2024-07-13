@@ -48,7 +48,7 @@ const paystackWebhook = async (req, res, next) => {
     if (received.event === "charge.success") {
       //place order
       try {
-        await axios.post("http://localhost:5000/api/ticket/createTicket", {
+        await axios.post("https://urbnctrl-frontend.onrender.com/api/ticket/createTicket", {
           email,
           vip,
           table,
