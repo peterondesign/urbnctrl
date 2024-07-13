@@ -51,9 +51,17 @@ const Content = () => {
           )}
           {!getEventsData?.loading && getEventsData?.data && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {getEventsData?.data?.map((card) => (
-                <SocialCard key={card?.id} data={card} />
-              ))}
+              {getEventsData?.data?.length > 0 ? (
+                getEventsData?.data?.map((card) => (
+                  <SocialCard key={card?.id} data={card} />
+                ))
+              ) : (
+                <div className="h-[410px] lg:h-[472px] grid place-content-center w-full">
+                  <p className="capitalize text-2xl font-bold">
+                    No available event
+                  </p>
+                </div>
+              )}
             </div>
           )}
         </div>
