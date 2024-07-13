@@ -13,6 +13,7 @@ const initiatePayment = async (req, res, next) => {
     email,
     amount: total * 100,
     callback_url: "https://urbnctrl-frontend.onrender.com/socials",
+    channels: ["card", "bank_transfer"],
     metadata,
   };
 
