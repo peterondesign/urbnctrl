@@ -1,7 +1,10 @@
 const axios = require("axios");
 const crypto = require("crypto");
-const db = require("../models");
+const db = require("../models/index")
+const { Events } = require("../models");
 const { Tickets } = require("../models");
+const {generateCode} = require("../utilis/randomSring")
+const{ mailForOrganizers } = require("../utilis/email");
 
 
 const initiatePayment = async (req, res, next) => {
@@ -51,9 +54,25 @@ const paystackWebhook = async (req, res, next) => {
     if (received.event === "charge.success") {
       //place order
       try {
-        await Tickets.create({email,vip,table,regular,EventId,total,})
+        const transact =await db.sequelize.transaction()
+
+         const event = await Events.findByPk(EventId,{transact})
+
+   if (event.vip < vip || event.regular < regular || event.table < table) {
+    const err = new Error("not enough tickets left")
+    err.status = 400
+    next(err)
+  }
+        event.vip -= vip.length
+        event.table -= table.length
+        event.regular-= regular.length
+        await event.save({transact})
+        await Tickets.create({email,vip,table,regular,EventId,total, code:generateCode()},{transact})
+        await transact.commit()
+        await mailForOrganizers("kerryesua9@gmail.com",email)
         res.status(200).end().json("success");
       } catch (error) {
+        await transact.rollback()
         const err = new Error(error.message);
         next(err);
       }
