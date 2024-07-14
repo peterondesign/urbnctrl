@@ -47,7 +47,7 @@ const paystackWebhook = async (req, res, next) => {
     const details = req.body;
     const { email, vip, table, regular, EventId, total } =details.data.metadata;
 
-    if (received.event === "charge.success") {
+    if (details.event === "charge.success") {
       //place order
       try {
         const transact =await db.sequelize.transaction()
