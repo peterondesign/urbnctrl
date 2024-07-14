@@ -42,14 +42,10 @@ const initiatePayment = async (req, res, next) => {
 
 const paystackWebhook = async (req, res, next) => {
   const secret = process.env.PAYSTACK_API_KEY;
-  const hash = crypto
-    .createHmac("sha512", secret)
-    .update(JSON.stringify(req.body))
-    .digest("hex");
+  const hash = crypto.createHmac("sha512", secret).update(JSON.stringify(req.body)).digest("hex");
   if (hash === req.headers["x-paystack-signature"]) {
     const details = req.body;
-    const { email, vip, table, regular, EventId, total } =
-      details.data.metadata;
+    const { email, vip, table, regular, EventId, total } =details.data.metadata;
 
     if (received.event === "charge.success") {
       //place order
