@@ -65,13 +65,27 @@ const paystackWebhook = async (req, res, next) => {
         await event.save({transact})
         await Tickets.create({email,vip,table,regular,EventId,total, code:generateCode()},{transact})
         await transact.commit()
-        await mailForOrganizers("kerryesua9@gmail.com",email)
+        //await mailForOrganizers("kerryesua9@gmail.com",email)
         res.status(200).end().json("success");
       } catch (error) {
+        console.log(error.message)
+        res.status(200).end().json("error");
         await transact.rollback()
         const err = new Error(error.message);
         next(err);
       }
+    }  else if (details.event==="transfer.success"){
+         const amountPaid = details.data.amount
+         const amountExpected = details.data.metadata.total
+       try {
+          console.log(amountExpected,amountPaid)
+          res.status(200).end().json("success");
+       } catch (error) {
+        res.status(200).end().json(error.message);
+
+       }
+    } else{
+      
     }
   }
 };
