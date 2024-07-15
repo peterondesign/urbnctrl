@@ -9,7 +9,6 @@ const{ mailForOrganizers } = require("../utilis/email");
 
 const initiatePayment = async (req, res, next) => {
   const { email, total, vip, regular, table, EventId } = req.body;
-  console.log(req.body)
   const metadata = { email, total, vip, regular, table, EventId };
 
   const options = {
@@ -50,7 +49,6 @@ const paystackWebhook = async (req, res, next) => {
     if (details.event === "charge.success") {
       //place order
       try {
-        console.log(details)
         const transact =await db.sequelize.transaction()
 
          const event = await Events.findByPk(EventId,{transact})
@@ -60,13 +58,12 @@ const paystackWebhook = async (req, res, next) => {
     err.status = 400
     next(err)
   }
-        event.vip -= vip.length
-        event.table -= table.length
-        event.regular-= regular.length
+        event.vip -= vip?.length
+        event.table -= table?.length
+        event.regular-= regular?.length
         await event.save({transact})
         await Tickets.create({email,vip,table,regular,EventId,total, code:generateCode()},{transact})
         await transact.commit()
-        console.log("good so far")
         //await mailForOrganizers("kerryesua9@gmail.com",email)
         res.status(200).end().json("success");
       } catch (error) {
