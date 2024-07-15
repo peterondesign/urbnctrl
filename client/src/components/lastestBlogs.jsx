@@ -103,7 +103,7 @@ const LastestBlogs = () => {
           {blogs?.length === 0 && (
             <div className="min-h-[350px] grid place-content-center w-full">
               <p className="capitalize text-2xl font-bold">
-                no available post{' '}
+                No available post{' '}
               </p>
             </div>
           )}
