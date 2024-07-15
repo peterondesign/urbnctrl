@@ -9,14 +9,14 @@ const{ mailForOrganizers } = require("../utilis/email");
 
 const initiatePayment = async (req, res, next) => {
   const { email, total, vip, regular, table, EventId } = req.body;
-
+  console.log(req.body)
   const metadata = { email, total, vip, regular, table, EventId };
 
   const options = {
     email,
     amount: total * 100,
     callback_url: "https://urbnctrl-frontend.onrender.com/socials",
-    channels: ["card", "bank_transfer"],
+    channels: ["card"],
     metadata,
   };
 
@@ -46,6 +46,7 @@ const paystackWebhook = async (req, res, next) => {
   if (hash === req.headers["x-paystack-signature"]) {
     const details = req.body;
     const { email, vip, table, regular, EventId, total } =details.data.metadata;
+    console.log(details)
 
     if (details.event === "charge.success") {
       //place order
