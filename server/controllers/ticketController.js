@@ -28,7 +28,8 @@ const createTickect=async(req,res,next)=>{
     await event.save({transact})
     await Tickets.create({email,vip,regular,table,EventId,total, code:generateCode()},{transact})
     await transact.commit()
-    await mailForOrganizers("kerryesua9@gmail.com",email)
+    //await mailForOrganizers("kerryesua9@gmail.com",email)
+    console.log("ticket created")
     res.status(201).json("ticket(s) purchased successfully!") 
 
   } catch (error) {

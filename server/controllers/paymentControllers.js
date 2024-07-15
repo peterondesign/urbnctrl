@@ -46,7 +46,6 @@ const paystackWebhook = async (req, res, next) => {
   if (hash === req.headers["x-paystack-signature"]) {
     const details = req.body;
     const { email, vip, table, regular, EventId, total } =details.data.metadata;
-    console.log(details)
 
     if (details.event === "charge.success") {
       //place order
@@ -67,6 +66,7 @@ const paystackWebhook = async (req, res, next) => {
         await event.save({transact})
         await Tickets.create({email,vip,table,regular,EventId,total, code:generateCode()},{transact})
         await transact.commit()
+        console.log("good so far")
         //await mailForOrganizers("kerryesua9@gmail.com",email)
         res.status(200).end().json("success");
       } catch (error) {
