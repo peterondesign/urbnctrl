@@ -58,9 +58,9 @@ const paystackWebhook = async (req, res, next) => {
     err.status = 400
     next(err)
   }
-        event.vip -= vip?.length
-        event.table -= table?.length
-        event.regular-= regular?.length
+        event.vipTicket -= vip?.length
+        event.tableTicket -= table?.length
+        event.regularTicket-= regular?.length
         await event.save({transact})
         await Tickets.create({email,vip,table,regular,EventId,total, code:generateCode()},{transact})
         await transact.commit()

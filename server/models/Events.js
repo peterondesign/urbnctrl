@@ -65,6 +65,21 @@ module.exports = (sequelize, DataTypes) => {
         minValue: 0
 
       },
+      vipTicket:{
+       allowNull:true,
+       minValue: 0,
+       type: DataTypes.INTEGER
+      },
+      regularTicket:{
+        allowNull:true,
+        minValue: 0,
+        type: DataTypes.INTEGER
+      },
+      tableTicket:{
+        allowNull:true,
+        minValue: 0,
+        type: DataTypes.INTEGER  
+      },
       img: {
         type: DataTypes.STRING,
         allowNull: false,

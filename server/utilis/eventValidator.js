@@ -14,9 +14,12 @@ const eventBody = [body("name").isString()
  body("endDay").notEmpty().withMessage("please provide an ending day"),
  body("img").notEmpty().withMessage("please provide an image"),
  body("endTime").notEmpty().withMessage("please provide an ending time"),
- body("vip").isNumeric().withMessage("please provide the number of vip tickets available"),
- body("regular").isNumeric().withMessage(" please provide the number of regular tickets available"),
- body("table").isNumeric().withMessage("please provide the number of table tickets available"),
+ body("vip").isNumeric().withMessage("please provide the price of vip tickets available"),
+ body("regular").isNumeric().withMessage(" please provide the price of regular tickets available"),
+ body("table").isNumeric().withMessage("please provide the price of table tickets available"),
+ body("tableTicket").isNumeric().withMessage("please provide the number of table tickets available"),
+ body("vipTicket").isNumeric().withMessage("please provide the number of vip tickets available"),
+ body("regularTicket").isNumeric().withMessage("please provide the number of regular tickets available"),
 ]
 
 
