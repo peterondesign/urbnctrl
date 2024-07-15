@@ -50,6 +50,7 @@ const paystackWebhook = async (req, res, next) => {
     if (details.event === "charge.success") {
       //place order
       try {
+        console.log(details)
         const transact =await db.sequelize.transaction()
 
          const event = await Events.findByPk(EventId,{transact})
