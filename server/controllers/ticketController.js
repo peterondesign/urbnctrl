@@ -17,20 +17,20 @@ const createTickect=async(req,res,next)=>{
 
     const event = await Events.findByPk(EventId,{transact})
 
-  if (event.vip < vip || event.regular < regular || event.table < table) {
+  if (event.vip < vip || event.regular < regular || event.table < table) { 
     const err = new Error("not enough tickets left")
     err.status = 400
     next(err)
   }
-    event.vip -= vip.length
-    event.table -= table.length
-    event.regular-= regular.length
+    event.vip -= vip?.length
+    event.table -= table?.length
+    event.regular-= regular?.length 
     await event.save({transact})
-    await Tickets.create({email,vip,regular,table,EventId,total, code:generateCode()},{transact})
+   const created= await Tickets.create({email,vip,regular,table,EventId,total, code:generateCode()},{transact})
     await transact.commit()
     //await mailForOrganizers("kerryesua9@gmail.com",email)
     console.log("ticket created")
-    res.status(201).json("ticket(s) purchased successfully!") 
+    res.status(201).json(created) 
 
   } catch (error) {
     await transact.rollback()
