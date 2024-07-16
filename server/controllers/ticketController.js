@@ -16,15 +16,17 @@ const createTickect=async(req,res,next)=>{
     const transact =await db.sequelize.transaction()
 
     const event = await Events.findByPk(EventId,{transact})
-
-  if (event.vip < vip || event.regular < regular || event.table < table) { 
+  const vipNumber= vip.length
+  const regularpNumber= regular.length
+  const tableNumber= table.length
+  if (event.vip < vipNumber || event.regular < regularpNumber || event.table < tableNumber) { 
     const err = new Error("not enough tickets left")
     err.status = 400
     next(err)
   }
-    event.vip -= vip?.length
-    event.table -= table?.length
-    event.regular-= regular?.length 
+    event.vip -= vipNumber
+    event.table -= tableNumber
+    event.regular-= regularpNumber
     await event.save({transact})
    const created= await Tickets.create({email,vip,regular,table,EventId,total, code:generateCode()},{transact})
     await transact.commit()
