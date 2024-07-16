@@ -45,7 +45,7 @@ const paystackWebhook = async (req, res, next) => {
   if (hash === req.headers["x-paystack-signature"]) {
     const details = req.body;
     console.log(details.data.metadata)
-    const { email, vip, table, regular, EventId, total } =details.data.metadata;
+    const { email, vip=[], table=[], regular=[], EventId, total } =details.data.metadata;
   
     if (details.event === "charge.success") {
       //place order
@@ -74,8 +74,8 @@ const paystackWebhook = async (req, res, next) => {
         res.status(200).end().json("success");
       } catch (error) {
         console.log(error.message)
-        res.status(200).end().json("error");
         await transact.rollback()
+        res.status(200).end().json("error");
         const err = new Error(error.message);
         next(err);
       }
