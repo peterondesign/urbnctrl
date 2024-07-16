@@ -58,6 +58,7 @@ const paystackWebhook = async (req, res, next) => {
     err.status = 400
     next(err)
   }
+         console.log("progress...")
         event.vip-= vip?.length
         event.table -= table?.length
         event.regular-= regular?.length
