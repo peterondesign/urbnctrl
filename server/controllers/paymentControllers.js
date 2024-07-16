@@ -44,8 +44,9 @@ const paystackWebhook = async (req, res, next) => {
   const hash = crypto.createHmac("sha512", secret).update(JSON.stringify(req.body)).digest("hex");
   if (hash === req.headers["x-paystack-signature"]) {
     const details = req.body;
+    console.log(details.data.metadata)
     const { email, vip, table, regular, EventId, total } =details.data.metadata;
-
+  
     if (details.event === "charge.success") {
       //place order
       try {
@@ -53,7 +54,7 @@ const paystackWebhook = async (req, res, next) => {
 
          const event = await Events.findByPk(EventId,{transact})
 
-   if (event.vip < vip || event.regular < regular || event.table < table) {
+   if (event.vip < vip.length || event.regular < regular.length || event.table < table.length) {
     const err = new Error("not enough tickets left")
     err.status = 400
     next(err)
@@ -76,19 +77,7 @@ const paystackWebhook = async (req, res, next) => {
         const err = new Error(error.message);
         next(err);
       }
-    }  else if (details.event==="transfer.success"){
-         const amountPaid = details.data.amount
-         const amountExpected = details.data.metadata.total
-       try {
-          console.log(amountExpected,amountPaid)
-          res.status(200).end().json("success");
-       } catch (error) {
-        res.status(200).end().json(error.message);
-
-       }
-    } else{
-      
-    }
+    }  
   }
 };
 
