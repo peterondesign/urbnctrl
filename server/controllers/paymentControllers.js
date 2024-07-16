@@ -48,9 +48,9 @@ const paystackWebhook = async (req, res, next) => {
     const { email, vip=[], table=[], regular=[], EventId, total } =details.data.metadata;
   
     if (details.event === "charge.success") {
+      const transact =await db.sequelize.transaction()
       //place order
       try {
-        const transact =await db.sequelize.transaction()
 
          const event = await Events.findByPk(EventId,{transact})
          const vipNumber= vip.length
@@ -60,22 +60,21 @@ const paystackWebhook = async (req, res, next) => {
     const err = new Error("not enough tickets left")
     err.status = 400
     next(err)
+    return
   }
-         console.log("progress...")
         event.vip-= vipNumber
         event.table -= tableNumber
         event.regular-= regularpNumber
         await event.save({transact})
-        console.log("good so far")
         await Tickets.create({email,vip,table,regular,EventId,total, code:generateCode()},{transact})
         console.log("worked")
         await transact.commit()
         //await mailForOrganizers("kerryesua9@gmail.com",email)
-        res.status(200).end().json("success");
+       return res.status(200).end().json("success");
       } catch (error) {
         console.log(error.message)
         await transact.rollback()
-        res.status(200).end().json("error");
+       return res.status(200).end().json("error");
         const err = new Error(error.message);
         next(err);
       }
