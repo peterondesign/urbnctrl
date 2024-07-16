@@ -62,7 +62,9 @@ const paystackWebhook = async (req, res, next) => {
         event.table -= table?.length
         event.regular-= regular?.length
         await event.save({transact})
+        console.log("good so far")
         await Tickets.create({email,vip,table,regular,EventId,total, code:generateCode()},{transact})
+        console.log("worked")
         await transact.commit()
         //await mailForOrganizers("kerryesua9@gmail.com",email)
         res.status(200).end().json("success");
