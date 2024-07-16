@@ -58,8 +58,10 @@ const paystackWebhook = async (req, res, next) => {
          const tableNumber= table.length
    if (event.vip < vipNumber || event.regular < regularpNumber || event.table < tableNumber){
     const err = new Error("not enough tickets left")
+    await transact.rollback()
     err.status = 400
     next(err)
+
     return
   }
         event.vip-= vipNumber
@@ -73,8 +75,7 @@ const paystackWebhook = async (req, res, next) => {
        return res.status(200).end().json("success");
       } catch (error) {
         console.log(error.message)
-        await transact.rollback()
-       return res.status(200).end().json("error");
+        return res.status(200).end().json("error");
         const err = new Error(error.message);
         next(err);
       }
