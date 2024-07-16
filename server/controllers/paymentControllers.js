@@ -54,7 +54,7 @@ const paystackWebhook = async (req, res, next) => {
 
          const event = await Events.findByPk(EventId,{transact})
 
-   if (event.vip < vip?.length || event.regular < regular?.length || event.table < table?.length) {
+   if (event.vip < vip || event.regular < regular || event.table < table) {
     const err = new Error("not enough tickets left")
     err.status = 400
     next(err)
