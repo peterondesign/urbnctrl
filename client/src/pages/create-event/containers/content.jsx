@@ -27,6 +27,9 @@ const Content = () => {
     regular: "",
     vip: "",
     table: "",
+    vipTicket: "",
+    regularTicket: "",
+    tableTicket: "",
     img: null,
   });
 
@@ -38,20 +41,44 @@ const Content = () => {
   const navigate = useNavigate();
 
   const notValid = useMemo(() => {
-    const requiredFields = [
-      "name",
-      "email",
-      "description",
-      "url",
-      "address",
-      "eventType",
-      "startDay",
-      "startTime",
-      "endDay",
-      "endTime",
-      "frequency",
-      "img",
-    ];
+    let requiredFields;
+    if (value?.eventType !== "free") {
+      requiredFields = [
+        "name",
+        "email",
+        "description",
+        "url",
+        "address",
+        "eventType",
+        "startDay",
+        "startTime",
+        "endDay",
+        "endTime",
+        "frequency",
+        "img",
+        "vip",
+        "table",
+        "regular",
+        "vipTicket",
+        "regularTicket",
+        "tableTicket",
+      ];
+    } else {
+      requiredFields = [
+        "name",
+        "email",
+        "description",
+        "url",
+        "address",
+        "eventType",
+        "startDay",
+        "startTime",
+        "endDay",
+        "endTime",
+        "frequency",
+        "img",
+      ];
+    }
 
     for (const field of requiredFields) {
       if (!value[field]) {
@@ -84,6 +111,7 @@ const Content = () => {
         handleSuccess(res?.data);
         return;
       }
+
       const res = await handleCreateEvent(copyValue);
       handleSuccess(res?.data);
     }
@@ -197,18 +225,24 @@ const Content = () => {
             </div>
 
             {value?.eventType === "paid" && (
-              <div className="flex flex-col w-full lg:w-[600px] mt-10">
-                <div className="flex-1 grid grid-cols-2 ">
+              <div className="flex flex-col w-full lg:w-[800px] mt-10">
+                <div className="hidden flex-1 lg:grid grid-cols-3 ">
                   <p className="text-xl font-semibold mb-9">Category</p>{" "}
                   <p className="text-xl font-semibold mb-9 text-center">
                     Price
                   </p>
+                  <p className="text-xl font-semibold mb-9 text-center">
+                    Ticket number
+                  </p>
                 </div>
                 <div className="flex-1">
                   <div className="[&>p]:leading-[63px] flex flex-col gap-[24px] ">
-                    <div className="items-center grid grid-rows-2 lg:grid-cols-2 lg:grid-rows-1 [&>p]:text-[20px] [&>p]:font-medium ">
+                    <div className="items-center grid grid-rows-1 lg:grid-cols-3 lg:gap-6  [&>p]:text-[20px] [&>p]:font-medium">
                       <p>Regular</p>
-                      <div className="flex flex-col gap-[24px] [&>input]:h-[63px] [&>input]:border [&>input]:border-[#4E4E4E] [&>input]:outline-none [&>input]:px-[16px] [&>input]:text-[20px]">
+                      <div className="flex flex-col gap-[4px] [&>input]:h-[63px] [&>input]:border [&>input]:border-[#4E4E4E] [&>input]:outline-none [&>input]:px-[16px] [&>input]:text-[20px] my-3 lg:my-0">
+                        <p className="text-[18px] font-medium lg:hidden">
+                          Price
+                        </p>
                         <input
                           type="number"
                           required
@@ -218,17 +252,40 @@ const Content = () => {
                             if (value === "" || /^[0-9]+$/.test(value)) {
                               const numericValue = value?.replace(
                                 /[^0-9]/g,
-                                "",
+                                ""
                               );
                               handleChange("regular", numericValue);
                             }
                           }}
                         />
                       </div>
+                      <div className="flex flex-col gap-[4px] [&>input]:h-[63px] [&>input]:border [&>input]:border-[#4E4E4E] [&>input]:outline-none [&>input]:px-[16px] [&>input]:text-[20px]">
+                        <p className="text-[18px] font-medium lg:hidden">
+                          Ticket number
+                        </p>
+                        <input
+                          type="number"
+                          required
+                          value={value?.regularTicket}
+                          onChange={(e) => {
+                            const { value } = e.target;
+                            if (value === "" || /^[0-9]+$/.test(value)) {
+                              const numericValue = value?.replace(
+                                /[^0-9]/g,
+                                ""
+                              );
+                              handleChange("regularTicket", numericValue);
+                            }
+                          }}
+                        />
+                      </div>
                     </div>
-                    <div className="items-center grid grid-rows-2 lg:grid-cols-2 lg:grid-rows-1 [&>p]:text-[20px] [&>p]:font-medium ">
+                    <div className="items-center grid  lg:grid-cols-3 lg:gap-6 grid-rows-1 [&>p]:text-[20px] [&>p]:font-medium ">
                       <p>VIP</p>
-                      <div className="flex flex-col gap-[24px] [&>input]:h-[63px] [&>input]:border [&>input]:border-[#4E4E4E] [&>input]:outline-none [&>input]:px-[16px] [&>input]:text-[20px]">
+                      <div className="flex flex-col gap-[4px] [&>input]:h-[63px] [&>input]:border [&>input]:border-[#4E4E4E] [&>input]:outline-none [&>input]:px-[16px] [&>input]:text-[20px] my-3 lg:my-0">
+                        <p className="text-[18px] font-medium lg:hidden">
+                          Price
+                        </p>
                         <input
                           type="number"
                           required
@@ -238,17 +295,40 @@ const Content = () => {
                             if (value === "" || /^[0-9]+$/.test(value)) {
                               const numericValue = value?.replace(
                                 /[^0-9]/g,
-                                "",
+                                ""
                               );
                               handleChange("vip", numericValue);
                             }
                           }}
                         />
                       </div>
+                      <div className="flex flex-col gap-[4px] [&>input]:h-[63px] [&>input]:border [&>input]:border-[#4E4E4E] [&>input]:outline-none [&>input]:px-[16px] [&>input]:text-[20px]">
+                        <p className="text-[18px] font-medium lg:hidden">
+                          Ticket number
+                        </p>
+                        <input
+                          type="number"
+                          required
+                          value={value?.vipTicket}
+                          onChange={(e) => {
+                            const { value } = e.target;
+                            if (value === "" || /^[0-9]+$/.test(value)) {
+                              const numericValue = value?.replace(
+                                /[^0-9]/g,
+                                ""
+                              );
+                              handleChange("vipTicket", numericValue);
+                            }
+                          }}
+                        />
+                      </div>
                     </div>
-                    <div className="items-center grid grid-rows-2 lg:grid-cols-2 lg:grid-rows-1 [&>p]:text-[20px] [&>p]:font-medium  ">
+                    <div className="items-center grid lg:grid-cols-3 lg:gap-6 grid-rows-1 [&>p]:text-[20px] [&>p]:font-medium">
                       <p>Table</p>
-                      <div className="flex flex-col gap-[24px] [&>input]:h-[63px] [&>input]:border [&>input]:border-[#4E4E4E] [&>input]:outline-none [&>input]:px-[16px] [&>input]:text-[20px]">
+                      <div className="flex flex-col gap-[4px] [&>input]:h-[63px] [&>input]:border [&>input]:border-[#4E4E4E] [&>input]:outline-none [&>input]:px-[16px] [&>input]:text-[20px] my-3 lg:my-0">
+                        <p className="text-[18px] font-medium lg:hidden">
+                          Price
+                        </p>
                         <input
                           type="number"
                           required
@@ -258,9 +338,29 @@ const Content = () => {
                             if (value === "" || /^[0-9]+$/.test(value)) {
                               const numericValue = value?.replace(
                                 /[^0-9]/g,
-                                "",
+                                ""
                               );
                               handleChange("table", numericValue);
+                            }
+                          }}
+                        />
+                      </div>
+                      <div className="flex flex-col  [&>input]:h-[63px] [&>input]:border [&>input]:border-[#4E4E4E] [&>input]:outline-none [&>input]:px-[16px] [&>input]:text-[20px]">
+                        <p className="text-[18px] font-medium lg:hidden">
+                          Ticket number
+                        </p>
+                        <input
+                          type="number"
+                          required
+                          value={value?.tableTicket}
+                          onChange={(e) => {
+                            const { value } = e.target;
+                            if (value === "" || /^[0-9]+$/.test(value)) {
+                              const numericValue = value?.replace(
+                                /[^0-9]/g,
+                                ""
+                              );
+                              handleChange("tableTicket", numericValue);
                             }
                           }}
                         />

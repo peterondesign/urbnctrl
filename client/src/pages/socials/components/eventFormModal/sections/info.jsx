@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Button from "../../../../../components/button";
 import Counter from "../../../../../components/counter";
 import numberFormatter from "../../../../../utils/numberFormatter";
-import moment from "moment-timezone";
+import moment from "moment";
 import { useState } from "react";
 
 /**
@@ -87,7 +87,7 @@ const EventInfo = ({ onClick, data }) => {
                   <p>Regular</p>
                   <p>₦{numberFormatter(data?.regular)}</p>
                   <Counter
-                    max={999}
+                    max={data?.regularTicket}
                     onChange={(v) =>
                       setTIcketCount((prev) => ({
                         ...prev,
@@ -102,7 +102,7 @@ const EventInfo = ({ onClick, data }) => {
                   <p>VIP</p>
                   <p>₦{numberFormatter(data?.vip)}</p>
                   <Counter
-                    max={999}
+                    max={data?.vipTicket}
                     onChange={(v) =>
                       setTIcketCount((prev) => ({
                         ...prev,
@@ -117,7 +117,7 @@ const EventInfo = ({ onClick, data }) => {
                   <p>Table</p>
                   <p>₦{numberFormatter(data?.table)}</p>
                   <Counter
-                    max={999}
+                    max={data?.tableTicket}
                     onChange={(v) =>
                       setTIcketCount((prev) => ({
                         ...prev,
