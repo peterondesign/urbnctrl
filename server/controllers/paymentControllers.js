@@ -52,7 +52,7 @@ const paystackWebhook = async (req, res, next) => {
       //place order
       try {
 
-         const event = await Events.findByPk(EventId,{transact})
+         const event = await Events.findByPk(EventId,{transaction:transact})
          const vipNumber= vip.length
          const regularpNumber= regular.length
          const tableNumber= table.length
@@ -67,17 +67,17 @@ const paystackWebhook = async (req, res, next) => {
         event.vip-= vipNumber
         event.table -= tableNumber
         event.regular-= regularpNumber
-        await event.save({transact})
-        await Tickets.create({email,vip,table,regular,EventId,total, code:generateCode()},{transact})
+        await event.save({transaction:transact})
+        await Tickets.create({email,vip,table,regular,EventId,total, code:generateCode()},{transaction:transact})
         console.log("worked")
         await transact.commit()
         //await mailForOrganizers("kerryesua9@gmail.com",email)
        return res.status(200).end().json("success");
       } catch (error) {
         console.log(error.message)
-        return res.status(200).end().json("error");
         const err = new Error(error.message);
         next(err);
+        return res.status(200).end().json("error");
       }
     }  
   }
