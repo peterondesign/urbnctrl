@@ -3,6 +3,8 @@ const { Events } = require("../models");
 const db = require("../models/index")
 const {generateCode} = require("../utilis/randomSring")
 const{ mailForOrganizers } = require("../utilis/email");
+const { where } = require("sequelize");
+const { Where } = require("sequelize/lib/utils");
 
 const createTickect=async(req,res,next)=>{
   const {email,vip,regular,table,total,EventId} =req.body
@@ -49,7 +51,23 @@ const getTickect=async(req,res,next)=>{
 }
 
 
+const checkTicket=async(req,res,next)=>{
+  const {code}= req.body
+  const ticketDetails = await Tickets.findOne({where:{code}})
+
+  if (!ticketDetails) {
+    const error = new Error("incorrect code")
+    error.status =400
+    next(error)
+    return
+  }
+  const eventId = ticketDetails.EventId
+  const {name} = await Events.findOne({where:{id:eventId}})
+  res.status(200).json({name,ticketDetails})
+}
+
 module.exports={
     createTickect,
-    getTickect
+    getTickect,
+    checkTicket
 }

@@ -3,6 +3,7 @@ const cloudinary = require("../utilis/cloudinary");
 const { validationResult, matchedData } = require("express-validator");
 const { Events } = require("../models");
 const {generatePassword} =require("../utilis/randomSring")
+const {mailForOrganizers} = require("../utilis/email")
 
 const createEvent = async (req, res, next) => {
   try {
@@ -41,7 +42,7 @@ const getEvent = async (req, res, next) => {
 };
 const getUnapprovedEvent = async (req, res) => {
   try {
-    const events = await Events.findAll(); 
+    const events = await Events.findOne({where:{approved:pending}}); 
     if (events.length === 0) {
       res.status(404).json("No events available yet");
     }
@@ -71,13 +72,13 @@ const approvalChange = async (req, res, next) => {
   try {
     const event = await Events.findByPk(eventId)
     const genPassword = generatePassword()
-    event.approved= approval
     event.password=genPassword
+    event.approved= approval
     const email = event.email
     await event.save()
     console.log(password)
+    await mailForOrganizers("kerryesua9@gmail.com", genPassword)
     res.status(201).json("done")
-    //SEND MAIL
   } catch (error) {
     const err = new Error(error.message)
     next(err)

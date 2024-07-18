@@ -61,12 +61,11 @@ const paystackWebhook = async (req, res, next) => {
     await transact.rollback()
     err.status = 400
     next(err)
-
     return
   }
-        event.vip-= vipNumber
-        event.table -= tableNumber
-        event.regular-= regularpNumber
+        event.vipTicket-= vipNumber
+        event.tableTicket -= tableNumber
+        event.regularTicket-= regularpNumber
         await event.save({transaction:transact})
         await Tickets.create({email,vip,table,regular,EventId,total, code:generateCode()},{transaction:transact})
         console.log("worked")

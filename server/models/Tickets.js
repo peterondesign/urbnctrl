@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull : false,
       },
-      vip: {
+       vip: {
         type: DataTypes.STRING,
         allowNull: true,
         defaultValue: "",
@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
           this.setDataValue("vip", Array.isArray(val) ? val.join(";") : '');
         }
       },
-      regular: {
+       regular: {
         defaultValue: "",
         type: DataTypes.STRING,
         allowNull: true,
@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
           this.setDataValue("regular", Array.isArray(val) ? val.join(";") : '');
         }
       },
-      table: {
+       table: {
         defaultValue: "",
         type: DataTypes.STRING,
         allowNull: true,
@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
           this.setDataValue("table", Array.isArray(val) ? val.join(";") : '');
         }
       },
-      total:{
+       total:{
         type: DataTypes.INTEGER,
         allowNull: true,
       },

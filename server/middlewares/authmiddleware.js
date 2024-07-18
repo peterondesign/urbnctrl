@@ -19,6 +19,7 @@ const checkToken=(req,res,next)=>{
         res.status(400).json("you are not authorized")
     }
 }   
+
 const adminAuth=(req, res, next)=>{
     checkToken(req, res,()=>{
       if (req.user.isAdmin) {
@@ -30,4 +31,18 @@ const adminAuth=(req, res, next)=>{
     })
   }
 
-module.exports ={checkToken,adminAuth}
+
+  const checkPassword=(req,res,next)=>{
+    const passwordCode= req.headers.x-password-token
+    
+    jwt.verify(passwordCode, process.env.JWT_KEY, (err,password)=>{
+        if(err){
+            res.status(400).json("invalid token")
+            return
+        }
+        req.user=user
+        next()
+
+    })
+  }
+module.exports ={checkToken,adminAuth,checkPassword}
