@@ -33,16 +33,22 @@ const adminAuth=(req, res, next)=>{
 
 
   const checkPassword=(req,res,next)=>{
-    const passwordCode= req.headers.x-password-token
+    const passwordCode= req.headers.organizer
+    if (!passwordCode) {
+        const error= new Error("no token")
+        error.status= 400
+        next(error)
+    } else { 
+        jwt.verify(passwordCode, process.env.JWT_KEY, (err,passwordd)=>{
+            if(err){
+                res.status(400).json("invalid token")
+                return
+            }
+            next()
+     
+        }) 
+    }
     
-    jwt.verify(passwordCode, process.env.JWT_KEY, (err,password)=>{
-        if(err){
-            res.status(400).json("invalid token")
-            return
-        }
-        req.user=user
-        next()
 
-    })
   }
 module.exports ={checkToken,adminAuth,checkPassword}

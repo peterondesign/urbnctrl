@@ -9,6 +9,7 @@ const tickets = require("./tickets/ticket");
 const payment = require("./payments/paystack")
 const events = require("./events/eventRoute");
 const googleAuth = require("./authRoute/googleAuth");
+const organizer = require("./authRoute/organizerAuth");
 const credentialsAuth = require("./authRoute/credentialsAuth");
 
 const corsOptions = {
@@ -28,6 +29,7 @@ app.use("/api/blog", blogs);
 app.use("/api/event", events);
 app.use("/api/ticket", tickets);
 app.use("/api/payment", payment);
+app.use("/api/organizer", organizer);
 app.use("/api", credentialsAuth);
 app.use("/auth", googleAuth);
 app.use(errorHandler);

@@ -40,21 +40,29 @@ const getEvent = async (req, res, next) => {
     next(serverError);
   }
 };
-const getUnapprovedEvent = async (req, res) => {
+const getUnapprovedEvent = async (req, res, next) => {
+  const page = parseInt(req.params.page) || 1
+  const limit =5
+  if (page<1) page =1
+  
   try {
-    const events = await Events.findOne({where:{approved:pending}}); 
-    if (events.length === 0) {
+    const offset = (page-1) * limit
+    const {count,rows} = await Events.findAndCountAll({where:{approved:"pending"},offset:offset,limit:limit}); 
+    if (rows.length === 0) {
       res.status(404).json("No events available yet");
+      return
     }
-
-    res.status(200).json(events);
+    const totalPages=Math.ceil(count/limit)
+    res.status(200).json({
+      page,limit,totalPages,events:rows
+    });
   } catch (error) {
     const serverError = new Error(error.message);
     next(serverError);
   }
 };
 
-const getUnapprovedEventById = async (req, res, next) => {
+const getEventById = async (req, res, next) => {
   const eventId = req.params.id
   try {
     const eventDetails = await Events.findByPk(eventId)
@@ -76,8 +84,9 @@ const approvalChange = async (req, res, next) => {
     event.approved= approval
     const email = event.email
     await event.save()
-    console.log(password)
-    await mailForOrganizers("kerryesua9@gmail.com", genPassword)
+    if (approval==="approved") {
+      await mailForOrganizers(email, genPassword)
+    }
     res.status(201).json("done")
   } catch (error) {
     const err = new Error(error.message)
@@ -90,5 +99,5 @@ module.exports = {
   getEvent,
   approvalChange,
   getUnapprovedEvent,
-  getUnapprovedEventById,
+  getEventById,
 };
