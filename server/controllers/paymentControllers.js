@@ -4,7 +4,7 @@ const db = require("../models/index")
 const { Events } = require("../models");
 const { Tickets } = require("../models");
 const {generateCode} = require("../utilis/randomSring")
-const{ mailForOrganizers } = require("../utilis/email");
+const{ mailForOrganizers,mailForRegular,mailForTable,mailForVIP } = require("../utilis/email");
 
 
 const initiatePayment = async (req, res, next) => {
@@ -56,19 +56,70 @@ const paystackWebhook = async (req, res, next) => {
          const vipNumber= vip.length
          const regularpNumber= regular.length
          const tableNumber= table.length
+
    if (event.vip < vipNumber || event.regular < regularpNumber || event.table < tableNumber){
-    const err = new Error("not enough tickets left")
-    await transact.rollback()
-    err.status = 400
-    next(err)
-    return
+      const err = new Error("not enough tickets left")
+      await transact.rollback()
+      err.status = 400
+      next(err)
+      return
   }
         event.vipTicket-= vipNumber
         event.tableTicket -= tableNumber
         event.regularTicket-= regularpNumber
         await event.save({transaction:transact})
-        await Tickets.create({email,vip,table,regular,EventId,total, code:generateCode()},{transaction:transact})
-        console.log("worked")
+
+       //for vip
+        for (let index = 0; index < vip.length; index++) {
+          if (vip.length===0) {
+            return null
+          }
+          const code = generateCode()
+          const element = {
+             email:vip[index],
+             type: "vip",
+             EventId,
+             total,
+             code
+          };
+          await Tickets.create(element,{transact})
+          //await mailForVIP(vip[index],code)
+
+        }
+          // for regular
+        for (let index = 0; index < regular.length; index++) {
+          if (regular.length===0) {
+            return null
+          }
+          const code = generateCode()
+          const element = {
+             email:regular[index],
+             type: "regular",
+             EventId,
+             total,
+             code
+          };
+          await Tickets.create(element,{transact})
+          //await mailForRegular(regular[index],code)
+        }
+         //fot tables
+        for (let index = 0; index < table.length; index++) {
+          if (table.length===0) {
+            return null
+          }
+          const code = generateCode()
+          const element = {
+             email:table[index],
+             type: "table",
+             EventId,
+             total,
+             code
+          };
+            await Tickets.create(element,{transact})
+            await mailForTable(table[index],code)
+
+        }
+
         await transact.commit()
         //await mailForOrganizers("kerryesua9@gmail.com",email)
        return res.status(200).end().json("success");

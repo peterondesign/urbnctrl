@@ -7,34 +7,54 @@ const { where } = require("sequelize");
 const { Where } = require("sequelize/lib/utils");
 
 const createTickect=async(req,res,next)=>{
-  const {email,vip,regular,table,total,EventId} =req.body
+  const {email,vip=[],regular=[],total,EventId} =req.body
+  const transact =await db.sequelize.transaction()
 
   try {
-    if (!email || !vip || !regular || !table || !EventId ) {
+    if (!email || !vip || !regular || !EventId ) {
         const error = new Error("please fill all required fields")
         error.status = 400 
         next(error)
     } 
-    const transact =await db.sequelize.transaction()
 
     const event = await Events.findByPk(EventId,{transact})
   const vipNumber= vip.length
   const regularpNumber= regular.length
-  const tableNumber= table.length
-  if (event.vip < vipNumber || event.regular < regularpNumber || event.table < tableNumber) { 
+  if (event.vip < vipNumber || event.regular < regularpNumber ) { 
     const err = new Error("not enough tickets left")
     err.status = 400
     next(err)
   }
     event.vip -= vipNumber
-    event.table -= tableNumber
     event.regular-= regularpNumber
     await event.save({transact})
-   const created= await Tickets.create({email,vip,regular,table,EventId,total, code:generateCode()},{transact})
+
+    for (let index = 0; index < vip.length; index++) {
+      const element = {
+         email:vip[index],
+         type: "vip",
+         EventId,
+         total : total/vipNumber,
+         code: generateCode()
+      };
+      const created= await Tickets.create(element,{transact})
+    }
+    for (let index = 0; index < regular.length; index++) {
+      const element = {
+         email:regular[index],
+         type: "regular",
+         EventId,
+         total: total/regularpNumber,
+         code: generateCode()
+      };
+      const created= await Tickets.create(element,{transact})
+      //await mailForOrganizers("kerryesua9@gmail.com",email)
+      console.log("ticket regular")
+    }
     await transact.commit()
-    //await mailForOrganizers("kerryesua9@gmail.com",email)
-    console.log("ticket created")
-    res.status(201).json(created) 
+
+    res.status(201).json("done")
+
 
   } catch (error) {
     await transact.rollback()
