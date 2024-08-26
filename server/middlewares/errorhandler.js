@@ -1,9 +1,14 @@
-const errorHandler =(err,req,res,next)=>{
- if (err.status) {
-  res.status(err.status).json({msg: err.message})
- } else {
-  res.status(500).json({msg: err.message})
- }
-}  
+require("dotenv").config();
 
-module.exports= {errorHandler}
+const logger = require("../utilis/logger");
+
+function errorHandler(err, req, res, next) {
+  logger.log("error", err.stack);
+  res.status(err.statusCode || 500).json({
+    status: err.status || "error",
+    message: err.message,
+    stack: process.env.NODE_ENV === "development" ? err.stack : undefined,
+  });
+}
+
+module.exports = errorHandler;

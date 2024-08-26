@@ -2,8 +2,11 @@ const router = require("../events/eventRoute");
 const cloudinary = require("../utilis/cloudinary");
 const { validationResult, matchedData } = require("express-validator");
 const { Events } = require("../models");
-const {generatePassword} =require("../utilis/randomSring")
-const {mailForOrganizers} = require("../utilis/email")
+const { generatePassword } = require("../utilis/randomSring");
+const { mailForOrganizers } = require("../utilis/email");
+const asyncHandler = require("express-async-handler");
+const paginateSearch = require("../utilis/paginateSearch");
+const { Op } = require("sequelize");
 
 const createEvent = async (req, res, next) => {
   try {
@@ -27,22 +30,58 @@ const createEvent = async (req, res, next) => {
   }
 };
 
-const getEvent = async (req, res, next) => {
-  try {
-    const events = await Events.findAll({ where: { approved: "pending" } });
-    if (events.length === 0) {
-      res.status(404).json("No events available yet");
-    }
+const getEvent = asyncHandler(async (req, res) => {
+  const results = await paginateSearch(
+    Events,
+    ["paginate"],
+    {
+      approved: "approved",
+    },
+    {},
+    req.query
+  );
 
-    res.status(200).json(events);
-  } catch (error) {
-    const serverError = new Error(error.message);
-    next(serverError);
-  }
-};
+  res.status(200).send({
+    status: "success",
+    results,
+  });
+});
+
+const completedEvents = asyncHandler(async (req, res) => {
+  const results = await paginateSearch(
+    Events,
+    ["paginate"],
+    {
+      [Op.or]: [{ approved: "approved" }, { approved: "rejected" }],
+    },
+    {},
+    req.query
+  );
+  res.status(200).send({
+    status: "success",
+    results,
+  });
+});
+
+const pendingEvents = asyncHandler(async (req, res) => {
+  const results = await paginateSearch(
+    Events,
+    ["paginate"],
+    {
+      approved: "pending",
+    },
+    {},
+    req.query
+  );
+  res.status(200).send({
+    status: "success",
+    results,
+  });
+});
+
 const getUnapprovedEvent = async (req, res) => {
   try {
-    const events = await Events.findOne({where:{approved:pending}}); 
+    const events = await Events.findOne({ where: { approved: pending } });
     if (events.length === 0) {
       res.status(404).json("No events available yet");
     }
@@ -55,33 +94,33 @@ const getUnapprovedEvent = async (req, res) => {
 };
 
 const getUnapprovedEventById = async (req, res, next) => {
-  const eventId = req.params.id
+  const eventId = req.params.id;
   try {
-    const eventDetails = await Events.findByPk(eventId)
-    const {password, ...others} = eventDetails
-    res.status(200).json(others.dataValues)
+    const eventDetails = await Events.findByPk(eventId);
+    const { password, ...others } = eventDetails;
+    res.status(200).json(others.dataValues);
   } catch (error) {
-    const err = new Error(error.message)
-    next(err)
+    const err = new Error(error.message);
+    next(err);
   }
 };
 
 const approvalChange = async (req, res, next) => {
-  const eventId = req.params.id
-  const approval = req.body.approval
+  const eventId = req.params.id;
+  const approval = req.body.approval;
   try {
-    const event = await Events.findByPk(eventId)
-    const genPassword = generatePassword()
-    event.password=genPassword
-    event.approved= approval
-    const email = event.email
-    await event.save()
-    console.log(password)
-    await mailForOrganizers("kerryesua9@gmail.com", genPassword)
-    res.status(201).json("done")
+    const event = await Events.findByPk(eventId);
+    const genPassword = generatePassword();
+    event.password = genPassword;
+    event.approved = approval;
+    const email = event.email;
+    await event.save();
+    console.log(password);
+    await mailForOrganizers("kerryesua9@gmail.com", genPassword);
+    res.status(201).json("done");
   } catch (error) {
-    const err = new Error(error.message)
-    next(err)
+    const err = new Error(error.message);
+    next(err);
   }
 };
 
@@ -91,4 +130,6 @@ module.exports = {
   approvalChange,
   getUnapprovedEvent,
   getUnapprovedEventById,
+  pendingEvents,
+  completedEvents,
 };

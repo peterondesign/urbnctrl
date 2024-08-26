@@ -2,11 +2,11 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 require("dotenv").config();
-const { errorHandler } = require("./middlewares/errorhandler");
+const errorHandler = require("./middlewares/errorhandler");
 const db = require("./models");
 const blogs = require("./blogs/blog");
 const tickets = require("./tickets/ticket");
-const payment = require("./payments/paystack")
+const payment = require("./payments/paystack");
 const events = require("./events/eventRoute");
 const googleAuth = require("./authRoute/googleAuth");
 const credentialsAuth = require("./authRoute/credentialsAuth");
@@ -24,6 +24,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use("/admin", require("./adminRoute"));
 app.use("/api/blog", blogs);
 app.use("/api/event", events);
 app.use("/api/ticket", tickets);
