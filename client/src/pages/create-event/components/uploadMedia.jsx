@@ -21,7 +21,7 @@ const UploadMedia = ({ onChange }) => {
         </span>
       )}
       {!image ? (
-        <label className="block w-full relative z-[2] h-full text-center text-xl font-medium cursor-pointer">
+        <label className="block w-full relative  h-full text-center text-xl font-medium cursor-pointer">
           <input
             type="file"
             name="myImage"

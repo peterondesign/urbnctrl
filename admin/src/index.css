@@ -2,13 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 .active {
   @apply bg-custom2 text-black right-1 border-r-lime-200;
 }
 
-
 .side-items {
-  @apply pl-5
+  @apply pl-5;
 }
