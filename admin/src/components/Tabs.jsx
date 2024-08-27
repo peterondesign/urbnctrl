@@ -56,7 +56,7 @@ const Tabs = () => {
       name: "Burna Boy Live",
       date: "12-11-2024",
       detail: "An energetic and unforgettable concert experience by Burna Boy.",
-      status: "Approved",
+      status: "Rejected",
     },
     {
       name: "Burna Boy Live",
