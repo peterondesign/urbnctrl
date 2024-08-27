@@ -5,6 +5,6 @@ const { emailPassword } = require("../middlewares/validator");
 
 auth.post("/login", emailPassword, Login);
 auth.post("/setup", emailPassword, setup);
-auth.post("/me", getMe);
+auth.get("/me", getMe);
 
 module.exports = auth;

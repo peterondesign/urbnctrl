@@ -159,7 +159,7 @@ exports.getAdmin = asyncHandler(async (req, res) => {
     attributes: { exclude: ["password"] },
   });
 
-  if (!admin) {
+  if (!admin || admin.role === "super") {
     throw new AppError("Admin not found.", 404);
   }
   res.status(200).send({

@@ -7,6 +7,7 @@ const { Op } = require("sequelize");
 exports.confirmEventCode = asyncHandler(async (req, res) => {
   const { code } = req.data;
 
+  console.log(code);
   const event = await db.Events.findOne({
     where: {
       password: code,
