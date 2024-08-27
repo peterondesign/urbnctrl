@@ -1,11 +1,11 @@
+require("dotenv").config();
 const axios = require("axios");
 const crypto = require("crypto");
-const db = require("../models/index")
+const db = require("../models/index");
 const { Events } = require("../models");
 const { Tickets } = require("../models");
-const {generateCode} = require("../utilis/randomSring")
-const{ mailForOrganizers } = require("../utilis/email");
-
+const { generateCode } = require("../utilis/randomSring");
+const { mailForOrganizers } = require("../utilis/email");
 
 const initiatePayment = async (req, res, next) => {
   const { email, total, vip, regular, table, EventId } = req.body;
@@ -41,44 +41,60 @@ const initiatePayment = async (req, res, next) => {
 
 const paystackWebhook = async (req, res, next) => {
   const secret = process.env.PAYSTACK_API_KEY;
-  const hash = crypto.createHmac("sha512", secret).update(JSON.stringify(req.body)).digest("hex");
+  const hash = crypto
+    .createHmac("sha512", secret)
+    .update(JSON.stringify(req.body))
+    .digest("hex");
   if (hash === req.headers["x-paystack-signature"]) {
     const details = req.body;
-    console.log(details.data.metadata)
-    const { email, vip=[], table=[], regular=[], EventId, total } =details.data.metadata;
-  
+    console.log(details.data.metadata);
+    const {
+      email,
+      vip = [],
+      table = [],
+      regular = [],
+      EventId,
+      total,
+    } = details.data.metadata;
+
     if (details.event === "charge.success") {
-      const transact =await db.sequelize.transaction()
+      const transact = await db.sequelize.transaction();
       //place order
       try {
-
-         const event = await Events.findByPk(EventId,{transaction:transact})
-         const vipNumber= vip.length
-         const regularpNumber= regular.length
-         const tableNumber= table.length
-   if (event.vip < vipNumber || event.regular < regularpNumber || event.table < tableNumber){
-    const err = new Error("not enough tickets left")
-    await transact.rollback()
-    err.status = 400
-    next(err)
-    return
-  }
-        event.vipTicket-= vipNumber
-        event.tableTicket -= tableNumber
-        event.regularTicket-= regularpNumber
-        await event.save({transaction:transact})
-        await Tickets.create({email,vip,table,regular,EventId,total, code:generateCode()},{transaction:transact})
-        console.log("worked")
-        await transact.commit()
+        const event = await Events.findByPk(EventId, { transaction: transact });
+        const vipNumber = vip.length;
+        const regularpNumber = regular.length;
+        const tableNumber = table.length;
+        if (
+          event.vip < vipNumber ||
+          event.regular < regularpNumber ||
+          event.table < tableNumber
+        ) {
+          const err = new Error("not enough tickets left");
+          await transact.rollback();
+          err.status = 400;
+          next(err);
+          return;
+        }
+        event.vipTicket -= vipNumber;
+        event.tableTicket -= tableNumber;
+        event.regularTicket -= regularpNumber;
+        await event.save({ transaction: transact });
+        await Tickets.create(
+          { email, vip, table, regular, EventId, total, code: generateCode() },
+          { transaction: transact }
+        );
+        console.log("worked");
+        await transact.commit();
         //await mailForOrganizers("kerryesua9@gmail.com",email)
-       return res.status(200).end().json("success");
+        return res.status(200).end().json("success");
       } catch (error) {
-        console.log(error.message)
+        console.log(error.message);
         const err = new Error(error.message);
         next(err);
         return res.status(200).end().json("error");
       }
-    }  
+    }
   }
 };
 

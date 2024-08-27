@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { Tickets } = require("../models");
 const { Events } = require("../models");
 const db = require("../models/index");
