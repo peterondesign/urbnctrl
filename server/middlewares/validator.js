@@ -20,6 +20,12 @@ const options = {
       "any.only": `Role must be one of ${["events", "blog"].join(", ")}.`,
       "any.required": "Role is required.",
     }),
+  code: Joi.string().required().messages({
+    "any.required": "Code is required.",
+  }),
+  ticketCode: Joi.string().required().messages({
+    "any.required": "ticket code is required.",
+  }),
 };
 
 const handler = (data, req, next) => {
@@ -60,6 +66,7 @@ exports.adminBody = (req, res, next) => {
     next
   );
 };
+
 exports.adminBodyUnPassword = (req, res, next) => {
   handler(
     {
@@ -67,6 +74,26 @@ exports.adminBodyUnPassword = (req, res, next) => {
       password: options.unpassowrd,
       name: options.name,
       role: options.role,
+    },
+    req,
+    next
+  );
+};
+
+exports.code = (req, res, next) => {
+  handler(
+    {
+      code: options.code,
+    },
+    req,
+    next
+  );
+};
+
+exports.ticketCode = (req, res, next) => {
+  handler(
+    {
+      ticketCode: options.ticketCode,
     },
     req,
     next

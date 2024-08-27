@@ -17,6 +17,9 @@ const EventInfo = ({ onClick, data }) => {
     regular: 0,
   });
 
+  const validSubmint =
+    ticketCount?.regular > 0 || ticketCount?.table > 0 || ticketCount?.vip > 0;
+
   return (
     <div className="w-full">
       <h2 className="hidden sm:block  text-center font-medium text-[#232121] text-[32px] mb-9">
@@ -185,10 +188,7 @@ const EventInfo = ({ onClick, data }) => {
         </ul>
       </div>
       <div className="flex justify-center md:justify-end w-full">
-        {!ticketCount?.regular > 0 &&
-        !ticketCount?.table > 0 &&
-        !ticketCount?.vip > 0 &&
-        data?.eventType !== "free" ? (
+        {!validSubmint && data?.eventType !== "free" ? (
           <Button text="Make Payment" disabled />
         ) : (
           <Button

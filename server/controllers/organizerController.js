@@ -1,22 +1,52 @@
-const { Events } = require("../models");
-const jwt = require("jsonwebtoken")
+const db = require("../models");
+const asyncHandler = require("express-async-handler");
+const AppError = require("../utilis/AppError");
+const { generateToken } = require("../utilis/tokenGen");
+const { Op } = require("sequelize");
 
-const organizerController=async(req,res,next)=>{
+exports.confirmEventCode = asyncHandler(async (req, res) => {
+  const { code } = req.data;
 
-const {password}= req.body
+  const event = await db.Events.findOne({
+    where: {
+      password: code,
+    },
+  });
 
-const findEvent = await Events.findOne({where:{password}})
-if (!findEvent) {
-    const error = new Error("wrong password")
-    error.status=400
-    next(error)
-    return
-}
- res.status(200).json({password: generateTRoken(password)})
-}
+  if (!event) {
+    throw new AppError("Event not found.", 404);
+  }
 
+  const token = generateToken({ code });
+  res.status(200).send({
+    status: "success",
+    message: "Event is valid.",
+    token,
+  });
+});
 
-const generateTRoken = (password) => {
-  return jwt.sign({ password },process.env.JWT_KEY,{ expiresIn: "1d" });
-}
-  module.exports ={organizerController}
+exports.validateTicket = asyncHandler(async (req, res) => {
+  const { ticketCode } = req.data;
+  const { code } = req.organizer;
+
+  const event = await db.Events.findOne({
+    where: {
+      password: code,
+    },
+  });
+
+  const ticket = await db.Tickets.findOne({
+    where: {
+      [Op.and]: [{ code: ticketCode }, { EventId: event.id }],
+    },
+  });
+
+  if (!ticket) {
+    throw new AppError("Invalid ticket.", 400);
+  }
+  res.status(200).send({
+    status: "success",
+    message: "Ticket is valid.",
+    results: ticket,
+  });
+});
