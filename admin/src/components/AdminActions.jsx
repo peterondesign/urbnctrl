@@ -15,6 +15,7 @@ const AdminActions = () => {
     setShowPopup(true);
   };
 
+  const handleClosePopup = () => setShowPopup(false);
 
   const handleClickOutside = (event) => {
     if (
