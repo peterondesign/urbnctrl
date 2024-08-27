@@ -7,6 +7,8 @@ const { mailForOrganizers } = require("../utilis/email");
 const asyncHandler = require("express-async-handler");
 const paginateSearch = require("../utilis/paginateSearch");
 const { Op } = require("sequelize");
+const AppError = require("../utilis/AppError");
+const db = require("../models");
 
 const createEvent = async (req, res, next) => {
   try {
@@ -50,11 +52,11 @@ const getEvent = asyncHandler(async (req, res) => {
 const completedEvents = asyncHandler(async (req, res) => {
   const results = await paginateSearch(
     Events,
-    ["paginate"],
+    ["paginate", { filter: ["email", "name"] }],
     {
       [Op.or]: [{ approved: "approved" }, { approved: "rejected" }],
     },
-    {},
+    { exclude: "password" },
     req.query
   );
   res.status(200).send({
@@ -66,11 +68,11 @@ const completedEvents = asyncHandler(async (req, res) => {
 const pendingEvents = asyncHandler(async (req, res) => {
   const results = await paginateSearch(
     Events,
-    ["paginate"],
+    ["paginate", { filter: ["email", "name"] }],
     {
       approved: "pending",
     },
-    {},
+    { exclude: "password" },
     req.query
   );
   res.status(200).send({
@@ -115,7 +117,6 @@ const approvalChange = async (req, res, next) => {
     event.approved = approval;
     const email = event.email;
     await event.save();
-    console.log(password);
     await mailForOrganizers("kerryesua9@gmail.com", genPassword);
     res.status(201).json("done");
   } catch (error) {
@@ -123,8 +124,65 @@ const approvalChange = async (req, res, next) => {
     next(err);
   }
 };
+const approvePendingEvent = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  const pendingEvent = await Events.findOne({
+    where: {
+      [Op.and]: [{ id }, { approved: "pending" }],
+    },
+  });
+
+  if (!pendingEvent) {
+    throw new AppError("Invalid event.", 400);
+  }
+
+  db.sequelize.transaction(async (t) => {
+    //send mail
+
+    const genPassword = generatePassword();
+    await Events.update(
+      { approved: "approved", password: genPassword },
+      { where: { id }, transaction: t }
+    );
+
+    res.status(200).send({
+      status: "success",
+      message: "Event was approved successfully.",
+    });
+  });
+});
+
+const rejectPendingEvent = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  const pendingEvent = await Events.findOne({
+    where: {
+      [Op.and]: [{ id }, { approved: "pending" }],
+    },
+  });
+
+  if (!pendingEvent) {
+    throw new AppError("Invalid event.", 400);
+  }
+
+  db.sequelize.transaction(async (t) => {
+    //send mail
+    await Events.update(
+      { approved: "rejected" },
+      { where: { id }, transaction: t }
+    );
+
+    res.status(200).send({
+      status: "success",
+      message: "Event was rejected successfully.",
+    });
+  });
+});
 
 module.exports = {
+  rejectPendingEvent,
+  approvePendingEvent,
   createEvent,
   getEvent,
   approvalChange,

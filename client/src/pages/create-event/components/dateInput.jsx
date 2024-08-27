@@ -17,7 +17,7 @@ const DateInput = ({ selected, onChange, className, minDate }) => {
     <div
       onClick={onClick}
       ref={ref}
-      className={`flex cursor-pointer border border-[#ABABAB] border-solid items-center justify-between w-full px-4 ${className}`}
+      className={`flex cursor-pointer border border-[#ABABAB] border-solid items-center justify-between w-full px-4 ${className} relative z-[5]`}
     >
       <div className="flex items-center gap-4 h-[54px]">
         <CalenderIcon />
@@ -39,6 +39,7 @@ const DateInput = ({ selected, onChange, className, minDate }) => {
       minDate={minDate}
       customInput={<CustomInput />}
       showTimeSelect
+      className="relative z-10"
       dateFormat="MMMM d, yyyy  h:mm aa"
     />
   );

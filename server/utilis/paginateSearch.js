@@ -8,7 +8,9 @@ const paginateSearch = async (
   reqQuery = {}
 ) => {
   const { page = 1, limit = 6, search = "" } = reqQuery;
-  const sequelizeOptions = {};
+  const sequelizeOptions = {
+    order: [["createdAt", "DESC"]],
+  };
 
   // Apply pagination if 'paginate' is in options
   if (options.includes("paginate")) {

@@ -24,7 +24,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/admin", require("./adminRoute"));
+app.use("/api/admin", require("./adminRoute"));
 app.use("/api/blog", blogs);
 app.use("/api/event", events);
 app.use("/api/ticket", tickets);

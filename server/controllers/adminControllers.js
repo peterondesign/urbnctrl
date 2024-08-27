@@ -135,7 +135,7 @@ exports.deleteAdmin = asyncHandler(async (req, res) => {
 exports.getAllAdmins = asyncHandler(async (req, res) => {
   const results = await paginateSearch(
     db.Admins,
-    ["paginate", { filter: ["email", "name"] }],
+    ["paginate"],
     {
       [Op.or]: [{ role: "events" }, { role: "blog" }],
     },
