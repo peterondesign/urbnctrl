@@ -1,14 +1,15 @@
 import Logo from "../../../client/src/assets/svgs/logo";
 import { useState } from "react";
 
-const Signin = () => {
+const Setup = () => {
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
 
   const label_cn = "text-base mb-2";
-  const input_cn = "w-full h-9 rounded-lg border-[#988E8E] border-solid border outline-0 px-3";
+  const input_cn =
+    "w-full h-9 rounded-lg border-[#988E8E] border-solid border outline-0 px-3";
 
   return (
     <div className="p-8 justify-center items-center min-h-screen">
@@ -57,4 +58,4 @@ const Signin = () => {
   );
 };
 
-export default Signin;
+export default Setup;
