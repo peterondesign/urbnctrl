@@ -28,8 +28,20 @@ const useOrganizer = () => {
       data,
     });
   };
+  const [{ ...getEventData }, getEvent] = useAxios(
+    {
+      method: "GET",
+      url: `${url}/event`,
+    },
+    { manual: true }
+  );
+  const handleGetEvent = async () => {
+    return await getEvent();
+  };
 
   return {
+    handleGetEvent,
+    getEventData,
     verifyEventData,
     handleVerifyEvent,
     handleVerifyTicket,

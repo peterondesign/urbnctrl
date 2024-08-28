@@ -1,8 +1,10 @@
+import moment from "moment";
 import { success } from "../../../assets/images";
 import ModalContainer from "../../../components/modalContainer";
 import PropTypes from "prop-types";
 
-const SuccessModal = ({ onClose }) => {
+const SuccessModal = ({ onClose, data }) => {
+  console.log(data);
   return (
     <ModalContainer open close={onClose}>
       <div className="bg-[#FFFFFF] w-full max-w-[700px] py-[32px] px-[24px] lg:px-[56px] rounded-[40px] flex flex-col gap-[48px] ">
@@ -12,22 +14,24 @@ const SuccessModal = ({ onClose }) => {
         <div className="flex w-full flex-col-reverse lg:flex-row items-center gap-[32px] justify-between">
           <ul className="w-full text-[12px] lg:text-[15px] flex flex-col gap-[8px] lg:gap-[12px]">
             <li className="flex w-full">
-              <p className="w-[160px] text-[#616161] font-medium ">
+              <p className="w-[160px] text-[#616161] font-medium uppercase">
                 Purchase date:
               </p>
-              <p className="flex-1 text-right font-medium">23-06-2024</p>
+              <p className="flex-1 text-right font-medium">
+                {moment(data?.createdAt).format("DD-MM-YYYY")}
+              </p>
             </li>
             <li className="flex w-full">
-              <p className="w-[160px] text-[#616161] font-medium ">REF ID:</p>
-              <p className="flex-1 text-right font-medium"> 28661882728GHT</p>
+              <p className="w-[160px] text-[#616161] font-medium uppercase">
+                Code:
+              </p>
+              <p className="flex-1 text-right font-medium">{data?.code}</p>
             </li>
             <li className="flex w-full">
-              <p className="w-[160px] text-[#616161] font-medium ">
+              <p className="w-[160px] text-[#616161] font-medium uppercase">
                 EMAIL ADDRESS:
               </p>
-              <p className="flex-1 text-right font-medium">
-                Haysal618@gmail.com
-              </p>
+              <p className="flex-1 text-right font-medium">{data?.email}</p>
             </li>
           </ul>
           <div className="w-[150px] h-[150px]  lg:w-[200px] lg:h-[200px] flex-shrink-0">
@@ -44,6 +48,7 @@ const SuccessModal = ({ onClose }) => {
 
 SuccessModal.propTypes = {
   onClose: PropTypes.func,
+  data: PropTypes.object,
 };
 
 export default SuccessModal;
