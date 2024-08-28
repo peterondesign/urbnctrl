@@ -1,4 +1,4 @@
-import Logo from "../../../public/assets/logo";
+import Logo from "../../../client/src/assets/svgs/logo";
 import { useState } from "react";
 
 const Login = () => {
