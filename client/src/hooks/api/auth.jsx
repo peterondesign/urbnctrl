@@ -1,22 +1,30 @@
-import useAxios from 'axios-hooks';
+import useAxios from "axios-hooks";
 
 const useAuth = () => {
   // signing in
-  const [{ ...signingInData }, signingIn] = useAxios();
+  const [{ ...signingInData }, signingIn] = useAxios(
+    {
+      method: "POST",
+      url: "/login",
+    },
+    { manual: true }
+  );
   const handleSigningIn = async (data) => {
     return await signingIn({
-      method: 'POST',
-      url: '/login',
       data,
     });
   };
 
   // signing up
-  const [{ ...signingUpData }, signingUp] = useAxios();
+  const [{ ...signingUpData }, signingUp] = useAxios(
+    {
+      method: "POST",
+      url: "/signup",
+    },
+    { manual: true }
+  );
   const handleSigningUp = async (data) => {
     return await signingUp({
-      method: 'POST',
-      url: '/signup',
       data,
     });
   };
