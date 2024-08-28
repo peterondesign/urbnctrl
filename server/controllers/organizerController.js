@@ -7,7 +7,6 @@ const { Op } = require("sequelize");
 exports.confirmEventCode = asyncHandler(async (req, res) => {
   const { code } = req.data;
 
-  console.log(code);
   const event = await db.Events.findOne({
     where: {
       password: code,
@@ -49,5 +48,24 @@ exports.validateTicket = asyncHandler(async (req, res) => {
     status: "success",
     message: "Ticket is valid.",
     results: ticket,
+  });
+});
+
+exports.getEvent = asyncHandler(async (req, res) => {
+  const { code } = req.organizer;
+
+  const event = await db.Events.findOne({
+    where: {
+      password: code,
+    },
+  });
+
+  if (!event) {
+    throw new AppError("Event not found.", 404);
+  }
+
+  res.status(200).send({
+    status: "success",
+    results: event,
   });
 });
