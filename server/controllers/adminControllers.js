@@ -151,6 +151,23 @@ exports.getAllAdmins = asyncHandler(async (req, res) => {
   });
 });
 
+exports.getAdmin = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  const admin = await db.Admins.findOne({
+    where: { id },
+    attributes: { exclude: ["password"] },
+  });
+
+  if (!admin || admin.role === "super") {
+    throw new AppError("Admin not found.", 404);
+  }
+  res.status(200).send({
+    status: "success",
+    results: admin,
+  });
+});
+
 exports.getMe = asyncHandler(async (req, res) => {
   const { id } = req.admin;
   const admin = await db.Admins.findOne({
@@ -162,4 +179,8 @@ exports.getMe = asyncHandler(async (req, res) => {
   if (!admin) {
     throw new AppError("Admin not found.", 404);
   }
+  res.status(200).send({
+    status: "success",
+    results: admin,
+  });
 });

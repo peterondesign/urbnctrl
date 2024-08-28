@@ -31,7 +31,7 @@ const organizerMiddleware = asyncHandler(async (req, res, next) => {
   });
 
   if (!organizer) {
-    throw new AppError("Event not found", 403);
+    throw new AppError("Invalid event.", 403);
   }
   req.organizer = { code: decodedToken.code };
 

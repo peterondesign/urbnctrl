@@ -50,3 +50,22 @@ exports.validateTicket = asyncHandler(async (req, res) => {
     results: ticket,
   });
 });
+
+exports.getEvent = asyncHandler(async (req, res) => {
+  const { code } = req.organizer;
+
+  const event = await db.Events.findOne({
+    where: {
+      password: code,
+    },
+  });
+
+  if (!event) {
+    throw new AppError("Event not found.", 404);
+  }
+
+  res.status(200).send({
+    status: "success",
+    results: event,
+  });
+});
