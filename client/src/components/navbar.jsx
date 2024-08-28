@@ -26,7 +26,7 @@ const Navbar = ({ toggle, setToggle, fixed }) => {
     <nav
       className={classNames("z-40 left-0 right-0 top-0", {
         relative: !fixed,
-        "fixed bg-white": fixed,
+        "fixed bg-white drop-shadow-md": fixed,
       })}
     >
       <MaxContainer>

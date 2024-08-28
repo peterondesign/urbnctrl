@@ -11,8 +11,12 @@ import authBg from "./auth-background.png";
 import gmail from "./gmail.png";
 import announcementComingSoon from "./announcement-coming-soon.jpg";
 import successPhone from "./success-phone.png";
+import fail from "./fail.png";
+import success from "./success.png";
 
 export {
+  fail,
+  success,
   announcementComingSoon,
   successPhone,
   gmail,
