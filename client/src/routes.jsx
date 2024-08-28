@@ -13,6 +13,8 @@ import CreateEvent from "./pages/create-event";
 import Announcement from "./pages/announcement";
 import PreviewPost from "./pages/preview-post";
 import ProtectedRoutes from "./components/protectedRoutes";
+import OrganizerContainer from "./components/organizerContainer";
+import Organizer from "./pages/organizer";
 
 const routes = createBrowserRouter([
   { path: "/", element: <Home /> },
@@ -38,6 +40,11 @@ const routes = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    path: "organizer",
+    element: <OrganizerContainer />,
+    children: [{ index: true, element: <Organizer /> }],
   },
   {
     path: "socials",
