@@ -16,7 +16,7 @@ const Dashboard = () => {
               <Route path="/Admin" element={<Admin />} />
               <Route path="/events" element={<Events />} />
               <Route path="/blog" element={<Blog />} />
-              {/* <Route path="/" element={<Events />} /> Default route */}
+              <Route path="/" element={<Events />} /> {/* Default route */}
             </Routes>
           </div>
         </div>
