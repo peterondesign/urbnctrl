@@ -15,7 +15,33 @@ const useAuth = () => {
     });
   };
 
-  return { setupData, handleSetup };
+  //login
+  const [{ ...loginData }, login] = useAxios(
+    {
+      url: "/admin/auth/login",
+      method: "POST",
+    },
+    { manual: true }
+  );
+  const handleLogin = async (data) => {
+    return await login({
+      data,
+    });
+  };
+
+  //me
+  const [{ ...meData }, me] = useAxios(
+    {
+      url: "/admin/auth/me",
+      method: "GET",
+    },
+    { manual: true }
+  );
+  const handleMe = async () => {
+    return await me();
+  };
+
+  return { setupData, handleSetup, meData, handleMe, handleLogin, loginData };
 };
 
 export default useAuth;

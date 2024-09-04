@@ -1,5 +1,12 @@
-import Logo from "../../../client/src/assets/svgs/logo";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import AuthWrapper from "../components/authWrapper";
+import Button from "../components/button";
+import TextField from "../components/textField";
+
+import { toast } from "react-toastify";
+import useAuth from "../hooks/api/auth";
+import Loader from "../components/loader";
 
 const Setup = () => {
   const [form, setForm] = useState({
@@ -7,54 +14,59 @@ const Setup = () => {
     password: "",
   });
 
-  const label_cn = "text-base mb-2";
-  const input_cn =
-    "w-full h-9 rounded-lg border-[#988E8E] border-solid border outline-0 px-3";
+  const { handleSetup, setupData } = useAuth();
 
+  const handleSubmit = async (e) => {
+    e?.preventDefault();
+    try {
+      const res = await handleSetup(form);
+      toast.success(res?.data?.message);
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+    }
+  };
   return (
-    <div className="p-8 justify-center items-center min-h-screen">
-      <div className="w-full logo-dark">
-        <Logo />
+    <AuthWrapper>
+      {setupData?.loading && <Loader />}
+      <div className="w-[280px]">
+        <h2 className="text-[18px] font-bold pb-[24px]">
+          Setup Admin Dashboard
+        </h2>
+        <form
+          className="w-full flex flex-col gap-[20px]"
+          onSubmit={handleSubmit}
+        >
+          <TextField
+            label="Email"
+            type="email"
+            required
+            value={form?.email}
+            onChange={(e) =>
+              setForm((prev) => ({ ...prev, email: e?.target?.value }))
+            }
+          />
+          <TextField
+            label="Password"
+            type="password"
+            required
+            value={form?.password}
+            onChange={(e) =>
+              setForm((prev) => ({ ...prev, password: e?.target?.value }))
+            }
+          />
+          <div className="pt-[10px]">
+            <Button fill text="Setup" />
+          </div>
+        </form>
+
+        <p className="mt-[32px]">
+          Go to{" "}
+          <Link className="font-bold text-[#e9b65d] underline" to="/">
+            login
+          </Link>
+        </p>
       </div>
-      <div className="flex justify-center items-center min-h-screen bg-gray-100">
-        <div className="bg-white p-8 rounded-md w-full max-w-sm">
-          <h2 className="text-xl font-bold text-center mb-6 ">
-            Sigin to Admin Dashboard
-          </h2>
-          <form>
-            <div className="mb-4">
-              <label>
-                <p className={label_cn}>Email</p>
-                <input
-                  type="email"
-                  required
-                  value={form?.email}
-                  className={input_cn}
-                  onChange={(e) =>
-                    setForm((prev) => ({ ...prev, email: e?.target?.value }))
-                  }
-                />
-              </label>
-            </div>
-            <label>
-              <p className={label_cn}>Password</p>
-              <input
-                type="password"
-                required
-                className={input_cn}
-                value={form?.password}
-                onChange={(e) =>
-                  setForm((prev) => ({ ...prev, password: e?.target?.value }))
-                }
-              />
-            </label>
-            <button className="h-[45px] w-full bg-primary font-medium text-light-dark capitalize rounded-[10px] flex items-center justify-center gap-4 mt-6">
-              Sign In
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
+    </AuthWrapper>
   );
 };
 
