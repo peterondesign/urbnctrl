@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import AuthWrapper from "../components/authWrapper";
-import Button from "../components/button";
-import TextField from "../components/textField";
+import AuthWrapper from "../../components/authWrapper";
+import Button from "../../components/button";
+import TextField from "../../components/textField";
 
 import { toast } from "react-toastify";
-import useAuth from "../hooks/api/auth";
-import Loader from "../components/loader";
+import useAuth from "../../hooks/api/auth";
+import Loader from "../../components/loader";
 
 const Setup = () => {
   const [form, setForm] = useState({

@@ -1,9 +1,9 @@
 import { useState } from "react";
-import AuthWrapper from "../components/authWrapper";
-import Button from "../components/button";
-import Loader from "../components/loader";
-import TextField from "../components/textField";
-import useAuth from "../hooks/api/auth";
+import AuthWrapper from "../../components/authWrapper";
+import Button from "../../components/button";
+import Loader from "../../components/loader";
+import TextField from "../../components/textField";
+import useAuth from "../../hooks/api/auth";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
