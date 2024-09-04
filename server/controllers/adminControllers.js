@@ -23,6 +23,7 @@ exports.Login = asyncHandler(async (req, res) => {
   res.status(200).send({
     status: "success",
     message: "Login was successful",
+    role: admin.role,
     token,
   });
 });
