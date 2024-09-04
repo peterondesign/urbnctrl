@@ -63,6 +63,8 @@ const Dashoard = () => {
     getMe();
   }, []);
 
+  console.log(meData);
+
   return (
     <div>
       <aside className="w-[240px] border-r border-[#E2E2E2] fixed z-10  left-0 bottom-0 top-0 flex flex-col bg-white">

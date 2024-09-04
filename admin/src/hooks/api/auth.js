@@ -32,13 +32,14 @@ const useAuth = () => {
   //me
   const [{ ...meData }, me] = useAxios(
     {
-      url: "/admin/auth/me",
       method: "GET",
     },
     { manual: true }
   );
   const handleMe = async () => {
-    return await me();
+    return await me({
+      url: "/admin/auth/me",
+    });
   };
 
   return { setupData, handleSetup, meData, handleMe, handleLogin, loginData };
