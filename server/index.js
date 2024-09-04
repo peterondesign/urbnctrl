@@ -17,6 +17,7 @@ const corsOptions = {
     "http://localhost:5174",
     "https://urbnctrl-frontend.onrender.com",
     "https://urbnctrl.onrender.com",
+    "https://urbnctrl-admin.onrender.com",
   ],
   optionalSuccessStatus: 200,
 };
