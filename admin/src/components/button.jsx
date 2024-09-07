@@ -1,6 +1,6 @@
 import classnames from "classnames";
 
-const Button = ({ text = "text", type = "submit", onClick, fill }) => {
+const Button = ({ text = "text", type = "submit", onClick, fill, icon }) => {
   return (
     <button
       type={type}
@@ -8,8 +8,10 @@ const Button = ({ text = "text", type = "submit", onClick, fill }) => {
       className={classnames("bg-[#FFBB4C] h-[48px] rounded px-[24px]", {
         "w-full": fill,
         "w-fit": !fill,
+        "flex gap-[16px] items-center": Boolean(icon),
       })}
     >
+      {icon && icon}
       {text}
     </button>
   );

@@ -9,3 +9,39 @@
 .side-items {
   @apply pl-5;
 }
+
+.paginate {
+  display: grid;
+  place-items: center;
+  width: 100%;
+}
+
+.paginate .rc-pagination {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.paginate .rc-pagination li {
+  background-color: #fedda4;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+.paginate .rc-pagination .rc-pagination-item-active {
+  background-color: #fdbb4b;
+  color: white;
+}
+.paginate .rc-pagination .rc-pagination-options {
+  display: none;
+}
+.paginate .rc-pagination .rc-pagination-jump-next-custom-icon {
+  background-color: transparent;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: flex-end;
+}

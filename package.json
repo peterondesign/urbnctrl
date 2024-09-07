@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "rc-pagination": "^4.2.0"
+  }
+}
