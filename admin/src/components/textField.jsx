@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import _ from "lodash";
 
 const TextField = ({
   label,
@@ -6,31 +6,26 @@ const TextField = ({
   required,
   value,
   onChange,
-  debounce,
+
+  onChangeDebounce,
   placeholder,
 }) => {
-  const [inputValue, setInputValue] = useState("");
+  const debouncedChange = _.debounce((value) => {
+    onChangeDebounce && onChangeDebounce(value);
+  }, 500);
 
-  useEffect(() => {
-    let timeoutId;
-
-    if (debounce && onChange) {
-      timeoutId = setTimeout(() => {
-        onChange(inputValue);
-      }, 500);
-    }
-
-    return () => clearTimeout(timeoutId);
-  }, [inputValue, debounce]);
+  const handleInputChange = (event) => {
+    const value = event?.target?.value;
+    onChange && onChange(event);
+    debouncedChange && debouncedChange(value);
+  };
 
   return (
     <label className="w-full">
       {label && <p className="mb-[8px] text-[15px]">{label}</p>}
       <input
-        onChange={(e) => {
-          debounce ? setInputValue(e.target?.value) : onChange(e);
-        }}
-        value={debounce ? inputValue : value}
+        onChange={handleInputChange}
+        value={value}
         type={type}
         required={required}
         placeholder={placeholder}

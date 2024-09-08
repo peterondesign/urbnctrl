@@ -10,7 +10,7 @@ const Switcher = ({ onChange }) => {
     if (onChange) {
       onChange(selected);
     }
-  }, []);
+  }, [selected]);
 
   return (
     <ul className="flex">

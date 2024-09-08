@@ -37,7 +37,12 @@ const Admins = () => {
     };
 
     getAdmins();
-  }, [deleteAdminData?.data, createAdminData?.data, updateAdminData?.data]);
+  }, [
+    deleteAdminData?.data,
+    createAdminData?.data,
+    updateAdminData?.data,
+    currentPage,
+  ]);
 
   const results = allAdminData?.data?.results;
 
