@@ -21,14 +21,20 @@ const Login = () => {
     e?.preventDefault();
     try {
       const res = await handleLogin(form);
+      console.log(res?.data);
       toast.success(res?.data?.message);
       const token = res?.data?.token;
       Cookies.set("token", token, { expires: 1 });
-      navigate("admin");
+      if (res?.data?.role === "super") {
+        navigate("admin");
+      } else {
+        navigate(`/admin/${res?.data?.role}`);
+      }
     } catch (error) {
       toast.error(error?.response?.data?.message);
     }
   };
+
   return (
     <AuthWrapper>
       {loginData?.loading && <Loader />}

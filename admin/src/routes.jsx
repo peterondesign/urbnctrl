@@ -4,6 +4,8 @@ import Login from "./pages/login";
 import Dashoard from "./components/dashoard";
 import Admins from "./pages/admins";
 import Events from "./pages/events";
+import Blog from "./pages/blog";
+import Preview from "./pages/blog/preview";
 
 const routes = createBrowserRouter([
   { path: "/", element: <Login /> },
@@ -14,6 +16,13 @@ const routes = createBrowserRouter([
     children: [
       { index: true, element: <Admins /> },
       { path: "events", element: <Events /> },
+      {
+        path: "blog",
+        children: [
+          { index: true, element: <Blog /> },
+          { path: "preview", element: <Preview /> },
+        ],
+      },
     ],
   },
 ]);

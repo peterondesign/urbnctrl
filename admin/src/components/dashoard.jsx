@@ -33,7 +33,15 @@ const Dashoard = () => {
   useEffect(() => {
     const getMe = async () => {
       try {
-        await handleMe();
+        const res = await handleMe();
+        const role = res?.data?.results?.role;
+        if (role === "blog" && !path.includes("blog")) {
+          navigate("/admin/blog");
+        } else if (role === "event" && !path.includes("events")) {
+          navigate("/admin/events");
+        } else {
+          return;
+        }
       } catch (error) {
         if (error?.response?.data) {
           toast.error(error?.response?.data?.message);
@@ -44,7 +52,7 @@ const Dashoard = () => {
     };
 
     getMe();
-  }, []);
+  }, [path]);
 
   const admin = meData?.data?.results;
 
