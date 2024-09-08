@@ -1,49 +1,35 @@
-const nodemailer = require("nodemailer")
+const nodemailer = require("nodemailer");
+const ejs = require("ejs");
+const AppError = require("./AppError");
+require("dotenv").config();
 
-const mailForCustomer=async(email, detail)=>{
-   
-   const transporter= nodemailer.createTransport({
-      service: "gmail",
-      host: "smtp.gmail.com",
-      port: 587,
-      secure: false,
-      auth:{
-         user: process.env.GMAIL_ADDRESS,
-         pass: process.env.GMAIL_PASS
+const transporter = nodemailer.createTransport({
+  host: process.env.MAIL_HOST,
+  port: process.env.MAIL_PORT,
+  secure: false,
+  auth: {
+    user: process.env.MAIL_USER,
+    pass: process.env.MAIL_PASSWORD,
+  },
+});
+
+const sendMail = async (receipients, subject, data, emailName) => {
+  ejs.renderFile(
+    `${__dirname}../views/${emailName}.ejs`,
+    data,
+    async (err, template) => {
+      if (err) {
+        throw new AppError(err.message);
+      } else {
+        await transporter.sendMail({
+          from: "no-reply@example.com",
+          to: receipients,
+          subject,
+          html: template,
+        });
       }
-   })
-   
-      await transporter.sendMail({
-         from: process.env.GMAIL_ADDRESS,
-         to: email,
-         subject: "testing",
-         html: `<p>hello ${detail}</p>`,
-         text: "testing 1 2"
-      })
-  
-}
+    }
+  );
+};
 
-
-
-
-const mailForOrganizers=async(email,password)=>{
-   const transporter= nodemailer.createTransport({
-      service: "gmail",
-      host: "smtp.gmail.com",
-      port: 587,
-      secure: false,
-      auth:{
-         user: process.env.GMAIL_ADDRESS,
-         pass: process.env.GMAIL_PASS
-      }
-   })
-   await transporter.sendMail({
-      from: process.env.GMAIL_ADDRESS,
-      to: email,
-      subject: "testing",
-      html: `<p>hello ${password}</p>`,
-      text: "testing 1 2"
-   })
-}
-
-module.exports={mailForOrganizers}
+module.exports = sendMail;

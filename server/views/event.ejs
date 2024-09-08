@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event code</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body style="background-color: #e5f9f9; margin: 0">
+    <center
+      style="width: 100%; table-layout: fixed; margin: 0; padding-bottom: 32px"
+    >
+      <table
+        style="
+          width: 100%;
+          max-width: 600px;
+          font-family: Montserrat, sans-serif;
+          color: #363636;
+          border-collapse: collapse;
+          border-spacing: 0;
+          padding: 52px 0;
+          background: #fff;
+          font-size: 12px;
+          line-height: 18px;
+        "
+      >
+        <tr>
+          <td align="center">
+            <h1 style="font-size: 24px">URBANCENTRAL</h1>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 0 24px">
+            <p>Dear organizer,</p>
+            <p>
+              Your event <strong><%= eventName %></strong> has been created and
+              has been successfully approved.
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 0 24px; width: 100%">
+            <table style="width: 100%">
+              <tr>
+                <td>
+                  <h2 style="font-size: 14px">Event Details:</h2>
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 100%">
+                  <table style="width: 100%; border-spacing: 0 8px">
+                    <tr>
+                      <td style="width: 40%">Name:</td>
+                      <td style="width: 60%">
+                        <strong><%= eventName %></strong>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="width: 40%">Date:</td>
+                      <td style="width: 60%">
+                        <strong><%= date %></strong>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="width: 40%">Event code:</td>
+                      <td style="width: 60%">
+                        <strong style="color: #01b0f0"><%= eventCode %></strong>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 20px 0 20px">
+                  We kindly request you to safeguard your event code. This code
+                  is crucial for verifying the authenticity of attendee tickets.
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 100%">
+            <table>
+              <tr>
+                <td
+                  style="
+                    background-color: #fcc210;
+                    padding: 9px 24px;
+                    font-weight: 500;
+                  "
+                >
+                  If you have any questions or need further assistance, please
+                  contact our customer service team at (Customer Service)
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </center>
+  </body>
+</html>

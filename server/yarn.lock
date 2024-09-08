@@ -153,6 +153,13 @@
   dependencies:
     "color-convert" "^2.0.1"
 
+"ansi-styles@^4.1.0":
+  "integrity" "sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg=="
+  "resolved" "https://registry.npmjs.org/ansi-styles/-/ansi-styles-4.3.0.tgz"
+  "version" "4.3.0"
+  dependencies:
+    "color-convert" "^2.0.1"
+
 "ansi-styles@^6.1.0":
   "integrity" "sha512-bN798gFfQX+viw3R7yrGWRqnrN2oRkEkUjjl4JNn4E8GxxbjtG3FbrEIIY3l8/hrwUwIeCZvi4QuOTP4MErVug=="
   "resolved" "https://registry.npmjs.org/ansi-styles/-/ansi-styles-6.2.1.tgz"
@@ -318,6 +325,14 @@
     "function-bind" "^1.1.2"
     "get-intrinsic" "^1.2.4"
     "set-function-length" "^1.2.1"
+
+"chalk@^4.0.2":
+  "integrity" "sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA=="
+  "resolved" "https://registry.npmjs.org/chalk/-/chalk-4.1.2.tgz"
+  "version" "4.1.2"
+  dependencies:
+    "ansi-styles" "^4.1.0"
+    "supports-color" "^7.1.0"
 
 "chokidar@^3.5.2":
   "integrity" "sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw=="
@@ -626,6 +641,13 @@
   "resolved" "https://registry.npmjs.org/ee-first/-/ee-first-1.1.1.tgz"
   "version" "1.1.1"
 
+"ejs@^3.1.10":
+  "integrity" "sha512-UeJmFfOrAQS8OJWPZ4qtgHyWExa088/MtK5UEyoJGFH67cDEXkZSviOiKRCZ4Xij0zxI3JECgYs3oKx+AizQBA=="
+  "resolved" "https://registry.npmjs.org/ejs/-/ejs-3.1.10.tgz"
+  "version" "3.1.10"
+  dependencies:
+    "jake" "^10.8.5"
+
 "emoji-regex@^8.0.0":
   "integrity" "sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A=="
   "resolved" "https://registry.npmjs.org/emoji-regex/-/emoji-regex-8.0.0.tgz"
@@ -792,6 +814,13 @@
   "integrity" "sha512-OP2IUU6HeYKJi3i0z4A19kHMQoLVs4Hc+DPqqxI2h/DPZHTm/vjsfC6P0b4jCMy14XizLBqvndQ+UilD7707Jw=="
   "resolved" "https://registry.npmjs.org/fecha/-/fecha-4.2.3.tgz"
   "version" "4.2.3"
+
+"filelist@^1.0.4":
+  "integrity" "sha512-w1cEuf3S+DrLCQL7ET6kz+gmlJdbq9J7yXCSjK/OZCPA+qEN1WyF4ZAf0YYJa4/shHJra2t/d/r8SV4Ji+x+8Q=="
+  "resolved" "https://registry.npmjs.org/filelist/-/filelist-1.0.4.tgz"
+  "version" "1.0.4"
+  dependencies:
+    "minimatch" "^5.0.1"
 
 "fill-range@^7.0.1":
   "integrity" "sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ=="
@@ -962,6 +991,11 @@
   "resolved" "https://registry.npmjs.org/has-flag/-/has-flag-3.0.0.tgz"
   "version" "3.0.0"
 
+"has-flag@^4.0.0":
+  "integrity" "sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ=="
+  "resolved" "https://registry.npmjs.org/has-flag/-/has-flag-4.0.0.tgz"
+  "version" "4.0.0"
+
 "has-property-descriptors@^1.0.1":
   "integrity" "sha512-55JNKuIW+vq4Ke1BjOTjM2YctQIvCT7GFzHwmfZPGo5wnrgkid0YQtnAleFSqumZm4az3n2BS+erby5ipJdgrg=="
   "resolved" "https://registry.npmjs.org/has-property-descriptors/-/has-property-descriptors-1.0.2.tgz"
@@ -1131,6 +1165,16 @@
     "@isaacs/cliui" "^8.0.2"
   optionalDependencies:
     "@pkgjs/parseargs" "^0.11.0"
+
+"jake@^10.8.5":
+  "integrity" "sha512-2P4SQ0HrLQ+fw6llpLnOaGAvN2Zu6778SJMrCUwns4fOoG9ayrTiZk3VV8sCPkVZF8ab0zksVpS8FDY5pRCNBA=="
+  "resolved" "https://registry.npmjs.org/jake/-/jake-10.9.2.tgz"
+  "version" "10.9.2"
+  dependencies:
+    "async" "^3.2.3"
+    "chalk" "^4.0.2"
+    "filelist" "^1.0.4"
+    "minimatch" "^3.1.2"
 
 "joi@^17.13.3":
   "integrity" "sha512-otDA4ldcIx+ZXsKHWmp0YizCweVRZG96J10b0FevjfuncLO1oX59THoAmHkNubYJ+9gWsYsp5k8v4ib6oDv1fA=="
@@ -1352,6 +1396,13 @@
   dependencies:
     "brace-expansion" "^1.1.7"
 
+"minimatch@^5.0.1":
+  "integrity" "sha512-lKwV/1brpG6mBUFHtb7NUmtABCb2WZZmm2wNiOA5hAb8VdCS4B3dtMWyvcoViccwAW/COERjXLt0zP1zXUN26g=="
+  "resolved" "https://registry.npmjs.org/minimatch/-/minimatch-5.1.6.tgz"
+  "version" "5.1.6"
+  dependencies:
+    "brace-expansion" "^2.0.1"
+
 "minimatch@^9.0.1":
   "integrity" "sha512-RHiac9mvaRw0x3AYRgDC1CxAP7HTcNrrECeA8YYJeWnpo+2Q5CegtZjaotWTWxDG3UeGA1coE05iH1mPjT/2mg=="
   "resolved" "https://registry.npmjs.org/minimatch/-/minimatch-9.0.3.tgz"
@@ -1496,10 +1547,10 @@
   dependencies:
     "whatwg-url" "^5.0.0"
 
-"nodemailer@^6.9.13":
-  "integrity" "sha512-7o38Yogx6krdoBf3jCAqnIN4oSQFx+fMa0I7dK1D+me9kBxx12D+/33wSb+fhOCtIxvYJ+4x4IMEhmhCKfAiOA=="
-  "resolved" "https://registry.npmjs.org/nodemailer/-/nodemailer-6.9.13.tgz"
-  "version" "6.9.13"
+"nodemailer@^6.9.15":
+  "integrity" "sha512-AHf04ySLC6CIfuRtRiEYtGEXgRfa6INgWGluDhnxTZhHSKvrBu7lc1VVchQ0d8nPc4cFaZoPq8vkyNoZr0TpGQ=="
+  "resolved" "https://registry.npmjs.org/nodemailer/-/nodemailer-6.9.15.tgz"
+  "version" "6.9.15"
 
 "nodemon@^3.0.3":
   "integrity" "sha512-7jH/NXbFPxVaMwmBCC2B9F/V6X1VkEdNgx3iu9jji8WxWcvhMWkmhNWhI5077zknOnZnBzba9hZP6bCPJLSReQ=="
@@ -2163,6 +2214,13 @@
   "version" "5.5.0"
   dependencies:
     "has-flag" "^3.0.0"
+
+"supports-color@^7.1.0":
+  "integrity" "sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw=="
+  "resolved" "https://registry.npmjs.org/supports-color/-/supports-color-7.2.0.tgz"
+  "version" "7.2.0"
+  dependencies:
+    "has-flag" "^4.0.0"
 
 "supports-preserve-symlinks-flag@^1.0.0":
   "integrity" "sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w=="

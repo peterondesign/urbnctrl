@@ -3,12 +3,14 @@ const cloudinary = require("../utilis/cloudinary");
 const { validationResult, matchedData } = require("express-validator");
 const { Events } = require("../models");
 const { generatePassword } = require("../utilis/randomSring");
-const { mailForOrganizers } = require("../utilis/email");
+// const { mailForOrganizers } = require("../utilis/email");
 const asyncHandler = require("express-async-handler");
 const paginateSearch = require("../utilis/paginateSearch");
 const { Op } = require("sequelize");
 const AppError = require("../utilis/AppError");
 const db = require("../models");
+const sendMail = require("../utilis/email");
+const moment = require("moment");
 
 const createEvent = async (req, res, next) => {
   try {
@@ -117,7 +119,7 @@ const approvalChange = async (req, res, next) => {
     event.approved = approval;
     const email = event.email;
     await event.save();
-    await mailForOrganizers("kerryesua9@gmail.com", genPassword);
+    // await mailForOrganizers("kerryesua9@gmail.com", genPassword);
     res.status(201).json("done");
   } catch (error) {
     const err = new Error(error.message);
@@ -141,9 +143,20 @@ const approvePendingEvent = asyncHandler(async (req, res) => {
     //send mail
 
     const genPassword = generatePassword();
+
     await Events.update(
       { approved: "approved", password: genPassword },
       { where: { id }, transaction: t }
+    );
+    await sendMail(
+      pendingEvent.email,
+      "Approved event",
+      {
+        eventName: pendingEvent.name,
+        date: moment(pendingEvent?.stateDay).format("dddd, Do MMMM YYYY"),
+        eventCode: genPassword,
+      },
+      "event"
     );
 
     res.status(200).send({

@@ -3,7 +3,7 @@ const { Tickets } = require("../models");
 const { Events } = require("../models");
 const db = require("../models/index");
 const { generateCode } = require("../utilis/randomSring");
-const { mailForOrganizers } = require("../utilis/email");
+// const { mailForOrganizers } = require("../utilis/email");
 
 const createTickect = async (req, res, next) => {
   const { email, vip, regular, table, total, EventId } = req.body;

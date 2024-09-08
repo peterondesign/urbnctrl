@@ -5,7 +5,7 @@ const db = require("../models/index");
 const { Events } = require("../models");
 const { Tickets } = require("../models");
 const { generateCode } = require("../utilis/randomSring");
-const { mailForOrganizers } = require("../utilis/email");
+// const { mailForOrganizers } = require("../utilis/email");
 
 const initiatePayment = async (req, res, next) => {
   const { email, total, vip, regular, table, EventId } = req.body;
