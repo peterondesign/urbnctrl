@@ -47,7 +47,7 @@ const useEvents = () => {
   );
   const handleApprovePendingEvent = async (id) => {
     return await approvePendingEvent({
-      url: `/admin/events/approve/${id}/reject`,
+      url: `/admin/events/pending/${id}/approve`,
     });
   };
 
