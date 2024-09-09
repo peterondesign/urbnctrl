@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer");
+const path = require("path");
 const ejs = require("ejs");
 const AppError = require("./AppError");
 require("dotenv").config();
@@ -14,22 +15,19 @@ const transporter = nodemailer.createTransport({
 });
 
 const sendMail = async (receipients, subject, data, emailName) => {
-  ejs.renderFile(
-    `${__dirname}../views/${emailName}.ejs`,
-    data,
-    async (err, template) => {
-      if (err) {
-        throw new AppError(err.message);
-      } else {
-        await transporter.sendMail({
-          from: "no-reply@example.com",
-          to: receipients,
-          subject,
-          html: template,
-        });
-      }
-    }
-  );
+  try {
+    const templatePath = path.join(__dirname, "../views", `${emailName}.ejs`);
+    const template = await renderFile(templatePath, data);
+
+    await transporter.sendMail({
+      from: "no-reply@example.com",
+      to: receipients,
+      subject,
+      html: template,
+    });
+  } catch (err) {
+    throw new AppError(err.message);
+  }
 };
 
 module.exports = sendMail;
