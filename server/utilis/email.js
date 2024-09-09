@@ -26,7 +26,7 @@ const sendMail = async (receipients, subject, data, emailName) => {
       html: template,
     });
   } catch (err) {
-    throw new AppError(err.message);
+    throw new AppError(err.message || "Failed to send email.", 500);
   }
 };
 
