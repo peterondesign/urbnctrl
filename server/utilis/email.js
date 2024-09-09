@@ -17,7 +17,7 @@ const transporter = nodemailer.createTransport({
 const sendMail = async (receipients, subject, data, emailName) => {
   try {
     const templatePath = path.join(__dirname, "../views", `${emailName}.ejs`);
-    const template = await renderFile(templatePath, data);
+    const template = await ejs.renderFile(templatePath, data);
 
     await transporter.sendMail({
       from: "no-reply@example.com",
