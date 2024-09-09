@@ -140,32 +140,27 @@ const approvePendingEvent = asyncHandler(async (req, res) => {
   }
 
   db.sequelize.transaction(async (t) => {
-    //send mail
-    try {
-      const genPassword = generatePassword();
+    const genPassword = generatePassword();
 
-      await Events.update(
-        { approved: "approved", password: genPassword },
-        { where: { id }, transaction: t }
-      );
-      await sendMail(
-        pendingEvent.email,
-        "Approved event",
-        {
-          eventName: pendingEvent.name,
-          date: moment(pendingEvent?.stateDay).format("dddd, Do MMMM YYYY"),
-          eventCode: genPassword,
-        },
-        "event"
-      );
+    await Events.update(
+      { approved: "approved", password: genPassword },
+      { where: { id }, transaction: t }
+    );
+    await sendMail(
+      pendingEvent.email,
+      "Approved event",
+      {
+        eventName: pendingEvent.name,
+        date: moment(pendingEvent?.stateDay).format("dddd, Do MMMM YYYY"),
+        eventCode: genPassword,
+      },
+      "event"
+    );
 
-      res.status(200).send({
-        status: "success",
-        message: "Event was approved successfully.",
-      });
-    } catch (error) {
-      throw new AppError("Failed to approve the event.", 500);
-    }
+    res.status(200).send({
+      status: "success",
+      message: "Event was approved successfully.",
+    });
   });
 });
 
