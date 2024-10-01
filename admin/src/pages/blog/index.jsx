@@ -82,7 +82,7 @@ const Blog = () => {
             <div className="flex items-center gap-[32px]">
               <Button
                 onClick={handleCreate}
-                text="Pulish"
+                text="Publish"
                 style={{ width: "140px" }}
                 disabled={disableAction}
               />
