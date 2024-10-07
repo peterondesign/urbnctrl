@@ -4,41 +4,16 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    vip: {
+    eventName:{
       type: DataTypes.STRING,
-      allowNull: true,
-      defaultValue: "",
-      get() {
-        const regularValue = this.getDataValue("vip");
-        return regularValue ? regularValue.split(";") : [];
-      },
-      set(val) {
-        this.setDataValue("vip", Array.isArray(val) ? val.join(";") : "");
-      },
+      allowNull: false,
     },
-    regular: {
-      defaultValue: "",
-      type: DataTypes.STRING,
-      allowNull: true,
-      get() {
-        const regularValue = this.getDataValue("regular");
-        return regularValue ? regularValue.split(";") : [];
-      },
-      set(val) {
-        this.setDataValue("regular", Array.isArray(val) ? val.join(";") : "");
-      },
-    },
-    table: {
-      defaultValue: "",
-      type: DataTypes.STRING,
-      allowNull: true,
-      get() {
-        const regularValue = this.getDataValue("table");
-        return regularValue ? regularValue.split(";") : [];
-      },
-      set(val) {
-        this.setDataValue("table", Array.isArray(val) ? val.join(";") : "");
-      },
+    type:{
+      type:DataTypes.STRING,
+      allowNull:true,
+      validate:{
+        isIn:[["vip","regular","table"]]
+      }
     },
     total: {
       type: DataTypes.INTEGER,

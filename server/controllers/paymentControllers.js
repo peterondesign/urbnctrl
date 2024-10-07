@@ -79,11 +79,50 @@ const paystackWebhook = async (req, res, next) => {
         event.vipTicket -= vipNumber;
         event.tableTicket -= tableNumber;
         event.regularTicket -= regularpNumber;
+
         await event.save({ transaction: transact });
-        await Tickets.create(
-          { email, vip, table, regular, EventId, total, code: generateCode() },
-          { transaction: transact }
-        );
+        
+
+
+      if (regular.length > 0) {
+        for (let i = 0; i < regular.length; i++) {
+          const email = regular[i];
+          await Tickets.create(
+            { email, type:"regular", EventId, eventName: event.name, total, code: generateCode() },
+            { transaction: transact }
+          )
+         // await sendRegularMail(email,event.name,)
+          
+        }
+      }
+
+
+       if (vip.length > 0) {
+
+        for (let i = 0; i < vip.length; i++) {
+          const email = vip[i];
+          await Tickets.create(
+            { email, type:"vip", EventId, total, eventName: event.name,code: generateCode() },
+            { transaction: transact }
+          )
+         // await sendVipMail(email,event.name)
+          
+        }
+       }
+
+       if (table.length > 0) {
+        
+        for (let i = 0; i < table.length; i++) {
+          const email = table[i];
+          await Tickets.create(
+            { email, type:"table", EventId, total, eventName: event.name, code: generateCode() },
+            { transaction: transact }
+          )
+         // await sendTableMail(email,event.name)
+          
+        }
+       }
+      
         console.log("worked");
         await transact.commit();
         //await mailForOrganizers("kerryesua9@gmail.com",email)
