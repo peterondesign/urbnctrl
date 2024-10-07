@@ -87,11 +87,12 @@ const paystackWebhook = async (req, res, next) => {
       if (regular.length > 0) {
         for (let i = 0; i < regular.length; i++) {
           const email = regular[i];
+          const ticketCode= generateCode()
           await Tickets.create(
-            { email, type:"regular", EventId, eventName: event.name, total, code: generateCode() },
+            { email, type:"regular", EventId, eventName: event.name, total, code: ticketCode },
             { transaction: transact }
           )
-         // await sendRegularMail(email,event.name,)
+         // await sendRegularMail(email,event.name,ticketCode)
           
         }
       }
@@ -101,11 +102,13 @@ const paystackWebhook = async (req, res, next) => {
 
         for (let i = 0; i < vip.length; i++) {
           const email = vip[i];
+          const ticketCode= generateCode()
+
           await Tickets.create(
-            { email, type:"vip", EventId, total, eventName: event.name,code: generateCode() },
+            { email, type:"vip", EventId, total, eventName: event.name,code: ticketCode },
             { transaction: transact }
           )
-         // await sendVipMail(email,event.name)
+         // await sendVipMail(email,event.name,ticketCode)
           
         }
        }
@@ -114,18 +117,19 @@ const paystackWebhook = async (req, res, next) => {
         
         for (let i = 0; i < table.length; i++) {
           const email = table[i];
+          const ticketCode= generateCode()
           await Tickets.create(
-            { email, type:"table", EventId, total, eventName: event.name, code: generateCode() },
+            { email, type:"table", EventId, total, eventName: event.name, code: ticketCode },
             { transaction: transact }
           )
-         // await sendTableMail(email,event.name)
+         // await sendTableMail(email,event.name,ticketCode)
           
         }
        }
       
         console.log("worked");
         await transact.commit();
-        //await mailForOrganizers("kerryesua9@gmail.com",email)
+        //await mailForOrganizers("kerryesua9@gmail.com",email,)
         return res.status(200).end().json("success");
       } catch (error) {
         console.log(error.message);
