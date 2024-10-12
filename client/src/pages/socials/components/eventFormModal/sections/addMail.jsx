@@ -1,4 +1,4 @@
-import classNames from "classnames";
+// import classNames from "classnames";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 
@@ -15,12 +15,12 @@ const EventAddMail = ({ sectionData, data }) => {
 
   const { handleMakePayment, makePaymentData } = usePayment();
 
-  const data1 = {
-    tabs: [
-      { type: "one", text: "SEND TO ONE EMAIL" },
-      { type: "many", text: "SEND TO MULTIPLE EMAIL" },
-    ],
-  };
+  // const data1 = {
+  //   tabs: [
+  //     { type: "one", text: "SEND TO ONE EMAIL" },
+  //     { type: "many", text: "SEND TO MULTIPLE EMAIL" },
+  //   ],
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -95,9 +95,29 @@ const EventAddMail = ({ sectionData, data }) => {
     });
   };
 
+  useEffect(() => {
+    function checkSingleTicket() {
+      // Check if one is greater than 0 and the rest are 0
+      const vipCount = ticketCount?.vip / data?.vip;
+      const regularCount = ticketCount?.regular / data?.regular;
+      const tableCount = ticketCount?.table / data?.table;
+      return (
+        (vipCount === 1 && tableCount === 0 && regularCount === 0) ||
+        (tableCount === 1 && vipCount === 0 && regularCount === 0) ||
+        (regularCount === 1 && vipCount === 0 && tableCount === 0)
+      );
+    }
+
+    const isSingle = checkSingleTicket();
+    if (isSingle) {
+      setActiveTab("one");
+    } else {
+      setActiveTab("many");
+    }
+  }, []);
   return (
     <form className="w-full" onSubmit={handleSubmit}>
-      <ul className="w-full flex justify-center items-center">
+      {/* <ul className="w-full flex justify-center items-center">
         {data1?.tabs?.map((i) => (
           <li
             key={i.type}
@@ -112,7 +132,7 @@ const EventAddMail = ({ sectionData, data }) => {
             {i.text}
           </li>
         ))}
-      </ul>
+      </ul> */}
 
       <div className="my-[80px] w-full max-w-[768px]">
         {activeTab !== "many" ? (

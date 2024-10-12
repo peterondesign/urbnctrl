@@ -12,6 +12,41 @@ const db = require("../models");
 const sendMail = require("../utilis/email");
 const moment = require("moment");
 
+const buyTicketbyEvent = asyncHandler(async (req, res) => {
+  const data = req.data;
+  const { id } = req.param;
+
+  const event = await db.Events.findOne({ where: { id } });
+  if (!event) throw new AppError("Event not found.", 404);
+
+  db.sequelize.transaction(async (t) => {
+    if (data.type === "one") {
+      const generateTicket = async (type, count) => {
+        let value = [];
+        if (count <= 0) return (value = []);
+        const code = generateCode();
+
+        for (i = 0; i < count; i++) {
+          const ticket = await db.Ticket.create(
+            {
+              type,
+              code,
+              price: event[type],
+              email: data?.email,
+            },
+            { transaction: t }
+          );
+          await db.Events.decrement(
+            { [type + "Ticket"]: -1 },
+            { where: { id: event.id }, transaction: t }
+          );
+          value.push([code]);
+        }
+        return value;
+      };
+    }
+  });
+});
 const createEvent = async (req, res, next) => {
   try {
     const result = validationResult(req);
