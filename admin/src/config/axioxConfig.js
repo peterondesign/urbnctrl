@@ -2,8 +2,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const axiosInstance = axios.create({
-  baseURL: "https://urbnctrl.onrender.com/api",
-  // baseURL: "http://localhost:6600/api",
+  // baseURL: "https://urbnctrl.onrender.com/api",
+  baseURL: "http://localhost:8000/api",
 });
 
 // Request interceptor to add the token to headers for each request

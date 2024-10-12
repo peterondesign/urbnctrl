@@ -17,16 +17,20 @@ const transporter = nodemailer.createTransport({
 const sendMail = async (receipients, subject, data, emailName) => {
   try {
     const templatePath = path.join(__dirname, "../views", `${emailName}.ejs`);
-    const template = await ejs.renderFile(templatePath, data);
+    const supportMail = process.env.SUPPORT_EMAIL;
+    const template = await ejs.renderFile(templatePath, {
+      ...data,
+      supportMail,
+    });
 
     await transporter.sendMail({
-      from: "no-reply@example.com",
+      from: supportMail,
       to: receipients,
       subject,
       html: template,
     });
   } catch (err) {
-    throw new AppError(err.message || "Failed to send email.", 500);
+    throw new AppError(err.message || "Please check email address.", 500);
   }
 };
 

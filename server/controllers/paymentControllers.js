@@ -5,6 +5,7 @@ const db = require("../models/index");
 const { Events } = require("../models");
 const { Tickets } = require("../models");
 const { generateCode } = require("../utilis/randomSring");
+const sendMail = require("../utilis/email");
 // const { mailForOrganizers } = require("../utilis/email");
 
 const initiatePayment = async (req, res, next) => {
@@ -81,52 +82,104 @@ const paystackWebhook = async (req, res, next) => {
         event.regularTicket -= regularpNumber;
 
         await event.save({ transaction: transact });
-        
 
-
-      if (regular.length > 0) {
-        for (let i = 0; i < regular.length; i++) {
-          const email = regular[i];
-          const ticketCode= generateCode()
-          await Tickets.create(
-            { email, type:"regular", EventId, eventName: event.name, total, code: ticketCode },
-            { transaction: transact }
-          )
-         // await sendRegularMail(email,event.name,ticketCode)
-          
+        if (regular.length > 0) {
+          for (let i = 0; i < regular.length; i++) {
+            const email = regular[i];
+            const ticketCode = generateCode();
+            await Tickets.create(
+              {
+                email,
+                type: "regular",
+                EventId,
+                eventName: event.name,
+                total,
+                code: ticketCode,
+              },
+              { transaction: transact }
+            );
+            // await sendRegularMail(email,event.name,ticketCode)
+            await sendMail(
+              email,
+              "Event ticket",
+              {
+                eventName: event.name,
+                date: moment(event?.stateDay).format("dddd, Do MMMM YYYY"),
+                ticketCode,
+                type: "Regular",
+                price: event.regular,
+                startTime: moment(event?.stateDay).format("hh:mm A"),
+              },
+              "ticket"
+            );
+          }
         }
-      }
 
+        if (vip.length > 0) {
+          for (let i = 0; i < vip.length; i++) {
+            const email = vip[i];
+            const ticketCode = generateCode();
 
-       if (vip.length > 0) {
-
-        for (let i = 0; i < vip.length; i++) {
-          const email = vip[i];
-          const ticketCode= generateCode()
-
-          await Tickets.create(
-            { email, type:"vip", EventId, total, eventName: event.name,code: ticketCode },
-            { transaction: transact }
-          )
-         // await sendVipMail(email,event.name,ticketCode)
-          
+            await Tickets.create(
+              {
+                email,
+                type: "vip",
+                EventId,
+                total,
+                eventName: event.name,
+                code: ticketCode,
+              },
+              { transaction: transact }
+            );
+            // await sendVipMail(email,event.name,ticketCode)
+            await sendMail(
+              email,
+              "Event ticket",
+              {
+                eventName: event.name,
+                date: moment(event?.stateDay).format("dddd, Do MMMM YYYY"),
+                ticketCode,
+                type: "VIP",
+                price: event.vip,
+                startTime: moment(event?.stateDay).format("hh:mm A"),
+              },
+              "ticket"
+            );
+          }
         }
-       }
 
-       if (table.length > 0) {
-        
-        for (let i = 0; i < table.length; i++) {
-          const email = table[i];
-          const ticketCode= generateCode()
-          await Tickets.create(
-            { email, type:"table", EventId, total, eventName: event.name, code: ticketCode },
-            { transaction: transact }
-          )
-         // await sendTableMail(email,event.name,ticketCode)
-          
+        if (table.length > 0) {
+          for (let i = 0; i < table.length; i++) {
+            const email = table[i];
+            const ticketCode = generateCode();
+            await Tickets.create(
+              {
+                email,
+                type: "table",
+                EventId,
+                total,
+                eventName: event.name,
+                code: ticketCode,
+              },
+              { transaction: transact }
+            );
+            // await sendTableMail(email,event.name,ticketCode)
+            await sendMail(
+              email,
+              "Event ticket",
+              {
+                eventName: event.name,
+                date: moment(event?.stateDay).format("dddd, Do MMMM YYYY"),
+                ticketCode,
+                type: "Table",
+                price: event.table,
+                startTime: moment(event?.stateDay).format("hh:mm A"),
+              },
+              "ticket"
+            );
+          }
         }
-       }
-      
+
         console.log("worked");
         await transact.commit();
         //await mailForOrganizers("kerryesua9@gmail.com",email,)
