@@ -119,7 +119,7 @@ const paystackWebhook = async (req, res, next) => {
           for (let i = 0; i < vip.length; i++) {
             const email = vip[i];
             const ticketCode = generateCode();
-
+ 
             await Tickets.create(
               {
                 email,
@@ -183,12 +183,12 @@ const paystackWebhook = async (req, res, next) => {
         console.log("worked");
         await transact.commit();
         //await mailForOrganizers("kerryesua9@gmail.com",email,)
-        return res.status(200).end().json("success");
+        return res.status(200).end();
       } catch (error) {
         console.log(error.message);
         const err = new Error(error.message);
         next(err);
-        return res.status(200).end().json("error");
+        return res.status(200).end();
       }
     }
   }
