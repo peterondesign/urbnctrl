@@ -6,6 +6,7 @@ const { Events } = require("../models");
 const { Tickets } = require("../models");
 const { generateCode } = require("../utilis/randomSring");
 const sendMail = require("../utilis/email");
+const moment = require("moment");
 // const { mailForOrganizers } = require("../utilis/email");
 
 const initiatePayment = async (req, res, next) => {
@@ -119,7 +120,7 @@ const paystackWebhook = async (req, res, next) => {
           for (let i = 0; i < vip.length; i++) {
             const email = vip[i];
             const ticketCode = generateCode();
- 
+
             await Tickets.create(
               {
                 email,
